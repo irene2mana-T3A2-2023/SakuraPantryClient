@@ -3,17 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nextui-org/react": "^2.2.9",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "framer-motion": "^10.16.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "lint": "eslint src/**/*.{js,jsx}",
-    "lint:fix": "eslint src/**/*.{js,jsx} --fix .",
+    "lint": "eslint **/*.{js,jsx}",
+    "lint:fix": "eslint **/*.{js,jsx} --fix .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
