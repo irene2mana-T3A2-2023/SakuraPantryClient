@@ -20,11 +20,11 @@ function App() {
       <Route path='/sign-in' element={<SignIn />} />
       <Route path='/sign-up' element={<SignUp />} />
       <Route path='/forgot-password' element={<ForgotPassword />} />
-      <Route path='/reset-password' element={<ResetPassword />} />
+      <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
       <Route path='/cart' element={<Cart />} />
       <Route path='/checkout' element={<Checkout />} />
-      <Route path='/user' element={<UserAccount />} />
-      <Route path='/admin' element={<AdminDashboard />} />
+      <Route path='/user-account' element={<UserAccount />} />
+      <Route path='/admin-dashboard' element={<AdminDashboard />} />
     </Routes>
   );
 }
