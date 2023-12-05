@@ -4,6 +4,7 @@ import Search from './pages/Search';
 import Category from './pages/Category';
 import Product from './pages/Product';
 import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path='/category/:slug' element={<Category />} />
       <Route path='/product/:slug' element={<Product />} />
       <Route path='/sign-in' element={<SignIn />} />
+      <Route path='/sign-up' element={<SignUp />} />
     </Routes>
   );
 }
