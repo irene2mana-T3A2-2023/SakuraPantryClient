@@ -9,6 +9,7 @@ import ResetPassword from './pages/ResetPassword';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import UserAccount from './pages/UserAccount';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path='/cart' element={<Cart />} />
       <Route path='/checkout' element={<Checkout />} />
       <Route path='/user' element={<UserAccount />} />
+      <Route path='/admin' element={<AdminDashboard />} />
     </Routes>
   );
 }
