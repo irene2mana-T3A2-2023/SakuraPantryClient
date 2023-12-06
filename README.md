@@ -106,5 +106,3 @@ An [ESLint](https://eslint.org/) configuration that disables rules conflicting w
 ### `tailwindcss`
 
 [Tailwind CSS](https://tailwindcss.com/) is a utility-first CSS framework for rapidly building custom user interfaces. It offers a wide range of classes for directly composing unique designs in your markup, mainly used during development for styling.
-
-These `devDependencies` are crucial during the development phase of the application and are not necessarily required in the production environment. They aid in code formatting, ensuring coding standards, and styling the application.
