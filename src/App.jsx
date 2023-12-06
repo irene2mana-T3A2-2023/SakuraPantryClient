@@ -1,11 +1,31 @@
-import { Button } from '@nextui-org/react';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Search from './pages/Search';
+import ProductDetails from './pages/ProductDetails';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import UserAccount from './pages/UserAccount';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
-    <div className='p-10'>
-      <Button color="primary" className="mr-10">Primary button</Button>
-      <Button color='secondary'>Secondary button</Button>
-    </div>
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/search' element={<Search />} />
+      <Route path='/product/:slug' element={<ProductDetails />} />
+      <Route path='/sign-in' element={<SignIn />} />
+      <Route path='/sign-up' element={<SignUp />} />
+      <Route path='/forgot-password' element={<ForgotPassword />} />
+      <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
+      <Route path='/cart' element={<Cart />} />
+      <Route path='/checkout' element={<Checkout />} />
+      <Route path='/user-account' element={<UserAccount />} />
+      <Route path='/admin-dashboard' element={<AdminDashboard />} />
+    </Routes>
   );
 }
 
