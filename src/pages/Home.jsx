@@ -1,8 +1,10 @@
-function Home() {
+import Layout from "../layouts/Base";
+
+const Home = () => {
   return (
-    <div>
+    <Layout>
       <p>This is the Home page</p>
-    </div>
+    </Layout>
   );
 }
 
