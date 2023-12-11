@@ -47,7 +47,7 @@ export default function Footer() {
             <div className='flex'>
               <FaSquareFacebook className='text-[#4267B2] w-8 h-8 mr-5' />
               <FaSquareInstagram className='text-[#E4405F] w-8 h-8' />
-              <Button className='text-bg-secondary w-8 h-8 font-bold py-2 px-4 ml-auto'>
+              <Button className='text-#b8bfdb bg-secondary w-8 h-8 font-bold py-2 px-4 ml-auto'>
                 Send
               </Button>
             </div>
