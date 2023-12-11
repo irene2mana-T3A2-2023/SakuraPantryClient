@@ -1,7 +1,7 @@
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, Image } from "@nextui-org/react";
 import logo from '../assets/images/SakuraPantry.png';
 
-export default function App() {
+export default function Header() {
   return (
     <Navbar isBordered isBlurred maxWidth='2xl' className='max-w-full'>
       <NavbarBrand>
