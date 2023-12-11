@@ -44,6 +44,7 @@
         1,
         2
       ],
+      "no-console": "error",
       "prettier/prettier": "warn",
       "react/jsx-filename-extension": [
         1,

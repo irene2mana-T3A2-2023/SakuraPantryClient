@@ -1,6 +1,9 @@
+// Import the `Toaster` component from 'react-hot-toast' library and rename it to DefaultToaster.
 import { Toaster as DefaultToaster } from 'react-hot-toast';
 
+// Define a new functional component named Toaster.
 const Toaster = () => (
+  // Return the `DefaultToaster` component with customized properties.
   <DefaultToaster
     position='top-right'
     gutter={8}

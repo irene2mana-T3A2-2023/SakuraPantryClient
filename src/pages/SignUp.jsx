@@ -61,6 +61,11 @@ const SignUpPage = () => {
     }
   };
 
+  // eslint-disable-next-line
+  console.log({
+    r: register('firstName')
+  });
+
   return (
     <Layout>
       <div className='container min-h-full mx-auto flex flex-col items-center justify-center'>
