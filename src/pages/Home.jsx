@@ -1,4 +1,4 @@
-import Layout from '../layouts/Base';
+import Layout from "../layouts/Base";
 
 const Home = () => {
   return (
@@ -6,6 +6,6 @@ const Home = () => {
       <p>This is the Home page</p>
     </Layout>
   );
-};
+}
 
 export default Home;
