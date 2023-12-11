@@ -1,11 +1,10 @@
 import { Card } from '@nextui-org/react';
 import { Input, Button } from '@nextui-org/react';
 import Joi from 'joi';
-import { FiMail, FiLock, FiUser } from 'react-icons/fi';
+import { FiMail } from 'react-icons/fi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import useAuth from '../components/Auth/useAuth';
 import Layout from '../layouts/Base';
 
