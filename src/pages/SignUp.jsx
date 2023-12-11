@@ -11,6 +11,7 @@ import Layout from '../layouts/Base';
 
 const nameRegex = /^[a-zA-Z]{3,30}$/;
 
+// Joi schema definition for form validation for required fields to sign up a new account
 const schema = Joi.object({
   firstName: Joi.string().pattern(nameRegex).required().messages({
     'string.pattern.base': `First name must be between 3 to 30 characters and contain letters only`,
@@ -42,29 +43,34 @@ const schema = Joi.object({
   })
 });
 
-const SignUpPage = () => {
+// SignUpPage functional component definition.
+export default function SignUpPage() {
+  // Use the useForm hook from React-Hook-Form to manage form data, validation, and submissions.
   const { register, handleSubmit, formState } = useForm({
+    // `resolver: joiResolver(schema)` integrates Joi for schema-based form validation.
     resolver: joiResolver(schema)
   });
 
+  // Use a custom authentication hook (useAuth) for user registration functionality.
+  // Renamed `register` from useAuth to `signUp` to avoid naming conflict.
   const { register: signUp } = useAuth();
 
+  // State to manage the loading status.
   const [loading, setLoading] = useState(false);
 
+  // Define an asynchronous function to handle form submission.
   const onSubmit = async ({ firstName, lastName, email, password, confirmPassword }) => {
+    // Set loading to true when the submission process starts.
     setLoading(true);
 
     try {
+      // Attempt to register the user with the provided details.
       await signUp({ firstName, lastName, email, password, confirmPassword });
     } finally {
+      // Ensure loading is set to false after the registration attempt.
       setLoading(false);
     }
   };
-
-  // eslint-disable-next-line
-  console.log({
-    r: register('firstName')
-  });
 
   return (
     <Layout>
@@ -117,12 +123,12 @@ const SignUpPage = () => {
               size='lg'
               isDisabled={loading}
             >
-              Create Account
+              Sign Up
             </Button>
           </form>
         </Card>
         <div className='mt-6 text-center'>
-          <span className='text-sm lg:text-base mr-2'>Already have account?</span>
+          <span className='text-sm lg:text-base mr-2'>Already have an account?</span>
           <Link className='underline text-primary' to='/sign-in'>
             Sign In
           </Link>
@@ -130,6 +136,4 @@ const SignUpPage = () => {
       </div>
     </Layout>
   );
-};
-
-export default SignUpPage;
+}

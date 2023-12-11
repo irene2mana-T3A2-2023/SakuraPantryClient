@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { getAxiosErrorMessage } from '../../utils';
 
-const AuthProvider = ({ children }) => {
+export default function AuthProvider({ children }) {
   const [user] = useState(null);
 
   const [isAuthenticated] = useState(false);
@@ -31,6 +31,4 @@ const AuthProvider = ({ children }) => {
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export default AuthProvider;
+}
