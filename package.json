@@ -45,6 +45,7 @@
         2
       ],
       "no-console": "error",
+      "no-unused-vars": "error",
       "prettier/prettier": "warn",
       "react/jsx-filename-extension": [
         1,
