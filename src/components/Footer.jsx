@@ -10,7 +10,7 @@ export default function Footer() {
       <div className='container mx-auto p-5 h-full w-full max-w-[1536px] flex-grow flex'>
         {/*About us*/}
         <div className='flext-col md:flex'>
-          <Card className='w-full bg-primary shadow-none '>
+          <Card className='w-full bg-primary shadow-none'>
             <CardHeader className='flex gap2'>
               <p className='text-secondary'>ABOUT US</p>
             </CardHeader>
@@ -26,7 +26,7 @@ export default function Footer() {
 
           {/*Contact form*/}
           <div className='flex w-full flex-col gap-5 md:ml-10 lg:ml-20'>
-            <p className='text-secondary'>Contact Us</p>
+            <p className='text-secondary'>Contact us</p>
             <Input
               label='Your name'
               type='text'
@@ -49,9 +49,7 @@ export default function Footer() {
             <div className='flex'>
               <FaSquareFacebook className='text-blue-500 w-8 h-8 mr-5' />
               <FaSquareInstagram className='text-pink-500 w-8 h-8' />
-              <Button className='text-#b8bfdb w-8 h-8 font-bold py-2 px-4 ml-20 md:ml-auto'>
-                Send
-              </Button>
+              <Button className='text-#b8bfdb w-8 h-8 font-bold py-2 px-4 ml-auto'>Send</Button>
             </div>
           </div>
         </div>
