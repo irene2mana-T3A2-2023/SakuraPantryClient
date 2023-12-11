@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { getAxiosErrorMessage } from '../../utils';
 
 export default function AuthProvider({ children }) {
-  const [user] = useState(null);
+  const [user, setUser] = useState(null);
 
-  const [isAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,10 +24,26 @@ export default function AuthProvider({ children }) {
     }
   };
 
+  const login = async (userData) => {
+    try {
+      const response = await api.post('/auth/login', userData);
+      const { user, token } = response.data;
+      setUser(user);
+      setIsAuthenticated(!!user);
+      if (token) {
+        localStorage.setItem('token', token);
+      }
+      navigate('/');
+    } catch (error) {
+      toast.error(getAxiosErrorMessage(error));
+    }
+  };
+
   const value = {
     user,
     isAuthenticated,
-    register
+    register,
+    login
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
