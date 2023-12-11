@@ -23,7 +23,6 @@ export default function Footer() {
               </p>
             </CardBody>
           </Card>
-
           {/*Contact form*/}
           <div className='flex w-full flex-col gap-5 md:ml-10 lg:ml-20'>
             <p className='text-secondary'>Contact us</p>
@@ -44,12 +43,13 @@ export default function Footer() {
               }
             />
             <Input label='Questions' type='text' className='h-16' />
-
             {/*Social Media Icons and Button*/}
             <div className='flex'>
-              <FaSquareFacebook className='text-blue-500 w-8 h-8 mr-5' />
-              <FaSquareInstagram className='text-pink-500 w-8 h-8' />
-              <Button className='text-#b8bfdb w-8 h-8 font-bold py-2 px-4 ml-auto'>Send</Button>
+              <FaSquareFacebook className='text-[#4267B2] w-8 h-8 mr-5' />
+              <FaSquareInstagram className='text-[#E4405F] w-8 h-8' />
+              <Button className='text-bg-secondary w-8 h-8 font-bold py-2 px-4 ml-auto'>
+                Send
+              </Button>
             </div>
           </div>
         </div>
