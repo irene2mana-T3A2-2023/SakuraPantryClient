@@ -3,10 +3,10 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   Image
 } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/images/SakuraPantry.png';
 import useAuth from './Auth/useAuth';
 
@@ -28,10 +28,10 @@ export default function Header() {
       </NavbarContent>
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
-          <Link href='#'>Sign In</Link>
+          <Link to='/sign-in'>Sign In</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color='primary' href='#' variant='flat'>
+          <Button as={Link} color='primary' to='/sign-up' variant='flat'>
             Sign Up
           </Button>
         </NavbarItem>
