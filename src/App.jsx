@@ -10,6 +10,9 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import UserAccount from './pages/UserAccount';
 import AdminDashboard from './pages/AdminDashboard';
+import NotFound from './pages/NotFound';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 
 function App() {
   return (
@@ -22,9 +25,10 @@ function App() {
       <Route path='/forgot-password' element={<ForgotPassword />} />
       <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
       <Route path='/cart' element={<Cart />} />
-      <Route path='/checkout' element={<Checkout />} />
-      <Route path='/user-account' element={<UserAccount />} />
-      <Route path='/admin-dashboard' element={<AdminDashboard />} />
+      <Route path='/checkout' element={<ProtectedRoute Page={Checkout} />} />
+      <Route path='/user-account' element={<ProtectedRoute Page={UserAccount} />} />
+      <Route path='/admin-dashboard' element={<AdminProtectedRoute Page={AdminDashboard} />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 }
