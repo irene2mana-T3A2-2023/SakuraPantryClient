@@ -60,7 +60,7 @@ export default function SignInPage() {
       <div className='container min-h-full mx-auto flex flex-col items-center justify-center'>
         <Card className='p-10 shadow-none border-1 w-full lg:w-[50%]'>
           <h4 className='text-4xl mb-2 font-semibold text-center'>Welcome back!</h4>
-          <span className='text-sm lg:text-base mb-10 text-center'>Please enter your details</span>
+          <span className='text-sm lg:text-base mb-10 text-center'>Please enter your detail</span>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               {...register('email')}

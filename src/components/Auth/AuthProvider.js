@@ -8,7 +8,7 @@ import { getAxiosErrorMessage } from '../../utils';
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAucenticated] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,9 +29,9 @@ export default function AuthProvider({ children }) {
       const response = await api.post('/auth/login', userData);
       const { user, token } = response.data;
       setUser(user);
-      setIsAuthenticated(!!user);
+      setIsAucenticated(!!user);
       if (token) {
-        localStorage.setItem('token', token);
+        localStorage.getItem('token', token);
       }
       navigate('/');
     } catch (error) {
