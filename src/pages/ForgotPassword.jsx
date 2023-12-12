@@ -20,25 +20,29 @@ const schema = Joi.object({
     })
 });
 
-export default function ForgotPassword() {
+// Export a default function component named ForgotPasswordPage.
+export default function ForgotPasswordPage() {
+  // Destructuring useForm to get register, handleSubmit, and formState. Using Joi for validation.
   const { register, handleSubmit, formState } = useForm({
     resolver: joiResolver(schema)
   });
 
+  // Using a custom hook, useAuth, to access the forgotPassword function.
   const { forgotPassword } = useAuth();
 
-  // State to manage the loading status.
+  // useState hook to manage the loading state, initially set to false.
   const [loading, setLoading] = useState(false);
 
-  // Define an asynchronous function to handle form submission.
+  // Asynchronous function to handle form submission, receiving email as an argument.
   const onSubmit = async ({ email }) => {
-    // Set loading to true when the submission process starts.
+    // When form submission starts, set loading state to true.
     setLoading(true);
 
     try {
+      // Attempt to execute forgotPassword with the provided email.
       await forgotPassword({ email });
     } finally {
-      // Ensure loading is set to false after the registration attempt.
+      // After the attempt (success or failure), set the loading state back to false.
       setLoading(false);
     }
   };

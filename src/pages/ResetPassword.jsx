@@ -23,7 +23,7 @@ const schema = Joi.object({
   })
 });
 
-export default function ResetPassword() {
+export default function ResetPasswordPage() {
   // Use the useForm hook from React-Hook-Form to manage form data, validation, and submissions.
   const { register, handleSubmit, formState } = useForm({
     // `resolver: joiResolver(schema)` integrates Joi for schema-based form validation.
