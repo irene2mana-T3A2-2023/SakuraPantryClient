@@ -1,4 +1,4 @@
-function UserAccount() {
+function UserAccountPage() {
   return (
     <div>
       <p>This is the User Account page</p>
@@ -6,4 +6,4 @@ function UserAccount() {
   );
 }
 
-export default UserAccount;
+export default UserAccountPage;
