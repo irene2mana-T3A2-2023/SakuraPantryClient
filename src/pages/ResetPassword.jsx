@@ -23,6 +23,7 @@ const schema = Joi.object({
   })
 });
 
+// Export a default function component named ResetPasswordPage.
 export default function ResetPasswordPage() {
   // Use the useForm hook from React-Hook-Form to manage form data, validation, and submissions.
   const { register, handleSubmit, formState } = useForm({
@@ -33,9 +34,10 @@ export default function ResetPasswordPage() {
   // Use a custom authentication hook (useAuth) for reset password functionality.
   const { resetPassword } = useAuth();
 
+  // Retrieve the reset token from the URL parameters using useParams hook from React Router.
   const { resetToken } = useParams();
 
-  // State to manage the loading status.
+  // useState hook to manage the loading state, initially set to false.
   const [loading, setLoading] = useState(false);
 
   // Define an asynchronous function to handle form submission.
@@ -47,7 +49,7 @@ export default function ResetPasswordPage() {
       // Attempt to reset password the user with the provided details.
       await resetPassword({ resetToken, newPassword, confirmNewPassword });
     } finally {
-      // Ensure loading is set to false after the registration attempt.
+      // After the reset attempt (whether successful or not), set the loading state back to false.
       setLoading(false);
     }
   };
