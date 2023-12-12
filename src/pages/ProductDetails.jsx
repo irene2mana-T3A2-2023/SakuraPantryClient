@@ -1,4 +1,4 @@
-function ProductDetails() {
+function ProductDetailsPage() {
   return (
     <div>
       <p>This is the Product Details page</p>
@@ -6,4 +6,4 @@ function ProductDetails() {
   );
 }
 
-export default ProductDetails;
+export default ProductDetailsPage;

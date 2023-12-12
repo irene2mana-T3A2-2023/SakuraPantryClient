@@ -1,4 +1,4 @@
-function Checkout() {
+function CheckoutPage() {
   return (
     <div>
       <p>This is the Checkout page</p>
@@ -6,4 +6,4 @@ function Checkout() {
   );
 }
 
-export default Checkout;
+export default CheckoutPage;

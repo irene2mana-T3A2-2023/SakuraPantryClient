@@ -1,4 +1,4 @@
-function Search() {
+function SearchPage() {
   return (
     <div>
       <p>This is the Search page</p>
@@ -6,4 +6,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default SearchPage;

@@ -38,12 +38,35 @@ export default function AuthProvider({ children }) {
       toast.error(getAxiosErrorMessage(error));
     }
   };
+  const forgotPassword = async (userData) => {
+    try {
+      await api.post('/auth/forgot-password', userData);
+
+      toast.success('Password reset email sent successfully!');
+    } catch (error) {
+      toast.error(getAxiosErrorMessage(error));
+    }
+  };
+
+  const resetPassword = async (userData) => {
+    try {
+      await api.post('/auth/reset-password', userData);
+
+      toast.success('Password reset successfully');
+
+      navigate('/sign-in');
+    } catch (error) {
+      toast.error(getAxiosErrorMessage(error));
+    }
+  };
 
   const value = {
     user,
     isAuthenticated,
     register,
-    login
+    login,
+    forgotPassword,
+    resetPassword
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,10 +1,8 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, Image } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/SakuraPantryLogo.png';
-import useAuth from './Auth/useAuth';
 
 export default function Header() {
-  const value = useAuth;
   return (
     <Navbar isBordered isBlurred maxWidth='2xl' className='max-w-full bg-primary'>
       <NavbarBrand>
