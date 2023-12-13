@@ -4,7 +4,7 @@ import logo from '../assets/images/SakuraPantryLogo.png';
 
 export default function Header() {
   return (
-    <Navbar isBordered isBlurred maxWidth='2xl' className='max-w-full bg-primary'>
+    <Navbar isBordered isBlurred maxWidth='2xl' className='max-w-full bg-primary' height='80px'>
       <NavbarBrand>
         <Link to='/'>
           <Image src={logo} className='h-[50px]' />
