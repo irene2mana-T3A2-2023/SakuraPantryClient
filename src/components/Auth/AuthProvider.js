@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getAxiosErrorMessage } from '../../utils';
 
+//Provide authentication-related functionality to its children components.
 export default function AuthProvider({ children }) {
   //Create a state variable user with an initial value of null. The setUser function will be used to update the user state.
   const [user, setUser] = useState(null);
@@ -29,7 +30,6 @@ export default function AuthProvider({ children }) {
       toast.error(getAxiosErrorMessage(error));
     }
   };
-
   //Take userData as its argument. It is used for user login.
   const login = async (userData) => {
     try {
@@ -78,7 +78,6 @@ export default function AuthProvider({ children }) {
       toast.error(getAxiosErrorMessage(error));
     }
   };
-
   //Take userData as its argument. It is used for resetting a user's password.
   const resetPassword = async (userData) => {
     //Make an asynchronous HTTP POST request to the /auth/reset-password endpoint.
