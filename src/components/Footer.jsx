@@ -7,7 +7,7 @@ import { FiMail, FiUser } from 'react-icons/fi';
 export default function Footer() {
   return (
     <div className='w-full bg-primary min-h-[300px]'>
-      <div className='container mx-auto p-5 h-full w-full max-w-[1536px] flex-grow flex'>
+      <div className='container mx-auto p-6 h-full w-full max-w-[1536px] flex-grow flex'>
         {/*About us*/}
         <div className='flext-col md:flex'>
           <Card className='w-full bg-primary shadow-none'>
