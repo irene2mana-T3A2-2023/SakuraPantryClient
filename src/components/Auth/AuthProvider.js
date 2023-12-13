@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import api from '../../configs/api';
 import AuthContext from './AuthContext';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getAxiosErrorMessage } from '../../utils';
 
-//Provide authentication-related functionality to its children components.
 export default function AuthProvider({ children }) {
   //Create a state variable user with an initial value of null. The setUser function will be used to update the user state.
   const [user, setUser] = useState(null);
 
   const [isAuthenticated, setIsAucenticated] = useState(false);
+
   //Utilize the useNavigate hook to fetch the navigate function.
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
 
   const register = async (userData) => {
     try {
@@ -27,27 +29,43 @@ export default function AuthProvider({ children }) {
       toast.error(getAxiosErrorMessage(error));
     }
   };
+
   //Take userData as its argument. It is used for user login.
   const login = async (userData) => {
     try {
       //Make an HTTP POST request to the /auth/login endpoint using the api object, sending the userData to the server for login.
       const response = await api.post('/auth/login', userData);
+
       //Upon a successful login, it extracts the user and token from the response data.
       const { user, token } = response.data;
+
       //Set the user state using the setUser function and updates the isAuthenticated state to true if user is truthy
       setUser(user);
+
       setIsAucenticated(!!user);
+
       //If a token is present, it stores the authentication token in the browser's local storage.
       if (token) {
         localStorage.getItem('token', token);
       }
-      //Navigates the user to Home page.
-      navigate('/');
-      //If there's an error during the login process, it displays an error message.
+
+      // Regex to validate a 'from' URL pattern
+      const validFromPattern = /^\/[\w-]+(\/[\w-]+)*\/?$/;
+
+      // Decode 'from' parameter value from URL search parameters
+      const from = decodeURIComponent(searchParams.get('from'));
+
+      // Determine redirection path; default to '/' if 'from' is invalid
+      const redirectTo = validFromPattern.test(from) ? from : '/';
+
+      // Redirect user to the determined path
+      navigate(redirectTo);
     } catch (error) {
+      //If there's an error during the login process, it displays an error message.
       toast.error(getAxiosErrorMessage(error));
     }
   };
+
   //Take userData as its argument. It is used for initiating the process of resetting a user's password.
   const forgotPassword = async (userData) => {
     try {
@@ -60,6 +78,7 @@ export default function AuthProvider({ children }) {
       toast.error(getAxiosErrorMessage(error));
     }
   };
+
   //Take userData as its argument. It is used for resetting a user's password.
   const resetPassword = async (userData) => {
     //Make an asynchronous HTTP POST request to the /auth/reset-password endpoint.

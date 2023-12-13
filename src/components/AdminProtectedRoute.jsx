@@ -1,5 +1,4 @@
 import { useLocation, createSearchParams, Navigate } from 'react-router-dom';
-import { useCallback } from 'react';
 import useAuth from './Auth/useAuth';
 import NotFound from '../pages/NotFound';
 
@@ -12,7 +11,7 @@ const AdminProtectedRoute = ({ Page }) => {
   const { pathname } = useLocation();
 
   // Define a memoized function getRedirectPath using the useCallback hook.
-  const getRedirectPath = useCallback(() => {
+  const getRedirectPath = () => {
     // Create search parameters with the current path.
     const newParams = createSearchParams({
       from: pathname
@@ -20,7 +19,7 @@ const AdminProtectedRoute = ({ Page }) => {
 
     // Return the sign-in URL, appending the search parameters if they exist.
     return `/sign-in${newParams ? `?${newParams}` : ''}`;
-  }, [pathname]); // The callback dependency is the current pathname.
+  };
 
   // Redirect unauthenticated users to the sign-in page.
   if (!isAuthenticated) {
