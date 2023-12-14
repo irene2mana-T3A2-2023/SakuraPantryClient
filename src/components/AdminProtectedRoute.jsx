@@ -5,7 +5,7 @@ import NotFound from '../pages/NotFound';
 // Define a functional component called AdminProtectedRoute that accepts a Page component as a prop.
 export default function AdminProtectedRoute({ Page }) {
   // Destructure isAuthenticated and isAdmin from the useAuth hook.
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   // Use the useLocation hook to get the current URL path.
   const { pathname } = useLocation();
@@ -18,7 +18,7 @@ export default function AdminProtectedRoute({ Page }) {
     });
 
     // Return the sign-in URL, appending the search parameters if they exist.
-    return `/sign-in${newParams ? `?${newParams}` : ''}`;
+    return `/sign-in?${newParams}`;
   };
 
   // Redirect unauthenticated users to the sign-in page.
@@ -27,7 +27,7 @@ export default function AdminProtectedRoute({ Page }) {
   }
 
   // Render the NotFound component if the user is authenticated but not an admin.
-  if (!isAdmin()) {
+  if (user.role !== 'admin') {
     return <NotFound />;
   }
 

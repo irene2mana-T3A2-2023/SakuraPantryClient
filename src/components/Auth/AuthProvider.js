@@ -59,7 +59,10 @@ export default function AuthProvider({ children }) {
       const validFromPattern = /^\/[\w-]+(\/[\w-]+)*\/?$/;
 
       // Decode 'from' parameter value from URL search parameters
-      const from = decodeURIComponent(searchParams.get('from'));
+      const from = searchParams.get('from');
+
+      // eslint-disable-next-line no-console
+      console.log({ from });
 
       // Determine redirection path; default to '/' if 'from' is invalid
       const redirectTo = validFromPattern.test(from) ? from : '/';

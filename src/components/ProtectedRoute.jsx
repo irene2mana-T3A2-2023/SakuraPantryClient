@@ -9,6 +9,9 @@ export default function ProtectedRoute({ Page }) {
   // Use the useLocation hook to get the current URL path.
   const { pathname } = useLocation();
 
+  // eslint-disable-next-line
+  console.log({ pathname });
+
   // Define a function getRedirectPath to create a redirect URL with query parameters.
   const getRedirectPath = () => {
     // Create search parameters with the current path.
@@ -17,7 +20,7 @@ export default function ProtectedRoute({ Page }) {
     });
 
     // Return the sign-in URL, appending the search parameters if they exist.
-    return `/sign-in${newParams ? `?${newParams}` : ''}`;
+    return `/sign-in?${newParams}`;
   };
 
   // Conditionally render the Page component if the user is authenticated, otherwise redirect to the sign-in page.
