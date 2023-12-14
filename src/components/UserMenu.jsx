@@ -8,7 +8,7 @@ import {
   NavbarItem
 } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import CardInHeader from './CartInHeader';
+import CartInHeader from './CartInHeader';
 import useAuth from './Auth/useAuth';
 
 export default function UserMenu() {
@@ -17,7 +17,7 @@ export default function UserMenu() {
   return (
     <NavbarContent justify='end'>
       <NavbarItem className='flex items-center pr-2 lg:pr-5'>
-        <CardInHeader />
+        <CartInHeader />
       </NavbarItem>
       <Dropdown placement='bottom-end'>
         <DropdownTrigger>

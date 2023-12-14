@@ -8,14 +8,14 @@ import {
   DropdownTrigger
 } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import { FiUser } from 'react-icons/fi';
-import CardInHeader from './CartInHeader';
+import { FiMenu } from 'react-icons/fi';
+import CartInHeader from './CartInHeader';
 
 export default function GuestMenu() {
   return (
     <NavbarContent justify='end'>
       <NavbarItem className='flex items-center pr-2 lg:pr-5'>
-        <CardInHeader />
+        <CartInHeader />
       </NavbarItem>
       <NavbarItem className='lg:flex hidden'>
         <Button as={Link} color='secondary' variant='solid' to='/sign-in'>
@@ -31,7 +31,7 @@ export default function GuestMenu() {
         <Dropdown>
           <DropdownTrigger>
             <Button isIconOnly variant='light'>
-              <FiUser className='w-6 h-6' />
+              <FiMenu className='w-6 h-6 text-white' />
             </Button>
           </DropdownTrigger>
           <DropdownMenu aria-label='Static Actions'>
