@@ -27,16 +27,16 @@ const HomePage = () => {
 
     return array;
   }
-  // Fetch product data from an API when the component mounts.
+  // Fetch products data from an API when the component mounts.
   useEffect(() => {
     const fetchProducts = async () => {
-      //It calls the api.get method to retrieve products
+      //Call the api.get method to retrieve products.
       try {
         const response = await api.get('/products');
         const products = response.data.products;
-        //Shuffle products.
+        // Swaps elements within the array to produce a new, randomized order and returns the shuffled array.
         const shuffledProducts = shuffleArray(products);
-        // Updates the newArrivals and featuredProducts state variables.
+        // Update the newArrivals state with the shuffled array of products.
         setNewArrivals(shuffledProducts);
         // Fetch only products with isFeatured is true by filtering the products.
         setFeaturedProducts(products.filter((product) => product.isFeatured));
@@ -62,6 +62,7 @@ const HomePage = () => {
               drag='x'
               dragConstraints={{ left: -1000, right: 0 }}
             >
+              {/* Iterates over each item in the newArrivals array. */}
               {newArrivals.map((product, index) => (
                 <Card
                   shadow='sm'
@@ -99,7 +100,7 @@ const HomePage = () => {
               drag='x'
               dragConstraints={{ left: -1000, right: 0 }}
             >
-              {/*creates a new array including only products where the isFeatured property is true. It's a conditional check that filters out any products that don't meet this criterion. */}
+              {/*creates a new array including only products where the isFeatured property is true.*/}
               {featuredProducts
                 .filter((product) => product.isFeatured)
                 .map((product, index) => (
