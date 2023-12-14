@@ -1,4 +1,3 @@
-import useAuth from '../Auth/useAuth';
 import {
   Avatar,
   Dropdown,
@@ -9,24 +8,24 @@ import {
   NavbarItem
 } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import CartInfo from '../Cart/CartInfo';
+import CardInHeader from './CartInHeader';
+import useAuth from './Auth/useAuth';
 
 export default function UserMenu() {
   const { user, logout } = useAuth();
 
   return (
     <NavbarContent justify='end'>
-      <NavbarItem className='flex items-center'>
-        <CartInfo />
+      <NavbarItem className='flex items-center pr-2 lg:pr-5'>
+        <CardInHeader />
       </NavbarItem>
       <Dropdown placement='bottom-end'>
         <DropdownTrigger>
           <Avatar
-            isBordered
-            color='primary'
+            color='secondary'
             as='button'
             className='transition-transform'
-            name={user?.firstName}
+            name={`${user?.firstName} ${user?.lastName}`}
             size='sm'
           />
         </DropdownTrigger>

@@ -10,7 +10,7 @@ export default function AuthProvider({ children }) {
   //Create a state variable user with an initial value of null. The setUser function will be used to update the user state.
   const [user, setUser] = useState(null);
 
-  const [isAuthenticated, setIsAucenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   //Utilize the useNavigate hook to fetch the navigate function.
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default function AuthProvider({ children }) {
       //Set the user state using the setUser function and updates the isAuthenticated state to true if user is truthy
       setUser(user);
 
-      setIsAucenticated(!!user);
+      setIsAuthenticated(!!user);
 
       //If a token is present, it stores the authentication token in the browser's local storage.
       if (token) {
@@ -66,6 +66,16 @@ export default function AuthProvider({ children }) {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+
+    setUser(null);
+
+    setIsAuthenticated(false);
+
+    navigate('/sign-in');
+  };
+
   //Take userData as its argument. It is used for initiating the process of resetting a user's password.
   const forgotPassword = async (userData) => {
     try {
@@ -78,6 +88,7 @@ export default function AuthProvider({ children }) {
       toast.error(getAxiosErrorMessage(error));
     }
   };
+
   //Take userData as its argument. It is used for resetting a user's password.
   const resetPassword = async (userData) => {
     //Make an asynchronous HTTP POST request to the /auth/reset-password endpoint.
@@ -99,10 +110,12 @@ export default function AuthProvider({ children }) {
 
       setUser(response.data);
 
-      setIsAucenticated(true);
+      setIsAuthenticated(true);
     } catch {
       setUser(null);
-      setIsAucenticated(false);
+
+      setIsAuthenticated(false);
+
       localStorage.removeItem('token');
     }
   };
@@ -125,6 +138,7 @@ export default function AuthProvider({ children }) {
     isAuthenticated,
     register,
     login,
+    logout,
     forgotPassword,
     resetPassword
   };
