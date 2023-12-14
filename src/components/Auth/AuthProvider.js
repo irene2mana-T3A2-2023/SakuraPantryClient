@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../configs/api';
 import AuthContext from './AuthContext';
 import toast from 'react-hot-toast';
@@ -46,7 +46,7 @@ export default function AuthProvider({ children }) {
 
       //If a token is present, it stores the authentication token in the browser's local storage.
       if (token) {
-        localStorage.getItem('token', token);
+        localStorage.setItem('token', token);
       }
 
       // Regex to validate a 'from' URL pattern
@@ -92,7 +92,34 @@ export default function AuthProvider({ children }) {
       toast.error(getAxiosErrorMessage(error));
     }
   };
-  //This object holds the values and functions related to authentication, , allowing child components to access authentication-related data and functions.
+
+  const currentUser = async () => {
+    try {
+      const response = await api.get('/auth/current-user');
+
+      setUser(response.data);
+
+      setIsAucenticated(true);
+    } catch {
+      setUser(null);
+      setIsAucenticated(false);
+      localStorage.removeItem('token');
+    }
+  };
+
+  useEffect(() => {
+    const initialise = async () => {
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        await currentUser();
+      }
+    };
+
+    initialise();
+  }, []);
+
+  //This object holds the values and functions related to authentication, allowing child components to access authentication-related data and functions.
   const value = {
     user,
     isAuthenticated,
@@ -101,6 +128,6 @@ export default function AuthProvider({ children }) {
     forgotPassword,
     resetPassword
   };
-  //It isresponsible for providing authentication-related data and functions to its descendant components.
+  //It is responsible for providing authentication-related data and functions to its descendant components.
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
