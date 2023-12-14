@@ -3,7 +3,7 @@ import useAuth from './Auth/useAuth';
 import NotFound from '../pages/NotFound';
 
 // Define a functional component called AdminProtectedRoute that accepts a Page component as a prop.
-const AdminProtectedRoute = ({ Page }) => {
+export default function AdminProtectedRoute({ Page }) {
   // Destructure isAuthenticated and isAdmin from the useAuth hook.
   const { isAuthenticated, isAdmin } = useAuth();
 
@@ -33,7 +33,4 @@ const AdminProtectedRoute = ({ Page }) => {
 
   // Render the Page component if the user is authenticated and is an admin.
   return <Page />;
-};
-
-// Export the AdminProtectedRoute component.
-export default AdminProtectedRoute;
+}
