@@ -1,6 +1,6 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, Image } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/images/SakuraPantryLogo.png';
+import logo from '../assets/images/SakuraPantryLogo_resized.png';
 
 export default function Header() {
   return (

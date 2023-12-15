@@ -1,8 +1,12 @@
+import Layout from '../layouts/Base';
+
 function CartPage() {
   return (
-    <div>
-      <p>This is the Shopping Cart page</p>
-    </div>
+    <Layout>
+      <div>
+        <p>This is the Shopping Cart page</p>
+      </div>
+    </Layout>
   );
 }
 
