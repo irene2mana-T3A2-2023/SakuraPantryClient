@@ -7,9 +7,6 @@ export default function AdminProtectedRoute({ Page }) {
   // Retrieve authentication status and user details from the useAuth custom hook.
   const { isAuthenticated, user } = useAuth();
 
-  // eslint-disable-next-line
-  console.log({ isAuthenticated, user });
-
   // Get the current URL path using the useLocation hook from React Router.
   const { pathname } = useLocation();
 
