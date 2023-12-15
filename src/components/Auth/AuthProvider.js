@@ -7,6 +7,9 @@ import { getAxiosErrorMessage } from '../../utils';
 
 //Provide authentication-related functionality to its children components.
 export default function AuthProvider({ children }) {
+  // Initialize state 'isInitialising' as true with its setter 'setIsInitialising' using useState hook.
+  const [isInitialising, setIsInitialising] = useState(true);
+
   //Create a state variable user with an initial value of null. The setUser function will be used to update the user state.
   const [user, setUser] = useState(null);
 
@@ -60,9 +63,6 @@ export default function AuthProvider({ children }) {
 
       // Decode 'from' parameter value from URL search parameters
       const from = searchParams.get('from');
-
-      // eslint-disable-next-line no-console
-      console.log({ from });
 
       // Determine redirection path; default to '/' if 'from' is invalid
       const redirectTo = validFromPattern.test(from) ? from : '/';
@@ -148,7 +148,7 @@ export default function AuthProvider({ children }) {
 
   // Use the 'useEffect' hook to perform side effects in the component
   useEffect(() => {
-    // Define an asynchronous function named 'initialise' inside the hook
+    // Defines an asynchronous 'initialise' function that attempts to authenticate the user.
     const initialise = async () => {
       // Retrieve the 'token' from local storage
       const token = localStorage.getItem('token');
@@ -160,9 +160,16 @@ export default function AuthProvider({ children }) {
       }
     };
 
-    // Call the 'initialise' function
-    initialise();
+    // After running 'initialise', 'isInitialising' state is set to false using 'setIsInitialising', indicating completion of the initialization process.
+    initialise().finally(() => {
+      setIsInitialising(false);
+    });
   }, []); // The empty dependency array means this effect runs once after the component mounts
+
+  // The conditional rendering at the end returns 'null' while 'isInitialising' is true, possibly to wait for authentication before rendering the component.
+  if (isInitialising) {
+    return null;
+  }
 
   //This object holds the values and functions related to authentication, allowing child components to access authentication-related data and functions.
   const value = {
@@ -174,6 +181,7 @@ export default function AuthProvider({ children }) {
     forgotPassword,
     resetPassword
   };
+
   //It is responsible for providing authentication-related data and functions to its descendant components.
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
