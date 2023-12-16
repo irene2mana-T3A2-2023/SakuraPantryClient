@@ -35,10 +35,10 @@ const HomePage = () => {
         const products = response.data.products;
         // Swap elements within the array to produce a new, randomized order and returns the shuffled array.
         const shuffledProducts = shuffleArray(products);
-        // Update the newArrivals state with the shuffled array of products.
+        // Update the newArrivals state with the shuffled array of products and get 6 products .
         setNewArrivals(shuffledProducts.slice(0, 6));
-        // Fetch only products with isFeatured is true by filtering the products.
-        setFeaturedProducts(products.filter((product) => product.isFeatured).slice(0, 6));
+        // Fetch only products with isFeatured is true by filtering the products and get 6 products.
+        setFeaturedProducts(shuffledProducts.filter((product) => product.isFeatured).slice(0, 6));
       } catch (error) {
         // If there is an error during the registration process, catches the error and displays an error message.
         toast.error('Error fetching products', error);
@@ -57,6 +57,7 @@ const HomePage = () => {
 
         {/* Featured Collection Section */}
         <ProductCardList
+          // Create a new array containing only those products where the isFeatured property is true.
           products={featuredProducts.filter((product) => product.isFeatured)}
           title='Featured Collection'
         />
