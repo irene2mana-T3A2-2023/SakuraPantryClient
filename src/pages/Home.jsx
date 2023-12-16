@@ -32,7 +32,7 @@ const HomePage = () => {
       //Call the api.get method to retrieve products.
       try {
         const response = await api.get('/products');
-        const products = response.data.products;
+        const products = response.data;
         // Swap elements within the array to produce a new, randomized order and returns the shuffled array.
         const shuffledProducts = shuffleArray(products);
         // Update the newArrivals state with the shuffled array of products and get 6 products .
