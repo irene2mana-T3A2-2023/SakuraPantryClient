@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/jsx-indent */
 import { Button } from '@nextui-org/react';
 import React from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
