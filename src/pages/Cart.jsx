@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../layouts/Base';
-import { Cart } from '../components/Cart';
+import { Cart } from '../components/Cart/Cart';
 
 function CartPage() {
   const cartItems = [
