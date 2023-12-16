@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import Layout from '../layouts/Base';
 import { Cart } from '../components/Cart';
