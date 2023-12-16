@@ -1,8 +1,13 @@
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, Image } from '@nextui-org/react';
+import { Navbar, NavbarBrand, NavbarContent, Image } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/SakuraPantryLogo.png';
+import useAuth from './Auth/useAuth';
+import UserMenu from './UserMenu';
+import GuestMenu from './GuestMenu';
 
 export default function Header() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Navbar isBordered isBlurred maxWidth='2xl' className='max-w-full bg-primary' height='80px'>
       <NavbarBrand>
@@ -13,18 +18,7 @@ export default function Header() {
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
         <p className='text-white'>Search bar will come here</p>
       </NavbarContent>
-      <NavbarContent justify='end'>
-        <NavbarItem className='hidden lg:flex'>
-          <Button as={Link} color='secondary' variant='solid' to='/sign-in'>
-            Sign In
-          </Button>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color='secondary' variant='light' to='/sign-up'>
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
+      <NavbarContent justify='end'>{isAuthenticated ? <UserMenu /> : <GuestMenu />}</NavbarContent>
     </Navbar>
   );
 }

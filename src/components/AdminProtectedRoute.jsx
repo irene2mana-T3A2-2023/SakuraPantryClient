@@ -2,38 +2,33 @@ import { useLocation, createSearchParams, Navigate } from 'react-router-dom';
 import useAuth from './Auth/useAuth';
 import NotFound from '../pages/NotFound';
 
-// Define a functional component called AdminProtectedRoute that accepts a Page component as a prop.
-const AdminProtectedRoute = ({ Page }) => {
-  // Destructure isAuthenticated and isAdmin from the useAuth hook.
-  const { isAuthenticated, isAdmin } = useAuth();
+// AdminProtectedRoute: A functional component to protect routes intended for admin users.
+export default function AdminProtectedRoute({ Page }) {
+  // Retrieve authentication status and user details from the useAuth custom hook.
+  const { isAuthenticated, user } = useAuth();
 
-  // Use the useLocation hook to get the current URL path.
+  // Get the current URL path using the useLocation hook from React Router.
   const { pathname } = useLocation();
 
-  // Define a memoized function getRedirectPath using the useCallback hook.
+  // Define a function 'getRedirectPath' to construct a redirect URL.
   const getRedirectPath = () => {
-    // Create search parameters with the current path.
-    const newParams = createSearchParams({
-      from: pathname
-    });
+    // Use 'createSearchParams' to build search parameters, including the current path for post-sign-in redirection.
+    const newParams = createSearchParams({ from: pathname });
 
-    // Return the sign-in URL, appending the search parameters if they exist.
-    return `/sign-in${newParams ? `?${newParams}` : ''}`;
+    // Construct and return the full sign-in URL with the included search parameters.
+    return `/sign-in?${newParams}`;
   };
 
-  // Redirect unauthenticated users to the sign-in page.
+  // Conditional redirect: If the user is not authenticated, redirect to the sign-in page.
   if (!isAuthenticated) {
     return <Navigate replace to={getRedirectPath()} />;
   }
 
-  // Render the NotFound component if the user is authenticated but not an admin.
-  if (!isAdmin()) {
+  // Conditional rendering: Show 'NotFound' component if the user is authenticated but not an admin.
+  if (user.role !== 'admin') {
     return <NotFound />;
   }
 
-  // Render the Page component if the user is authenticated and is an admin.
+  // Render the passed Page component if the user is authenticated and has an admin role.
   return <Page />;
-};
-
-// Export the AdminProtectedRoute component.
-export default AdminProtectedRoute;
+}
