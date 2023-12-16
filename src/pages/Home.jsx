@@ -131,6 +131,4 @@ const HomePage = () => {
       </div>
     </Layout>
   );
-};
-
-export default HomePage;
+}
