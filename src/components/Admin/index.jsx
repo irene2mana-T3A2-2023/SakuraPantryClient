@@ -1,11 +1,19 @@
 import React from 'react';
 import { Tabs, Tab } from '@nextui-org/react';
 import { FiDatabase, FiUser, FiEdit, FiPackage, FiFile } from 'react-icons/fi';
+import { useSearchParams } from 'react-router-dom';
 
 export default function AdminDashboard() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const onSelectionChange = (key) => {
+    setSearchParams({ tab: key });
+  };
+
   return (
     <div className='flex w-full flex-col h-11 min-w-lg'>
       <Tabs
+        onSelectionChange={onSelectionChange}
+        defaultSelectedKey={searchParams.get('tab') || 'total-summary'}
         aria-label='admin-tabs'
         variant='bordered'
         color='primary'
