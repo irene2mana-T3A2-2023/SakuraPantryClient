@@ -16,7 +16,7 @@ export default function UserMenu({ isAdminHeader }) {
 
   return (
     <NavbarContent justify='end'>
-      {!isAdminHeader && (
+      {isAdminHeader ? null : (
         <NavbarItem className='flex items-center pr-2 lg:pr-5'>
           <CartInHeader />
         </NavbarItem>

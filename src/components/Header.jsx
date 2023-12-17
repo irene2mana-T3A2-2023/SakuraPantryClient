@@ -15,7 +15,7 @@ export default function Header({ isAdminHeader }) {
           <Image src={logo} className='h-[50px]' />
         </Link>
       </NavbarBrand>
-      {!isAdminHeader && (
+      {isAdminHeader ? null : (
         <NavbarContent className='hidden sm:flex gap-4' justify='center'>
           <p className='text-white'>Search bar will come here</p>
         </NavbarContent>
