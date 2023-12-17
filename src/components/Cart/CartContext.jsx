@@ -59,8 +59,8 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Function to remove one item from cart
-  const removeFromCart = (item) => {
+  // Function to minus one item from cart
+  const minusFromCart = (item) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
     // If the quantity of the item is 1, remove the item from the cart
@@ -76,15 +76,22 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Set the cart items to an empty array to clear all items in cart
-  const clearCart = () => {
-    setCartItems([]);
+  // Function to remove the item from cart
+  const removeFromCart = (item) => {
+    const updatedCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
+    setCartItems(updatedCartItems);
   };
 
-  // Calculate the total price of the items in the cart
+  // Function to calculate the total price of the items in the cart
   const getCartTotalPrice = () => {
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     return totalPrice.toFixed(2);
+  };
+
+  // Function to get the total of item quantity in cart
+  const getCartTotalQuantity = () => {
+    const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+    return totalQuantity;
   };
 
   // Set the cart items in the local storage
@@ -105,9 +112,10 @@ export const CartProvider = ({ children }) => {
       value={{
         cartItems,
         addToCart,
+        minusFromCart,
         removeFromCart,
-        clearCart,
-        getCartTotalPrice
+        getCartTotalPrice,
+        getCartTotalQuantity
       }}
     >
       {children}

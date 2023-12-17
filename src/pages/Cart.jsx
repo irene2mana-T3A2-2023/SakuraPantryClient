@@ -5,7 +5,7 @@ import { Cart } from '../components/Cart/Cart';
 export default function CartPage() {
   return (
     <Layout>
-      <div className='container mx-auto p-4'>
+      <div className='container mx-auto mt-6 mb-6'>
         <Cart />
       </div>
     </Layout>

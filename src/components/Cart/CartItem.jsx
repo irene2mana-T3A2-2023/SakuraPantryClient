@@ -4,7 +4,7 @@ import { FiMinus, FiPlus } from 'react-icons/fi';
 import { CartContext } from './CartContext';
 
 export const CartItem = ({ item }) => {
-  const { addToCart, removeFromCart } = useContext(CartContext);
+  const { addToCart, minusFromCart, removeFromCart } = useContext(CartContext);
 
   return (
     <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full'>
@@ -14,7 +14,12 @@ export const CartItem = ({ item }) => {
           <div>
             <p className='justify-self-start mt-8'>{item.name}</p>
             <div className='text-sm my-1.5'>${item.price}</div>
-            <div className='hover:underline cursor-pointer text-xs text-stone-700'>Remove</div>
+            <div
+              className='hover:underline cursor-pointer text-xs text-stone-700'
+              onClick={() => removeFromCart(item)}
+            >
+              Remove
+            </div>
           </div>
         </div>
         <div className='flex justify-between items-center w-1/3 ml-auto'>
@@ -24,7 +29,7 @@ export const CartItem = ({ item }) => {
               color='primary'
               size='sm'
               variant='flat'
-              onClick={() => removeFromCart(item)}
+              onClick={() => minusFromCart(item)}
             >
               {<FiMinus className='h-5 w-5 text-black-100 self-center' />}
             </Button>
