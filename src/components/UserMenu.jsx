@@ -11,14 +11,16 @@ import { Link } from 'react-router-dom';
 import CartInHeader from './CartInHeader';
 import useAuth from './Auth/useAuth';
 
-export default function UserMenu() {
+export default function UserMenu({ isAdminHeader }) {
   const { user, logout } = useAuth();
 
   return (
     <NavbarContent justify='end'>
-      <NavbarItem className='flex items-center pr-2 lg:pr-5'>
-        <CartInHeader />
-      </NavbarItem>
+      {!isAdminHeader && (
+        <NavbarItem className='flex items-center pr-2 lg:pr-5'>
+          <CartInHeader />
+        </NavbarItem>
+      )}
       <Dropdown placement='bottom-end'>
         <DropdownTrigger>
           <Avatar
