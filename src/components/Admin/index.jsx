@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Tab } from '@nextui-org/react';
 import { FiDatabase, FiUser, FiEdit, FiPackage, FiFile } from 'react-icons/fi';
 import { useSearchParams } from 'react-router-dom';
+import Summary from './Summary';
 
 export default function AdminDashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,7 +17,7 @@ export default function AdminDashboard() {
         defaultSelectedKey={searchParams.get('tab') || 'total-summary'}
         aria-label='admin-tabs'
         variant='bordered'
-        color='primary'
+        color='secondary'
         className='w-full mt-4'
         radius='sm'
         classNames={{
@@ -35,7 +36,9 @@ export default function AdminDashboard() {
             </div>
           }
         >
-          <div className='container max-w-full mt-10'>This is total summary table</div>
+          <div className='container max-w-full mt-10'>
+            <Summary />
+          </div>
         </Tab>
         <Tab
           key='order-management'
