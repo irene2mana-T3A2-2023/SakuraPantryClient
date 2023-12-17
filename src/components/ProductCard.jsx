@@ -1,23 +1,29 @@
 import React from 'react';
-import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
+import { Image } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   return (
-    <Card shadow='sm' isPressable className='border-2 w-[300px] h-[450px] flex-shrink-0'>
-      <CardBody className='flext justify-center overflow-visible'>
+    <Link to={`/product/${product.slug}`}>
+      <div className='flex flex-col py-4 h-[95%] items-center max-w-full transform overflow-hidden min-w-[240px] rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg'>
         <Image
-          radius='lg'
-          width='100%'
-          alt={product.name}
-          className='w-full object-contain'
+          className='h-40 w-full object-cover object-center'
           src={product.imageUrl}
+          alt='Products'
         />
-      </CardBody>
-      <CardFooter className='text-small justify-around'>
-        <b>{product.name}</b>
-        <p className='text-default-500'>${product.price}</p>
-      </CardFooter>
-    </Card>
+        <div className='p-4 w-full flex flex-col justify-between flex-grow'>
+          <h2 className='text-md mb-2 font-medium text-center text-gray-900 flex-grow'>
+            {product.name}
+          </h2>
+          <p className='text-xs font-medium mb-1 text-gray-500 tracking-widest text-center'>
+            {product.category.name}
+          </p>
+          <div className='text-right'>
+            <p className='text-xl font-semibold text-gray-900'>${product.price}</p>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
 
