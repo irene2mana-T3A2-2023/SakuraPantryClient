@@ -1,14 +1,16 @@
+/* eslint-disable prettier/prettier */
 import React, { useContext } from 'react';
 import { CartItem } from './CartItem';
 import { Button, Divider } from '@nextui-org/react';
 import { CartContext } from './CartContext';
 import { PiShoppingCartDuotone } from 'react-icons/pi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // fetch product info (image, price, name) from DB
 
 export const Cart = () => {
   const { cartItems, getCartTotalPrice } = useContext(CartContext);
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -42,7 +44,11 @@ export const Cart = () => {
                 Tax included. Free shipping applied to all orders.
               </p>
               <div className='flex items-start flex-col'>
-                <Button className='w-full mb-3' color='primary'>
+                <Button
+                  className='w-full mb-3'
+                  color='primary'
+                  onClick={(e) => navigate('/checkout')}
+                >
                   Checkout
                 </Button>
                 <Link className='w-full mb-3' to='/'>
