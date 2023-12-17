@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CartItem } from './CartItem';
 import { Button, Divider } from '@nextui-org/react';
+import { CartContext } from './CartContext';
 
-export const Cart = ({ cartItems }) => {
-  // Calculate the total price based on items in the cart
-  const calculateTotalPrice = () => {
-    return cartItems
-      .reduce((total, item) => {
-        return total + item.price * item.quantity;
-      }, 0)
-      .toFixed(2);
-  };
+// fetch product info (image, price, name) from DB
+
+export const Cart = () => {
+  const { cartItems, getCartTotalPrice } = useContext(CartContext);
 
   return (
     <div>
@@ -24,7 +20,7 @@ export const Cart = ({ cartItems }) => {
         <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full col-span-3 row-span-1 md:col-span-1'>
           <div className='flex justify-between items-center mb-5'>
             <h2 className='text-xl font-semibold'>Total</h2>
-            <p className='text-xl font-semibold'>${calculateTotalPrice()} AUD</p>
+            <p className='text-xl font-semibold'>${getCartTotalPrice()} AUD</p>
           </div>
           <Divider />
           <p className='text-sm text-stone-700 my-3'>
