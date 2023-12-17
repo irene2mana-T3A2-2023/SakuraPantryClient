@@ -1,9 +1,9 @@
 import { Card } from '@nextui-org/react';
-import { Input, Button } from '@nextui-org/react';
+import { Input, Button, Checkbox } from '@nextui-org/react';
 import Joi from 'joi';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../components/Auth/useAuth';
@@ -23,13 +23,14 @@ const schema = Joi.object({
     'string.pattern.base': `Password should be between 8 to 30 characters and contain letters or numbers only`,
     'string.empty': `Password cannot be empty`,
     'any.required': `Password is required`
-  })
+  }),
+  rememberMe: Joi.boolean().default(false)
 });
 
 // SignUpPage functional component definition.
 export default function SignInPage() {
   // Use the useForm hook from React-Hook-Form to manage form data, validation, and submissions.
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, control } = useForm({
     // `resolver: joiResolver(schema)` integrates Joi for schema-based form validation.
     resolver: joiResolver(schema)
   });
@@ -42,13 +43,13 @@ export default function SignInPage() {
   const [loading, setLoading] = useState(false);
 
   // Define an asynchronous function to handle form submission.
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit = async ({ email, password, rememberMe }) => {
     // Set loading to true when the submission process starts.
     setLoading(true);
 
     try {
       // Attempt to register the user with the provided details.
-      await login({ email, password });
+      await login({ email, password, rememberMe });
     } finally {
       // Ensure loading is set to false after the registration attempt.
       setLoading(false);
@@ -86,6 +87,24 @@ export default function SignInPage() {
             >
               Sign In
             </Button>
+            <div className='mt-4 flex justify-between flex-col md:flex-row'>
+              <Controller
+                control={control}
+                name='rememberMe'
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+                    onChange={(e) => onChange?.(e.target.checked)}
+                    className='mb-2 lg:mb-0'
+                    value={value}
+                  >
+                    Remember me for 30 days
+                  </Checkbox>
+                )}
+              />
+              <Link className='underline text-primary' to='/forgot-password'>
+                Forgot password?
+              </Link>
+            </div>
           </form>
         </Card>
         <div className='mt-6 text-center'>

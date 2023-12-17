@@ -3,7 +3,7 @@ import Layout from '../layouts/Base';
 import homeImage from '../assets/images/homePage.jpg';
 import { Card, CardHeader, CardBody, CardFooter, Divider } from '@nextui-org/react';
 
-function ProductDetailsPage() {
+export default function ProductDetailsPage() {
   return (
     <Layout>
       <div>
@@ -26,6 +26,4 @@ function ProductDetailsPage() {
       </div>
     </Layout>
   );
-}
-
-export default ProductDetailsPage;
+};
