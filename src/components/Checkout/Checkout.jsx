@@ -41,12 +41,18 @@ export const Checkout = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     // eslint-disable-next-line no-unused-vars
     formState: { errors }
   } = useForm();
 
   // Access cart items and total price from the CartContext
   const { cartItems, getCartTotalPrice } = useContext(CartContext);
+
+  // Handler for changing the payment method
+  const handlePaymentMethodChange = (value) => {
+    setValue('paymentMethod', value);
+  };
 
   // Handler for form submission
   const onSubmit = async (updatedData) => {
@@ -59,8 +65,8 @@ export const Checkout = () => {
     // Add the order items and total price to the data
     updatedData.orderItems = orderItems;
 
+    // Log to check data in the console and create order with the updated data
     console.log(updatedData);
-
     await placeOrder(updatedData);
   };
 
@@ -117,7 +123,11 @@ export const Checkout = () => {
                 {/* Payment Method Radio Group */}
                 <RadioGroup isRequired={true} color='secondary' defaultValue='Credit Card'>
                   <div className='flex border-solid bg-stone-100 rounded pl-2 pt-3 pb-3 pr-3'>
-                    <Radio value='Credit Card' {...register('paymentMethod')}>
+                    <Radio
+                      value='Credit Card'
+                      {...register('paymentMethod')}
+                      onChange={() => handlePaymentMethodChange('Credit Card')}
+                    >
                       Credit Card
                     </Radio>
                     <div className='flex ml-auto gap-2'>
@@ -127,13 +137,21 @@ export const Checkout = () => {
                     </div>
                   </div>
                   <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
-                    <Radio value='Paypal' {...register('paymentMethod')}>
-                      Paypal
+                    <Radio
+                      value='PayPal'
+                      {...register('paymentMethod')}
+                      onChange={() => handlePaymentMethodChange('PayPal')}
+                    >
+                      PayPal
                     </Radio>
                     <img src={paypal} alt='' className='flex ml-auto w-12 h-12' />
                   </div>
                   <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
-                    <Radio value='Stripe' {...register('paymentMethod')}>
+                    <Radio
+                      value='Stripe'
+                      {...register('paymentMethod')}
+                      onChange={() => handlePaymentMethodChange('Stripe')}
+                    >
                       Stripe
                     </Radio>
                     <img src={stripe} alt='' className='flex ml-auto w-12 h-12' />
