@@ -56,7 +56,7 @@ export const Checkout = () => {
       <h1 className='text-3xl mb-8'>CHECKOUT</h1>
       <div className='flex flex-col md:flex-row mb-8 gap-x-5'>
         {/* Shipping Address and Payment Method */}
-        <div className='border border-solid border-1 rounded p-4 border-pink-500 md:w-3/5'>
+        <div className='border border-solid border-1 rounded p-4 border-pink-500 md:w-3/5 order-2 md:order-none'>
           <form onSubmit={handleSubmit}>
             <Accordion defaultExpandedKeys={['2']} selectionMode='multiple'>
               <AccordionItem
@@ -104,7 +104,7 @@ export const Checkout = () => {
                 </RadioGroup>
               </AccordionItem>
             </Accordion>
-            {/* "Pay Now" button */}
+            {/* "Place Order" button */}
             <div className='mt-6'>
               <Button
                 type='submit'
@@ -123,7 +123,7 @@ export const Checkout = () => {
           </form>
         </div>
         {/* Order Summary */}
-        <div className='border border-solid border-1 rounded border-pink-500 w-full mt-5 md:w-2/5 md:mt-0 max-h-[310px]'>
+        <div className='border border-solid border-1 rounded border-pink-500 w-full mb-5 md:w-2/5 max-h-[310px]'>
           <h2 className='p-5 mt-3 text-xl'>ORDER SUMMARY</h2>
           <div className='ml-2 mb-3'>
             {cartItems.map((item) => (
