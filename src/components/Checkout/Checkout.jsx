@@ -8,6 +8,11 @@ import { Accordion, AccordionItem, Button, Divider, Input } from '@nextui-org/re
 import { RadioGroup, Radio } from '@nextui-org/react';
 import { CartContext } from '../Cart/CartContext';
 import { OrderSummary } from './OrderSummary';
+import card from '../../assets/images/card.png';
+import amex from '../../assets/images/american-express.png';
+import paypal from '../../assets/images/paypal.png';
+import visa from '../../assets/images/visa.png';
+import stripe from '../../assets/images/stripe.png';
 
 const initialFormData = {
   orderItems: [],
@@ -56,7 +61,12 @@ export const Checkout = () => {
         <div className='border border-solid border-1 rounded p-4 border-pink-500 md:w-3/5'>
           <form onSubmit={handleSubmit}>
             <Accordion defaultExpandedKeys={['2']}>
-              <AccordionItem key='1' aria-label='Accordion 2' className='text-xl' title='SHIPPING ADDRESS'>
+              <AccordionItem
+                key='1'
+                aria-label='Accordion 2'
+                className='text-xl'
+                title='SHIPPING ADDRESS'
+              >
                 <Input
                   required
                   label='Address'
@@ -71,16 +81,34 @@ export const Checkout = () => {
                 </div>
                 <Input required label='Phone' className='mb-3' name='phone' />
               </AccordionItem>
-              <AccordionItem key='2' aria-label='Accordion 3' className='text-xl' title='PAYMENT METHOD'>
+              <AccordionItem
+                key='2'
+                aria-label='Accordion 3'
+                className='text-xl'
+                title='PAYMENT METHOD'
+              >
                 <RadioGroup
                   isRequired={true}
                   color='secondary'
                   defaultValue='Credit Card'
                   name='paymentMethod'
                 >
-                  <Radio value='Credit Card'>Credit Card</Radio>
-                  <Radio value='Paypal'>Paypal</Radio>
-                  <Radio value='Stripe'>Stripe</Radio>
+                  <div className='flex border-solid bg-stone-100 rounded pl-2 pt-3 pb-3 pr-3'>
+                    <Radio value='Credit Card'>Credit Card</Radio>
+                    <div className='flex ml-auto gap-2'>
+                      <img src={card} alt='' className='w-12 h-8' />
+                      <img src={visa} alt='' className='w-10 h-10' />
+                      <img src={amex} alt='' className='w-10 h-10' />
+                    </div>
+                  </div>
+                  <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
+                    <Radio value='Paypal'>Paypal</Radio>
+                    <img src={paypal} alt='' className='flex ml-auto w-12 h-12' />
+                  </div>
+                  <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
+                    <Radio value='Stripe'>Stripe</Radio>
+                    <img src={stripe} alt='' className='flex ml-auto w-12 h-12' />
+                  </div>
                 </RadioGroup>
               </AccordionItem>
             </Accordion>
@@ -112,7 +140,7 @@ export const Checkout = () => {
           </div>
           <div className='mb-6'>
             <div className='flex items-center justify-center'>
-              <Divider style={{ width: '92%' }} className='bg-pink-500 h-px'/>
+              <Divider style={{ width: '92%' }} className='bg-pink-500 h-px' />
             </div>
             <div className='flex flex-row ml-5 mt-3 font-semibold'>
               <p className='justify-start'>Shipping</p>
