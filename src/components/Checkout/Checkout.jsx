@@ -19,9 +19,9 @@ const initialFormData = {
     address: '',
     city: '',
     state: '',
-    postcode: '',
-    phone: ''
-  }
+    postcode: ''
+  },
+  phone: ''
 };
 
 const confirmOrder = async (formData) => {
@@ -121,8 +121,8 @@ export const Checkout = () => {
                   required
                   label='Phone'
                   className='mb-3'
-                  name='shippingAddress.phone'
-                  value={formData.shippingAddress.phone}
+                  name='phone'
+                  value={formData.phone}
                   onChange={handleInputChange}
                 />
               </AccordionItem>
