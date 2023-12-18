@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useContext } from 'react';
 import { CartItem } from './CartItem';
 import { Button, Divider } from '@nextui-org/react';
@@ -29,7 +28,7 @@ export const Cart = () => {
           <div className='grid grid-cols-2 grid-flow-row w-full mt-8 mb-8 gap-x-5 md:grid-flow-col'>
             <div className='col-span-3 row-span-2'>
               {cartItems.map((item) => (
-                <CartItem key={item.id} item={item} />
+                <CartItem key={item._id} item={item} />
               ))}
             </div>
             <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full col-span-3 row-span-1 md:col-span-1'>
