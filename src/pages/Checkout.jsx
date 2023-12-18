@@ -1,7 +1,13 @@
+import React from 'react';
+import Layout from '../layouts/Base';
+import { Checkout } from '../components/Checkout/Checkout';
+
 export default function CheckoutPage() {
   return (
-    <div>
-      <p>This is the Checkout page</p>
-    </div>
+    <Layout>
+      <div className='container mx-auto mt-6 mb-6'>
+        <Checkout />
+      </div>
+    </Layout>
   );
 }
