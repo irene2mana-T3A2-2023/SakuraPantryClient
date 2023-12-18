@@ -2,28 +2,28 @@ import { createContext, useState, useEffect } from 'react';
 
 const dummyCartItems = [
   {
-    id: 1,
+    _id: '65801bee8715821d22fe9df3',
+    name: 'Soy Sauce',
     image:
-      'https://image.dokodemo.world/catalog-skus/9032237/8665ac97785ade2d5e8de6341621e2fd.jpg?d=450x0',
-    name: 'Sukiyaki Sauce ',
-    price: 10.99,
+      'https://image.dokodemo.world/catalog-skus/1454900/a5e084aa98a809c6c2eed42f9ad2945d.jpg?d=0x0',
+    price: 6.1,
     quantity: 2
   },
   {
-    id: 2,
+    _id: '65801bee8715821d22fe9df4',
+    name: 'Sukiyaki Sauce',
     image:
-      'https://image.dokodemo.world/catalog-skus/1508989/fb207367efcf8fbdbb7c58c5596d7767.jpg?d=450x0',
-    name: 'Dashi Stock Powder',
-    price: 20.99,
-    quantity: 1
+      'https://image.dokodemo.world/catalog-skus/9032237/8665ac97785ade2d5e8de6341621e2fd.jpg?d=450x0',
+    price: 6.1,
+    quantity: 3
   },
   {
-    id: 3,
+    _id: '65801bee8715821d22fe9df5',
+    name: 'Dashi Stock Powder',
     image:
       'https://image.dokodemo.world/catalog-skus/1508989/fb207367efcf8fbdbb7c58c5596d7767.jpg?d=450x0',
-    name: 'Calbee Potato Chips',
-    price: 20.99,
-    quantity: 3
+    price: 22.6,
+    quantity: 1
   }
 ];
 
