@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useContext } from 'react';
 import { CartItem } from './CartItem';
 import { Button, Divider } from '@nextui-org/react';
