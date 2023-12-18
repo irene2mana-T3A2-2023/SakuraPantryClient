@@ -1,4 +1,3 @@
-import React from 'react';
 import Layout from '../layouts/Base';
 import { Checkout } from '../components/Checkout/Checkout';
 

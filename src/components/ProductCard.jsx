@@ -1,4 +1,3 @@
-import React from 'react';
 import { Image } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 

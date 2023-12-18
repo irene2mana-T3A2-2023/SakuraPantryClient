@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tabs, Tab } from '@nextui-org/react';
 import { FiDatabase, FiUser, FiEdit, FiPackage, FiFile } from 'react-icons/fi';
 import { useSearchParams } from 'react-router-dom';

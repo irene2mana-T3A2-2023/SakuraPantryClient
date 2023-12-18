@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const OrderSummary = ({ item }) => {
   return (
     <div className='ml-2 p-1 w-full'>
