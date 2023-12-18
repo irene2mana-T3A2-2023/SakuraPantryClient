@@ -4,8 +4,8 @@
 
 ### Resources
 
-- [Production site](https://www.google.com.au/)
-- [Back-end repo](https://www.google.com.au/)
+- [Production site](https://sakurapantry.netlify.app/)
+- [Back-end repo](https://github.com/irene2mana-T3A2-2023/SakuraPantryServer)
 - [Documentation repo](https://github.com/irene2mana-T3A2-2023/SakuraPantryDocs/tree/main)
 - [Trello board](https://trello.com/b/TE5Q9ZYj/t3a2-%F0%9F%8C%B8sakura-pantry)
 
@@ -30,10 +30,6 @@ Compiles the React application into static files for production. The compiled ve
 ### `npm run test`
 
 Runs the test runner. It's set up to execute tests written for the React components or other JavaScript code in the project.
-
-### `npm run eject`
-
-Ejects the project, copying all build configs and dependencies (like webpack, Babel, ESLint) directly into the project for full control. Note: this is a one-way operation. Once you eject, you can’t go back!
 
 ### `npm run lint`
 
