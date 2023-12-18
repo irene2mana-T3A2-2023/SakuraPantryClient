@@ -3,12 +3,27 @@ import api from '../../../configs/api';
 import { getAxiosErrorMessage } from '../../../utils';
 import toast from 'react-hot-toast';
 import DataTable from '../DataTable';
-import { Tooltip, Image } from '@nextui-org/react';
+import { Tooltip, Image, useDisclosure, Modal, ModalContent } from '@nextui-org/react';
 import { currencyFormatter } from '../../../utils';
-import { FiEye, FiEdit, FiTrash } from 'react-icons/fi';
+import { FiEdit, FiTrash } from 'react-icons/fi';
+import AddProduct from './AddProductModal';
+import EditProduct from './EditProductModal';
+import DeleteProduct from './DeleteProductModal';
 
 export default function ProductsMangement() {
   const [data, setData] = useState(null);
+
+  const [modalType, setModalType] = useState(null);
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure({
+    onClose: () => {
+      setSelectedProduct(null);
+
+      setModalType(null);
+    }
+  });
 
   const fetchProducts = async () => {
     try {
@@ -19,10 +34,6 @@ export default function ProductsMangement() {
       toast.error(getAxiosErrorMessage(err));
     }
   };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   // eslint-disable-next-line
   console.log(data);
@@ -64,11 +75,6 @@ export default function ProductsMangement() {
       case 'actions':
         return (
           <div className='relative flex items-center2 gap-3'>
-            <Tooltip content='Details'>
-              <span className='text-lg text-default-500 cursor-pointer active:opacity-50'>
-                <FiEye />
-              </span>
-            </Tooltip>
             <Tooltip content='Edit product'>
               <span className='text-lg text-default-500 cursor-pointer active:opacity-50'>
                 <FiEdit />
@@ -87,6 +93,43 @@ export default function ProductsMangement() {
     }
   };
 
+  const openAddProductModal = () => {
+    setModalType('add-product');
+    onOpen();
+  };
+
+  const renderModalContent = (closeModal) => {
+    switch (modalType) {
+      case 'add-product':
+        return <AddProduct closeModal={closeModal} fetchData={fetchProducts} />;
+
+      case 'edit-product':
+        return (
+          <EditProduct
+            closeModal={closeModal}
+            product={selectedProduct}
+            fetchData={fetchProducts}
+          />
+        );
+
+      case 'delete-product':
+        return (
+          <DeleteProduct
+            closeModal={closeModal}
+            product={selectedProduct}
+            fetchData={fetchProducts}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   if (!data) {
     return null;
   }
@@ -95,7 +138,7 @@ export default function ProductsMangement() {
     <>
       <DataTable
         data={data}
-        addAction={() => {}}
+        addAction={openAddProductModal}
         addActionLabel='Add new product'
         renderCell={renderCell}
         columns={[
@@ -108,6 +151,9 @@ export default function ProductsMangement() {
           { name: 'ACTIONS', uid: 'actions' }
         ]}
       />
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='3xl'>
+        <ModalContent>{(onClose) => renderModalContent(onClose)}</ModalContent>
+      </Modal>
     </>
   );
 }
