@@ -1,24 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../layouts/Base';
 import { Image, Button } from '@nextui-org/react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import api from '../configs/api';
 import toast from 'react-hot-toast';
-import { NewArrivalsContext } from '../components/NewArrivals/NewArrivalsContext';
 import ProductCardList from '../components/ProductCardList';
 
 export default function ProductDetailsPage() {
   const { slug } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
-  const { newArrivals } = useContext(NewArrivalsContext);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         const response = await api.get(`/products/${slug}`);
         setProduct(response.data);
+        //eslint-disable-next-line
+        console.log('Product Data:', response.data);
+
+        const categorySlug = response.data.category.slug;
+        // category slugを取得
+        //eslint-disable-next-line
+        console.log(categorySlug);
+        fetchRelatedProducts(categorySlug);
       } catch (error) {
         toast.error('Error fetching product details', error);
       }
@@ -26,6 +33,21 @@ export default function ProductDetailsPage() {
 
     fetchProductDetails();
   }, [slug]);
+
+  const fetchRelatedProducts = async (categorySlug) => {
+    try {
+      const response = await api.get(`/products/relative-products/${categorySlug}`);
+      //eslint-disable-next-line
+      console.log(response.data);
+      const relatedProductsData = response.data;
+
+      //eslint-disable-next-line
+          console.log(relatedProductsData);
+      setRelatedProducts(relatedProductsData);
+    } catch (error) {
+      toast.error('Error fetching related products', error);
+    }
+  };
 
   const incrementQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -100,7 +122,7 @@ export default function ProductDetailsPage() {
             </div>
           </div>
         </div>
-        <ProductCardList products={newArrivals} title='You may also like' />
+        <ProductCardList products={relatedProducts} title='You may also like' />
       </section>
     </Layout>
   );
