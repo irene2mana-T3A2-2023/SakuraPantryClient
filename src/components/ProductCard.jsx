@@ -18,8 +18,8 @@ const ProductCard = ({ product }) => {
           <p className='text-xs font-medium mb-1 text-gray-500 tracking-widest text-center'>
             {product.category.name}
           </p>
-          <div className='text-right'>
-            <p className='text-xl font-semibold text-gray-900'>${product.price}</p>
+          <div className='flex items-end justify-end '>
+            <p className='text-md font-semibold text-gray-900'>Price: ${product.price}</p>
           </div>
         </div>
       </div>
