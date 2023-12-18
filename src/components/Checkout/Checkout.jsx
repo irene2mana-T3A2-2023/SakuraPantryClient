@@ -60,7 +60,7 @@ export const Checkout = () => {
         {/* Shipping Address and Payment Method */}
         <div className='border border-solid border-1 rounded p-4 border-pink-500 md:w-3/5'>
           <form onSubmit={handleSubmit}>
-            <Accordion defaultExpandedKeys={['2']}>
+            <Accordion defaultExpandedKeys={['2']} selectionMode='multiple'>
               <AccordionItem
                 key='1'
                 aria-label='Accordion 2'
@@ -131,7 +131,7 @@ export const Checkout = () => {
           </form>
         </div>
         {/* Order Summary */}
-        <div className='border border-solid border-1 rounded border-pink-500 w-full md:w-2/5'>
+        <div className='border border-solid border-1 rounded border-pink-500 w-full mt-5 md:w-2/5 md:mt-0 max-h-[310px]'>
           <h2 className='p-5 mt-3 text-xl'>ORDER SUMMARY</h2>
           <div className='ml-2 mb-3'>
             {cartItems.map((item) => (
