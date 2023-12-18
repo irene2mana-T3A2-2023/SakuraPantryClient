@@ -5,7 +5,7 @@ import useAuth from './Auth/useAuth';
 import UserMenu from './UserMenu';
 import GuestMenu from './GuestMenu';
 
-export default function Header() {
+export default function Header({ isAdminHeader }) {
   const { isAuthenticated } = useAuth();
 
   return (
@@ -15,10 +15,14 @@ export default function Header() {
           <Image src={logo} className='h-[50px]' />
         </Link>
       </NavbarBrand>
-      <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-        <p className='text-white'>Search bar will come here</p>
+      {isAdminHeader ? null : (
+        <NavbarContent className='hidden sm:flex gap-4' justify='center'>
+          <p className='text-white'>Search bar will come here</p>
+        </NavbarContent>
+      )}
+      <NavbarContent justify='end'>
+        {isAuthenticated ? <UserMenu isAdminHeader={isAdminHeader} /> : <GuestMenu />}
       </NavbarContent>
-      <NavbarContent justify='end'>{isAuthenticated ? <UserMenu /> : <GuestMenu />}</NavbarContent>
     </Navbar>
   );
 }
