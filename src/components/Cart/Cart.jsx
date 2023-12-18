@@ -36,9 +36,7 @@ export const Cart = () => {
             <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full col-span-3 row-span-1 md:col-span-1'>
               <div className='flex justify-between items-center mb-5'>
                 <h2 className='text-xl font-semibold'>Total</h2>
-                <p className='text-xl font-semibold'>
-                  {currencyFormatter(getCartTotalPrice())}
-                </p>
+                <p className='text-xl font-semibold'>{currencyFormatter(getCartTotalPrice())}</p>
               </div>
               <Divider />
               <p className='text-sm text-stone-700 my-3'>
