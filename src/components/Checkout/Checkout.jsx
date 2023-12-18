@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { Accordion, AccordionItem, Button, Divider, Input } from '@nextui-org/react';
 import { RadioGroup, Radio } from '@nextui-org/react';
@@ -11,7 +10,11 @@ import amex from '../../assets/images/american-express.png';
 import paypal from '../../assets/images/paypal.png';
 import visa from '../../assets/images/visa.png';
 import stripe from '../../assets/images/stripe.png';
+import api from '../../configs/api';
+import toast from 'react-hot-toast';
+import { getAxiosErrorMessage } from '../../utils';
 
+// Initial form data with default values
 const initialFormData = {
   orderItems: [],
   paymentMethod: 'Credit Card',
@@ -24,29 +27,42 @@ const initialFormData = {
   phone: ''
 };
 
-const confirmOrder = async (formData) => {
+// Function to place an order
+const placeOrder = async (formData) => {
   try {
+    // Retrieve the user's token from local storage
     const token = localStorage.getItem('token');
-    const response = await axios.post('http://localhost:5000/api/orders', formData, {
+    // Send a POST request to create an order
+    const response = await api.post('/orders', formData, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+    // Log the order data and show a success message
     console.log(response.data);
+    toast.success('Order placed!');
   } catch (error) {
-    console.error(error);
+    // Log and show an error message if order placement fails
+    console.error('Error placing order:', error);
+    toast.error(getAxiosErrorMessage(error));
   }
 };
 
+// CHECKOUT COMPONENT
 export const Checkout = () => {
+  // State to manage form data
   const [formData, setFormData] = useState(initialFormData);
+  // Access cart items and total price from the CartContext
   const { cartItems, getCartTotalPrice } = useContext(CartContext);
 
+  // Handler for input changes in the form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
+    // Split the input name to handle nested data structures
     const nameParts = name.split('.');
 
+    // Update form data based on input name
     if (nameParts.length === 1) {
       setFormData((prevData) => ({
         ...prevData,
@@ -63,12 +79,34 @@ export const Checkout = () => {
     }
   };
 
+  // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    await confirmOrder(formData);
+
+    // Create an array of order items based on cart items
+    const orderItems = cartItems.map((item) => ({
+      productId: item.id,
+      quantity: item.quantity
+    }));
+
+    // Update the form data with order items
+    setFormData((prevData) => ({
+      ...prevData,
+      orderItems
+    }));
+
+    // Create an object with updated form data
+    const updatedFormData = {
+      ...formData,
+      orderItems
+    };
+
+    // Log the updated form data and initiate the order placement
+    console.log(updatedFormData);
+    await placeOrder(updatedFormData);
   };
 
+  // JSX structure for the Checkout component
   return (
     <div className='flex flex-col'>
       <h1 className='text-3xl mb-8'>CHECKOUT</h1>

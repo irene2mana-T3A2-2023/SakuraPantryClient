@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Order summary component in Checkout Page
 export const OrderSummary = ({ item }) => {
   return (
     <div className='ml-2 p-1 w-full'>
