@@ -1,5 +1,6 @@
 import { Image } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
+import { currencyFormatter } from '../utils';
 
 const ProductCard = ({ product }) => {
   return (
@@ -18,7 +19,9 @@ const ProductCard = ({ product }) => {
             {product.category.name}
           </p>
           <div className='text-right'>
-            <p className='text-xl font-semibold text-gray-900'>${product.price}</p>
+            <p className='text-xl font-semibold text-gray-900'>
+              {currencyFormatter(product.price)}
+            </p>
           </div>
         </div>
       </div>

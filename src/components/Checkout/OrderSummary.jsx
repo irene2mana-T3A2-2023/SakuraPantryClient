@@ -1,3 +1,5 @@
+import { currencyFormatter } from '../../utils';
+
 export const OrderSummary = ({ item }) => {
   return (
     <div className='ml-2 p-1 w-full'>
@@ -15,7 +17,7 @@ export const OrderSummary = ({ item }) => {
           </div>
         </div>
         <div className='flex justify-between items-center w-1/5 ml-auto'>
-          <p>${(item.price * item.quantity).toFixed(2)}</p>
+          <p>{currencyFormatter((item.price * item.quantity).toFixed(2))}</p>
         </div>
       </div>
     </div>

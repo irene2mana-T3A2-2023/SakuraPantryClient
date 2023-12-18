@@ -5,6 +5,7 @@ import { Button, Divider } from '@nextui-org/react';
 import { CartContext } from './CartContext';
 import { PiShoppingCartDuotone } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
+import { currencyFormatter } from '../../utils';
 
 // fetch product info (image, price, name) from DB
 
@@ -35,7 +36,7 @@ export const Cart = () => {
             <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full col-span-3 row-span-1 md:col-span-1'>
               <div className='flex justify-between items-center mb-5'>
                 <h2 className='text-xl font-semibold'>Total</h2>
-                <p className='text-xl font-semibold'>${getCartTotalPrice()} AUD</p>
+                <p className='text-xl font-semibold'>{currencyFormatter(getCartTotalPrice())} AUD</p>
               </div>
               <Divider />
               <p className='text-sm text-stone-700 my-3'>
