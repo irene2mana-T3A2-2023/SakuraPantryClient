@@ -1,8 +1,4 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import React, { useContext } from 'react';
 import { Accordion, AccordionItem, Button, Divider, Input } from '@nextui-org/react';
@@ -45,6 +41,7 @@ export const Checkout = () => {
   const {
     register,
     handleSubmit,
+    // eslint-disable-next-line no-unused-vars
     formState: { errors }
   } = useForm();
 
