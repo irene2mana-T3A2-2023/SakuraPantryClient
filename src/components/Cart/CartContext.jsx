@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 
 const dummyCartItems = [
   {
-    _id: '65801bee8715821d22fe9df3',
+    _id: '65802571f3aa90e83020cb4b',
     name: 'Soy Sauce',
     image:
       'https://image.dokodemo.world/catalog-skus/1454900/a5e084aa98a809c6c2eed42f9ad2945d.jpg?d=0x0',
@@ -10,7 +10,7 @@ const dummyCartItems = [
     quantity: 2
   },
   {
-    _id: '65801bee8715821d22fe9df4',
+    _id: '65802571f3aa90e83020cb4c',
     name: 'Sukiyaki Sauce',
     image:
       'https://image.dokodemo.world/catalog-skus/9032237/8665ac97785ade2d5e8de6341621e2fd.jpg?d=450x0',
@@ -18,7 +18,7 @@ const dummyCartItems = [
     quantity: 3
   },
   {
-    _id: '65801bee8715821d22fe9df5',
+    _id: '65802571f3aa90e83020cb4d',
     name: 'Dashi Stock Powder',
     image:
       'https://image.dokodemo.world/catalog-skus/1508989/fb207367efcf8fbdbb7c58c5596d7767.jpg?d=450x0',
@@ -43,14 +43,14 @@ export const CartProvider = ({ children }) => {
   // Function to add one item to cart
   const addToCart = (item) => {
     // Check if the item is already in cart
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+    const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id);
 
     if (isItemInCart) {
       setCartItems(
         // If the item is already in the cart, increase the quantity of the item
         // Otherwise, return the cart item
         cartItems.map((cartItem) =>
-          cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+          cartItem._id === item._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
         )
       );
     } else {
@@ -61,16 +61,16 @@ export const CartProvider = ({ children }) => {
 
   // Function to minus one item from cart
   const minusFromCart = (item) => {
-    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+    const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id);
 
     // If the quantity of the item is 1, remove the item from the cart
     if (isItemInCart.quantity === 1) {
-      setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
+      setCartItems(cartItems.filter((cartItem) => cartItem._id !== item._id));
     } else {
       // If the quantity of the item is greater than 1, decrease the quantity of the item
       setCartItems(
         cartItems.map((cartItem) =>
-          cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
+          cartItem._id === item._id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
         )
       );
     }
@@ -78,7 +78,7 @@ export const CartProvider = ({ children }) => {
 
   // Function to remove the item from cart
   const removeFromCart = (item) => {
-    const updatedCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
+    const updatedCartItems = cartItems.filter((cartItem) => cartItem._id !== item._id);
     setCartItems(updatedCartItems);
   };
 
