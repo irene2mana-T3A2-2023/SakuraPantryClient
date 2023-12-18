@@ -26,7 +26,12 @@ const initialFormData = {
 
 const confirmOrder = async (formData) => {
   try {
-    const response = await axios.post('http://localhost:500/api/order', formData);
+    const token = localStorage.getItem('token');
+    const response = await axios.post('http://localhost:5000/api/orders', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     console.log(response.data);
   } catch (error) {
     console.error(error);
@@ -39,10 +44,23 @@ export const Checkout = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
+
+    const nameParts = name.split('.');
+
+    if (nameParts.length === 1) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [nameParts[0]]: {
+          ...prevData[nameParts[0]],
+          [nameParts[1]]: value
+        }
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -65,13 +83,48 @@ export const Checkout = () => {
                 className='text-xl'
                 title='SHIPPING ADDRESS'
               >
-                <Input required label='Address' className='mb-3' name='address' />
-                <Input required label='City' className='mb-3' name='city' />
-                <div className='flex flex-row gap-x-2 mb-3'>
-                  <Input required label='State' className='flex-1 mb-3 w-1/2' name='state' />
-                  <Input required label='Postcode' className='flex-1 mb-3 w-1/2' name='postcode' />
+                <Input
+                  required
+                  label='Address'
+                  className='mb-3'
+                  name='shippingAddress.address'
+                  value={formData.shippingAddress.address}
+                  onChange={handleInputChange}
+                />
+                <Input
+                  required
+                  label='City'
+                  className='mb-3'
+                  name='shippingAddress.city'
+                  value={formData.shippingAddress.city}
+                  onChange={handleInputChange}
+                />
+                <div className='flex flex-row gap-x-2'>
+                  <Input
+                    required
+                    label='State'
+                    className='flex-1 mb-3 w-1/2'
+                    name='shippingAddress.state'
+                    value={formData.shippingAddress.state}
+                    onChange={handleInputChange}
+                  />
+                  <Input
+                    required
+                    label='Postcode'
+                    className='flex-1 mb-3 w-1/2'
+                    name='shippingAddress.postcode'
+                    value={formData.shippingAddress.postcode}
+                    onChange={handleInputChange}
+                  />
                 </div>
-                <Input required label='Phone' className='mb-3' name='phone' />
+                <Input
+                  required
+                  label='Phone'
+                  className='mb-3'
+                  name='shippingAddress.phone'
+                  value={formData.shippingAddress.phone}
+                  onChange={handleInputChange}
+                />
               </AccordionItem>
               <AccordionItem
                 key='2'
@@ -84,6 +137,7 @@ export const Checkout = () => {
                   color='secondary'
                   defaultValue='Credit Card'
                   name='paymentMethod'
+                  onChange={handleInputChange}
                 >
                   <div className='flex border-solid bg-stone-100 rounded pl-2 pt-3 pb-3 pr-3'>
                     <Radio value='Credit Card'>Credit Card</Radio>
