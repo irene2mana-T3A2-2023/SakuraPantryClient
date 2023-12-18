@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-indent */
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import axios from 'axios';
@@ -67,12 +65,7 @@ export const Checkout = () => {
                 className='text-xl'
                 title='SHIPPING ADDRESS'
               >
-                <Input
-                  required
-                  label='Address'
-                  className='mb-3'
-                  name='address'
-                />
+                <Input required label='Address' className='mb-3' name='address' />
                 <Input required label='City' className='mb-3' name='city' />
                 <div className='flex flex-row gap-x-2 mb-3'>
                   <Input required label='State' className='flex-1 mb-3 w-1/2' name='state' />
