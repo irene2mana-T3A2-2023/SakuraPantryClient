@@ -152,7 +152,7 @@ export default function ProductsMangement() {
         ]}
       />
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='3xl'>
-        <ModalContent>{(onClose) => renderModalContent(onClose)}</ModalContent>
+        <ModalContent>{(closeModal) => renderModalContent(closeModal)}</ModalContent>
       </Modal>
     </>
   );
