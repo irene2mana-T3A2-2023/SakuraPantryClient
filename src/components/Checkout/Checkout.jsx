@@ -72,7 +72,6 @@ export const Checkout = () => {
                   label='Address'
                   className='mb-3'
                   name='address'
-                  errorMessage='This field is required'
                 />
                 <Input required label='City' className='mb-3' name='city' />
                 <div className='flex flex-row gap-x-2 mb-3'>
@@ -85,7 +84,7 @@ export const Checkout = () => {
                 key='2'
                 aria-label='Accordion 3'
                 className='text-xl'
-                title='PAYMENT METHOD'
+                title='PAYMENT OPTION'
               >
                 <RadioGroup
                   isRequired={true}
