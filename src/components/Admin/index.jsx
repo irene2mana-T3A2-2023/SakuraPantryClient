@@ -2,6 +2,7 @@ import { Tabs, Tab } from '@nextui-org/react';
 import { FiDatabase, FiUser, FiEdit, FiPackage, FiFile } from 'react-icons/fi';
 import { useSearchParams } from 'react-router-dom';
 import Summary from './Summary';
+import ProductsMangement from './ProductsManagement';
 
 export default function AdminDashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,7 +60,9 @@ export default function AdminDashboard() {
             </div>
           }
         >
-          <div className='container max-w-full mt-10'>This is products management table</div>
+          <div className='container max-w-full mt-10'>
+            <ProductsMangement />
+          </div>
         </Tab>
         <Tab
           key='categories-management'
