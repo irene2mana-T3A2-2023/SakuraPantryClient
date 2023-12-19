@@ -12,7 +12,7 @@ export const CartItem = ({ item }) => {
       <div className='flex items-center m-auto'>
         <div className='flex justify-start items-center w-1/2'>
           <img src={item.imageUrl} alt='' className='w-32 h-32' />
-          <div>
+          <div className='ml-5'>
             <p className='justify-self-start mt-8'>{item.name}</p>
             <div className='text-sm my-1.5'>${item.price}</div>
             <div

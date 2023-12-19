@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 // Create a new context for the shopping cart
 export const CartContext = createContext();
@@ -16,7 +17,10 @@ export const CartProvider = ({ children }) => {
     // Check if the item is already in cart
     const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id);
 
-    if (isItemInCart) {
+    // Check if the item's stock quantity has been exceeded
+    const isStockQuantityExceeded = item.stockQuantity <= isItemInCart.quantity;
+
+    if (isItemInCart && !isStockQuantityExceeded) {
       setCartItems(
         // If the item is already in the cart, increase the quantity of the item
         // Otherwise, return the cart item
@@ -24,9 +28,12 @@ export const CartProvider = ({ children }) => {
           cartItem._id === item._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
         )
       );
-    } else {
+    } else if (!isItemInCart) {
       // If the item is not in the cart, add the item to the cart
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    } else {
+      // Handle the case where isItemInCart is defined but the stock quantity is exceeded
+      toast.error('Quantity limit exceeded');
     }
   };
 
