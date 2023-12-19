@@ -1,24 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../layouts/Base';
 import { Image, Button } from '@nextui-org/react';
-import { FiMinus, FiPlus } from 'react-icons/fi';
 import api from '../configs/api';
 import toast from 'react-hot-toast';
-import { NewArrivalsContext } from '../components/NewArrivals/NewArrivalsContext';
 import ProductCardList from '../components/ProductCardList';
+import { FiMinus, FiPlus } from 'react-icons/fi';
 
 export default function ProductDetailsPage() {
   const { slug } = useParams();
-  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
-  const { newArrivals } = useContext(NewArrivalsContext);
+  const [quantity, setQuantity] = useState(1);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         const response = await api.get(`/products/${slug}`);
         setProduct(response.data);
+        const categorySlug = response.data.category.slug;
+        fetchRelatedProducts(categorySlug);
       } catch (error) {
         toast.error('Error fetching product details', error);
       }
@@ -36,7 +37,15 @@ export default function ProductDetailsPage() {
       setQuantity((prevQuantity) => prevQuantity - 1);
     }
   };
-
+  const fetchRelatedProducts = async (categorySlug) => {
+    try {
+      const response = await api.get(`/products/relative-products/${categorySlug}`);
+      const relatedProductsData = response.data;
+      setRelatedProducts(relatedProductsData);
+    } catch (error) {
+      toast.error('Error fetching related products', error);
+    }
+  };
   if (!product) {
     return (
       <Layout>
@@ -49,8 +58,8 @@ export default function ProductDetailsPage() {
     <Layout>
       <section className='body-font overflow-hidden bg-white'>
         <div className='container px-5 py-6 mx-auto'>
-          <div className='lg:w-full flex flex-wrap justify-evenly'>
-            <div className='border border-pink-500 flex justify-center items-center'>
+          <div className='lg:w-full flex flex-wrap justify-between'>
+            <div className='border border-pink-500'>
               <Image
                 alt='product image'
                 className='max-h-full max-w-full object-cover rounded '
@@ -64,9 +73,6 @@ export default function ProductDetailsPage() {
                 </h1>
                 <div className='flex mb-4'></div>
                 <p className='leading-relaxed text-justify'>{product.description}</p>
-                <p className='font-medium text-xl text-right mt-3  text-gray-900 '>
-                  Stock Quantity: {product.stockQuantity}
-                </p>
                 <p className='title-font font-medium text-2xl text-gray-900 mt-3 text-right'>
                   Price: ${product.price}
                 </p>
@@ -100,7 +106,7 @@ export default function ProductDetailsPage() {
             </div>
           </div>
         </div>
-        <ProductCardList products={newArrivals} title='You may also like' />
+        <ProductCardList products={relatedProducts} title='You may also like' />
       </section>
     </Layout>
   );
