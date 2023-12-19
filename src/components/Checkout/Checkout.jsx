@@ -14,17 +14,39 @@ import api from '../../configs/api';
 import toast from 'react-hot-toast';
 import { getAxiosErrorMessage } from '../../utils';
 import { OrderSuccess } from './OrderSuccess';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+
+const schema = Joi.object({
+  address: Joi.string().required().message({
+    'string.empty': `Address cannot be empty`,
+    'any.required': `Address is required`
+  }),
+  city: Joi.string().required().message({
+    'string.empty': `City cannot be empty`,
+    'any.required': `City is required`
+  }),
+  state: Joi.string().required().message({
+    'string.empty': `State cannot be empty`,
+    'any.required': `State is required`
+  }),
+  postcode: Joi.string().required().message({
+    'string.empty': `Postcode cannot be empty`,
+    'any.required': `Postcode is required`
+  }),
+  phone: Joi.string().pattern(new RegExp('^[0-9]{6,12}$')).required().message({
+    'string.pattern.base': `Phone number must contain numbers only`,
+    'string.empty': `Phone number cannot be empty`,
+    'any.required': `Phone number is required`
+  })
+});
 
 // CHECKOUT COMPONENT
 export const Checkout = () => {
   // Initialize the useForm hook
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    // eslint-disable-next-line no-unused-vars
-    formState: { errors }
-  } = useForm();
+  const { register, handleSubmit, setValue, formState } = useForm({
+    resolver: joiResolver(schema)
+  });
 
   // Access cart items and total price from the CartContext
   const { cartItems, setCartItems, getCartTotalPrice } = useContext(CartContext);
@@ -62,20 +84,34 @@ export const Checkout = () => {
     setValue('paymentMethod', value);
   };
 
+  // Set state to manage the loading status
+  const [loading, setLoading] = useState(false);
+
   // Handler for form submission
   const onSubmit = async (updatedData) => {
-    // Create an array of order items based on cart items
-    const orderItems = cartItems.map((item) => ({
-      product: item._id,
-      quantity: item.quantity
-    }));
+    // Set the loading state to true
+    setLoading(true);
 
-    // Add the order items and total price to the data
-    updatedData.orderItems = orderItems;
+    try {
+      // Create an array of order items based on cart items
+      const orderItems = cartItems.map((item) => ({
+        product: item._id,
+        quantity: item.quantity
+      }));
 
-    // Log to check data in the console and create order with the updated data
-    console.log(updatedData);
-    await placeOrder(updatedData);
+      // Add the order items and total price to the data
+      updatedData.orderItems = orderItems;
+
+      // Log to check data in the console and create order with the updated data
+      console.log(updatedData);
+      await placeOrder(updatedData);
+    } catch (error) {
+      console.error('Error placing order:', error);
+      toast.error(getAxiosErrorMessage(error));
+    } finally {
+      // Set the loading state back to false, whether the submission was successful or not
+      setLoading(false);
+    }
   };
 
   // JSX structure for the Checkout component
@@ -104,12 +140,14 @@ export const Checkout = () => {
                       label='Address'
                       className='mb-3'
                       {...register('shippingAddress.address')}
+                      errorMessage={formState.errors?.address?.message}
                     />
                     <Input
                       required
                       label='City'
                       className='mb-3'
                       {...register('shippingAddress.city')}
+                      errorMessage={formState.errors?.city?.message}
                     />
                     <div className='flex flex-row gap-x-2'>
                       <Input
@@ -117,15 +155,23 @@ export const Checkout = () => {
                         label='State'
                         className='flex-1 mb-3 w-1/2'
                         {...register('shippingAddress.state')}
+                        errorMessage={formState.errors?.state?.message}
                       />
                       <Input
                         required
                         label='Postcode'
                         className='flex-1 mb-3 w-1/2'
                         {...register('shippingAddress.postcode')}
+                        errorMessage={formState.errors?.postcode?.message}
                       />
                     </div>
-                    <Input required label='Phone' className='mb-3' {...register('phone')} />
+                    <Input
+                      required
+                      label='Phone'
+                      className='mb-3'
+                      {...register('phone')}
+                      errorMessage={formState.errors?.phone?.message}
+                    />
                   </AccordionItem>
                   <AccordionItem
                     key='2'
@@ -179,10 +225,11 @@ export const Checkout = () => {
                     radius='sm'
                     color='primary'
                     variant='solid'
-                    className='w-3/5'
+                    className='w-3/5 text-lg'
                     size='lg'
+                    isDisabled={loading}
                   >
-                    <p className='text-lg'>Place Order</p>
+                    Place Order
                   </Button>
                   <p className='text-sm text-stone-500 mt-2'>
                     * Press Place Order to complete your purchase.
