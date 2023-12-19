@@ -3,10 +3,12 @@ import { FiDatabase, FiUser, FiEdit, FiPackage, FiFile } from 'react-icons/fi';
 import { useSearchParams } from 'react-router-dom';
 import Summary from './Summary';
 import ProductsMangement from './ProductsManagement';
-import CategoriessMangement from './CategoriesManagement';
+import CategoriesMangement from './CategoriesManagement';
+import UsersManagement from './UsersManagement';
 
 export default function AdminDashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const onSelectionChange = (key) => {
     setSearchParams({ tab: key });
   };
@@ -75,7 +77,7 @@ export default function AdminDashboard() {
           }
         >
           <div className='container max-w-full mt-10'>
-            <CategoriessMangement />
+            <CategoriesMangement />
           </div>
         </Tab>
         <Tab
@@ -87,7 +89,9 @@ export default function AdminDashboard() {
             </div>
           }
         >
-          <div className='container max-w-full mt-10'>This is users management table</div>
+          <div className='container max-w-full mt-10'>
+            <UsersManagement />
+          </div>
         </Tab>
       </Tabs>
     </div>
