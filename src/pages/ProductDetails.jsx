@@ -80,6 +80,7 @@ export default function ProductDetailsPage() {
       console.error('Error fetching related products', error);
     }
   };
+
   if (!product) {
     return (
       <Layout>
@@ -94,7 +95,7 @@ export default function ProductDetailsPage() {
       <section className='body-font overflow-hidden bg-white items-center'>
         <div className='container flex justify-center items-center md:mx-20 md:my-12'>
           <div className='md:flex md:flex-cols'>
-            <div className='border border-1.5 border-pink-500 p-8 rounded md:w-2/3'>
+            <div className='border-1.5 border-pink-500 p-8 rounded md:w-2/3'>
               <Image
                 alt='product image'
                 className='max-h-full w-auto object-cover rounded'
