@@ -7,22 +7,26 @@ import Layout from '../layouts/Base';
 import toast from 'react-hot-toast';
 
 export default function SearchPage() {
+  // Store the search results.
   const [results, setResults] = useState([]);
+  // React-router-dom is used to access the URL query parameters.
   const location = useLocation();
-
   const searchParams = new URLSearchParams(location.search);
+  //  Retrieves the value of the query parameter keyword from URLSearchParams.
   const keyword = searchParams.get('keyword');
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
+        // API call is made to fetch products based on the provided keyword.
         const response = await api.get(`/products/search?keyword=${keyword}`);
+        // Store search results in setResults.
         setResults(response.data);
       } catch (error) {
         toast.error('Error fetching search results:', error);
       }
     };
-
+    // Check if the keyword variable is truthy before executing the fetchResults
     if (keyword) {
       fetchResults();
     }
@@ -33,6 +37,7 @@ export default function SearchPage() {
       <div className='container mx-auto px-6'>
         <h3 className='text-gray-700 text-2xl font-medium'>Product for `{keyword}`</h3>
         <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6'>
+          {/* Checks if there are any products in the results array. If results contain items, it maps over each product*/}
           {results.length > 0 ? (
             results.map((product) => (
               <div
@@ -60,6 +65,7 @@ export default function SearchPage() {
               </div>
             ))
           ) : (
+            // If results is empty, it displays a message below.
             <p>No products found for '{keyword}'</p>
           )}
         </div>
