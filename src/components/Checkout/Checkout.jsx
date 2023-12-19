@@ -18,23 +18,25 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 const schema = Joi.object({
-  address: Joi.string().required().message({
-    'string.empty': `Address cannot be empty`,
-    'any.required': `Address is required`
+  shippingAddress: Joi.object({
+    address: Joi.string().required().messages({
+      'string.empty': `Address cannot be empty`,
+      'any.required': `Address is required`
+    }),
+    city: Joi.string().required().messages({
+      'string.empty': `City cannot be empty`,
+      'any.required': `City is required`
+    }),
+    state: Joi.string().required().messages({
+      'string.empty': `State cannot be empty`,
+      'any.required': `State is required`
+    }),
+    postcode: Joi.string().required().messages({
+      'string.empty': `Postcode cannot be empty`,
+      'any.required': `Postcode is required`
+    })
   }),
-  city: Joi.string().required().message({
-    'string.empty': `City cannot be empty`,
-    'any.required': `City is required`
-  }),
-  state: Joi.string().required().message({
-    'string.empty': `State cannot be empty`,
-    'any.required': `State is required`
-  }),
-  postcode: Joi.string().required().message({
-    'string.empty': `Postcode cannot be empty`,
-    'any.required': `Postcode is required`
-  }),
-  phone: Joi.string().pattern(new RegExp('^[0-9]{6,12}$')).required().message({
+  phone: Joi.string().pattern(new RegExp('^[0-9]{6,12}$')).required().messages({
     'string.pattern.base': `Phone number must contain numbers only`,
     'string.empty': `Phone number cannot be empty`,
     'any.required': `Phone number is required`
@@ -140,14 +142,14 @@ export const Checkout = () => {
                       label='Address'
                       className='mb-3'
                       {...register('shippingAddress.address')}
-                      errorMessage={formState.errors?.address?.message}
+                      errorMessage={formState.errors?.shippingAddress?.address?.message}
                     />
                     <Input
                       required
                       label='City'
                       className='mb-3'
                       {...register('shippingAddress.city')}
-                      errorMessage={formState.errors?.city?.message}
+                      errorMessage={formState.errors?.shippingAddress?.city?.message}
                     />
                     <div className='flex flex-row gap-x-2'>
                       <Input
@@ -155,14 +157,14 @@ export const Checkout = () => {
                         label='State'
                         className='flex-1 mb-3 w-1/2'
                         {...register('shippingAddress.state')}
-                        errorMessage={formState.errors?.state?.message}
+                        errorMessage={formState.errors?.shippingAddress?.state?.message}
                       />
                       <Input
                         required
                         label='Postcode'
                         className='flex-1 mb-3 w-1/2'
                         {...register('shippingAddress.postcode')}
-                        errorMessage={formState.errors?.postcode?.message}
+                        errorMessage={formState.errors?.shippingAddress?.postcode?.message}
                       />
                     </div>
                     <Input
