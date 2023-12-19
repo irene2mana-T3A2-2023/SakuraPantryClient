@@ -46,6 +46,14 @@ export default function ProductsMangement() {
       onOpen();
     };
 
+    const openDeleteProductModal = () => {
+      setModalType('delete-product');
+
+      setSelectedProduct(product);
+
+      onOpen();
+    };
+
     switch (columnKey) {
       case 'name':
         return <span className='text-md font-medium text-secondary-500'>{cellValue}</span>;
@@ -96,7 +104,10 @@ export default function ProductsMangement() {
               </span>
             </Tooltip>
             <Tooltip color='danger' content='Delete product'>
-              <span className='text-lg text-danger cursor-pointer active:opacity-50'>
+              <span
+                className='text-lg text-danger cursor-pointer active:opacity-50'
+                onClick={openDeleteProductModal}
+              >
                 <FiTrash />
               </span>
             </Tooltip>
