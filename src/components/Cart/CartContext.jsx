@@ -1,32 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
 
-const dummyCartItems = [
-  {
-    _id: '65802571f3aa90e83020cb4b',
-    name: 'Soy Sauce',
-    image:
-      'https://image.dokodemo.world/catalog-skus/1454900/a5e084aa98a809c6c2eed42f9ad2945d.jpg?d=0x0',
-    price: 6.1,
-    quantity: 2
-  },
-  {
-    _id: '65802571f3aa90e83020cb4c',
-    name: 'Sukiyaki Sauce',
-    image:
-      'https://image.dokodemo.world/catalog-skus/9032237/8665ac97785ade2d5e8de6341621e2fd.jpg?d=450x0',
-    price: 6.1,
-    quantity: 3
-  },
-  {
-    _id: '65802571f3aa90e83020cb4d',
-    name: 'Dashi Stock Powder',
-    image:
-      'https://image.dokodemo.world/catalog-skus/1508989/fb207367efcf8fbdbb7c58c5596d7767.jpg?d=450x0',
-    price: 22.6,
-    quantity: 1
-  }
-];
-
 // Create a new context for the shopping cart
 export const CartContext = createContext();
 
@@ -35,9 +8,7 @@ export const CartProvider = ({ children }) => {
   // State to manage the cart items
   const [cartItems, setCartItems] = useState(
     // Check if cart items exist in localStorage
-    localStorage.getItem('cartItems')
-      ? JSON.parse(localStorage.getItem('cartItems'))
-      : dummyCartItems // replace dummyCartItems with empty array when there're actual data
+    localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
   );
 
   // Function to add one item to cart
@@ -115,7 +86,8 @@ export const CartProvider = ({ children }) => {
         minusFromCart,
         removeFromCart,
         getCartTotalPrice,
-        getCartTotalQuantity
+        getCartTotalQuantity,
+        setCartItems
       }}
     >
       {children}

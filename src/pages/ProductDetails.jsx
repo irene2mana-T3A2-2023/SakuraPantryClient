@@ -1,17 +1,47 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-console */
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../layouts/Base';
-import { Image, Button } from '@nextui-org/react';
+import { Image, Button, Select, SelectItem } from '@nextui-org/react';
 import api from '../configs/api';
 import toast from 'react-hot-toast';
 import ProductCardList from '../components/ProductCardList';
-import { FiMinus, FiPlus } from 'react-icons/fi';
+import { CartContext } from '../components/Cart/CartContext';
+
+const ERROR_MSG = 'Quantity limit exceeded!';
 
 export default function ProductDetailsPage() {
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+  const [error, setError] = useState('');
+
+  const { setCartItems } = useContext(CartContext);
+
+  const addToCart = () => {
+    let isItemExist = false;
+    let newCartItems = localStorage.getItem('cartItems')
+      ? JSON.parse(localStorage.getItem('cartItems'))
+      : [];
+    newCartItems.map((item) => {
+      if (item?._id === product?._id) {
+        isItemExist = true;
+        if (item?.stockQuantity >= parseInt(quantity) + parseInt(item?.quantity)) {
+          item.quantity += parseInt(quantity);
+          setError('');
+        } else {
+          setError(ERROR_MSG);
+        }
+      }
+      return item;
+    });
+    if (!isItemExist) {
+      newCartItems.push({ ...product, quantity: parseInt(quantity) });
+    }
+    setCartItems(newCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(newCartItems));
+  };
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -28,15 +58,6 @@ export default function ProductDetailsPage() {
     fetchProductDetails();
   }, [slug]);
 
-  const incrementQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
   const fetchRelatedProducts = async (categorySlug) => {
     try {
       const response = await api.get(`/products/relative-products/${categorySlug}`);
@@ -78,30 +99,30 @@ export default function ProductDetailsPage() {
                 </p>
               </div>
               <div className='flex flex-col mt-6 items-center pb-5 mb-5'>
-                <div className='flex items-center mb-5'>
-                  <Button
-                    isIconOnly
-                    color='primary'
-                    size='sm'
-                    variant='flat'
-                    onClick={incrementQuantity}
+                <div className='flex items-center mb-5 w-1/3'>
+                  <Select
+                    label='Quantity'
+                    placeholder='Select a quantity number'
+                    className='w-full'
+                    onChange={(e) => setQuantity(e.target.value)}
                   >
-                    {<FiPlus className='h-5 w-5 text-black-500 self-center' />}
-                  </Button>
-                  <p className='mx-2 border px-3 py-1 rounded'>{quantity}</p>
-                  <Button
-                    isIconOnly
-                    color='primary'
-                    size='sm'
-                    variant='flat'
-                    onClick={decrementQuantity}
-                  >
-                    {<FiMinus className='h-5 w-5 text-black-100 self-center' />}
-                  </Button>
+                    {[...Array(product.stockQuantity).keys()]
+                      .map((value) => value + 1)
+                      .map((quantity) => (
+                        <SelectItem key={quantity} value={JSON.stringify(quantity)}>
+                          {JSON.stringify(quantity)}
+                        </SelectItem>
+                      ))}
+                  </Select>
                 </div>
-                <Button className='flex items-center bg-primary text-white border-0 py-2 px-6 focus:outline-none hover:bg-gray-400 rounded'>
-                  Add to Cart
+                <Button
+                  className='flex items-center bg-primary text-white border-0 py-2 px-6 focus:outline-none hover:bg-gray-400 rounded'
+                  onClick={addToCart}
+                  disabled={product?.stockQuantity === 0}
+                >
+                  {product?.stockQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
                 </Button>
+                <span className='text-red-500 font-bold'>{error}</span>
               </div>
             </div>
           </div>
