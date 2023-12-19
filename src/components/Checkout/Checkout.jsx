@@ -74,10 +74,14 @@ export const Checkout = () => {
       setCartItems([]);
       // Set the state to indicate that the order is placed
       setOrderPlaced(true);
+      // Return the response for async validation
+      return response;
     } catch (error) {
       // Log and show an error message if order placement fails
       console.error('Error placing order:', error);
       toast.error(getAxiosErrorMessage(error));
+      // If the order placement fails, reject the promise with the error
+      throw error;
     }
   };
 
@@ -87,13 +91,10 @@ export const Checkout = () => {
   };
 
   // Set state to manage the loading status
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
 
   // Handler for form submission
   const onSubmit = async (updatedData) => {
-    // Set the loading state to true
-    setLoading(true);
-
     try {
       // Create an array of order items based on cart items
       const orderItems = cartItems.map((item) => ({
@@ -108,11 +109,8 @@ export const Checkout = () => {
       console.log(updatedData);
       await placeOrder(updatedData);
     } catch (error) {
-      console.error('Error placing order:', error);
-      toast.error(getAxiosErrorMessage(error));
-    } finally {
-      // Set the loading state back to false, whether the submission was successful or not
-      setLoading(false);
+      console.error('Error submitting form:', error);
+      toast.error('An error occurred while placing the order.');
     }
   };
 
@@ -138,14 +136,12 @@ export const Checkout = () => {
                     title='SHIPPING ADDRESS'
                   >
                     <Input
-                      required
                       label='Address'
                       className='mb-3'
                       {...register('shippingAddress.address')}
                       errorMessage={formState.errors?.shippingAddress?.address?.message}
                     />
                     <Input
-                      required
                       label='City'
                       className='mb-3'
                       {...register('shippingAddress.city')}
@@ -153,14 +149,12 @@ export const Checkout = () => {
                     />
                     <div className='flex flex-row gap-x-2'>
                       <Input
-                        required
                         label='State'
                         className='flex-1 mb-3 w-1/2'
                         {...register('shippingAddress.state')}
                         errorMessage={formState.errors?.shippingAddress?.state?.message}
                       />
                       <Input
-                        required
                         label='Postcode'
                         className='flex-1 mb-3 w-1/2'
                         {...register('shippingAddress.postcode')}
@@ -168,7 +162,6 @@ export const Checkout = () => {
                       />
                     </div>
                     <Input
-                      required
                       label='Phone'
                       className='mb-3'
                       {...register('phone')}
@@ -229,7 +222,6 @@ export const Checkout = () => {
                     variant='solid'
                     className='w-3/5 text-lg'
                     size='lg'
-                    isDisabled={loading}
                   >
                     Place Order
                   </Button>
