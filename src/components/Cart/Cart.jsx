@@ -5,6 +5,7 @@ import { CartContext } from './CartContext';
 import { PiShoppingCartDuotone } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
 
+// CART COMPONENT
 export const Cart = () => {
   const { cartItems, getCartTotalPrice } = useContext(CartContext);
   const navigate = useNavigate();

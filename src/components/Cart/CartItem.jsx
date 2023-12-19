@@ -3,8 +3,9 @@ import React, { useContext } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { CartContext } from './CartContext';
 
+// CART ITEMS COMPONENTS
 export const CartItem = ({ item }) => {
-  const { addToCart, minusFromCart, removeFromCart } = useContext(CartContext);
+  const { increaseCart, decreaseCart, removeFromCart } = useContext(CartContext);
 
   return (
     <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full'>
@@ -29,7 +30,7 @@ export const CartItem = ({ item }) => {
               color='primary'
               size='sm'
               variant='flat'
-              onClick={() => minusFromCart(item)}
+              onClick={() => decreaseCart(item)}
             >
               {<FiMinus className='h-5 w-5 text-black-100 self-center' />}
             </Button>
@@ -39,7 +40,7 @@ export const CartItem = ({ item }) => {
               color='primary'
               size='sm'
               variant='flat'
-              onClick={() => addToCart(item)}
+              onClick={() => increaseCart(item)}
             >
               {<FiPlus className='h-5 w-5 text-black-500 self-center' />}
             </Button>

@@ -2,47 +2,59 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../layouts/Base';
-import { Image, Button, Select, SelectItem } from '@nextui-org/react';
+import { Image, Button, Select, SelectItem, Divider } from '@nextui-org/react';
 import api from '../configs/api';
-import toast from 'react-hot-toast';
 import ProductCardList from '../components/ProductCardList';
 import { CartContext } from '../components/Cart/CartContext';
 
-const ERROR_MSG = 'Quantity limit exceeded!';
+// Define a constant for the quantity error message
+const QUANTITY_ERROR_MSG = '*Quantity limit exceeded!';
 
+// PRODUCT DETAILS COMPONENT
 export default function ProductDetailsPage() {
+  // Extract the 'slug' from the URL parameters
   const { slug } = useParams();
+  // State variables
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [quantity, setQuantity] = useState(0);
   const [error, setError] = useState('');
 
+  // Access 'setCartItems' from the CartContext
   const { setCartItems } = useContext(CartContext);
 
+  // Function to add the product to the cart
   const addToCart = () => {
     let isItemExist = false;
+    // Retrieve existing cart items from local storage or initialize an empty array
     let newCartItems = localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [];
+    // Iterate through existing cart items
     newCartItems.map((item) => {
+      // Check if the item already exists in the cart
       if (item?._id === product?._id) {
         isItemExist = true;
+        // Check if adding the selected quantity exceeds the stock limit
         if (item?.stockQuantity >= parseInt(quantity) + parseInt(item?.quantity)) {
           item.quantity += parseInt(quantity);
           setError('');
         } else {
-          setError(ERROR_MSG);
+          setError(QUANTITY_ERROR_MSG);
         }
       }
       return item;
     });
+    // If the item doesn't exist in the cart, add it
     if (!isItemExist) {
       newCartItems.push({ ...product, quantity: parseInt(quantity) });
     }
+    // Update the cart items in context and local storage
     setCartItems(newCartItems);
     localStorage.setItem('cartItems', JSON.stringify(newCartItems));
   };
 
+  // Fetch product details and related products
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -51,20 +63,21 @@ export default function ProductDetailsPage() {
         const categorySlug = response.data.category.slug;
         fetchRelatedProducts(categorySlug);
       } catch (error) {
-        toast.error('Error fetching product details', error);
+        console.error('Error fetching product details', error);
       }
     };
 
     fetchProductDetails();
   }, [slug]);
 
+  // Function to fetch related products based on category
   const fetchRelatedProducts = async (categorySlug) => {
     try {
       const response = await api.get(`/products/relative-products/${categorySlug}`);
       const relatedProductsData = response.data;
       setRelatedProducts(relatedProductsData);
     } catch (error) {
-      toast.error('Error fetching related products', error);
+      console.error('Error fetching related products', error);
     }
   };
   if (!product) {
@@ -75,35 +88,38 @@ export default function ProductDetailsPage() {
     );
   }
 
+  // Render the product details page
   return (
     <Layout>
-      <section className='body-font overflow-hidden bg-white'>
-        <div className='container px-5 py-6 mx-auto'>
-          <div className='lg:w-full flex flex-wrap justify-between'>
-            <div className='border border-pink-500'>
+      <section className='body-font overflow-hidden bg-white items-center'>
+        <div className='container flex justify-center items-center md:mx-20 md:my-12'>
+          <div className='md:flex md:flex-cols'>
+            <div className='border border-1.5 border-pink-500 p-8 rounded md:w-2/3'>
               <Image
                 alt='product image'
-                className='max-h-full max-w-full object-cover rounded '
+                className='max-h-full w-auto object-cover rounded'
                 src={product.imageUrl}
               />
             </div>
-            <div className='lg:w-1/2 w-full lg:pl-10  mt-6 lg:mt-0'>
-              <div className='border border-pink-500 p-4'>
-                <h1 className='text-gray-900 text-3xl title-font font-medium mb-1 text-center'>
-                  {product.name}
-                </h1>
+            <div className='md:w-full md:pl-12 mt-6 md:mt-0'>
+              <div className='md:pr-20'>
+                <h1 className='text-gray-900 text-3xl title-font font-medium'>{product.name}</h1>
+                <Divider className='bg-pink-500 p-0.5 w-1/3 mt-5 h-px' />
+                <div className='mt-2'>
+                  <span className='mr-2 font-semibold'>Price:</span>
+                  <span className='title-font font-medium text-2xl text-gray-900 mt-3'>
+                    ${product.price.toFixed(2)} AUD
+                  </span>
+                </div>
                 <div className='flex mb-4'></div>
                 <p className='leading-relaxed text-justify'>{product.description}</p>
-                <p className='title-font font-medium text-2xl text-gray-900 mt-3 text-right'>
-                  Price: ${product.price}
-                </p>
               </div>
-              <div className='flex flex-col mt-6 items-center pb-5 mb-5'>
+              <div className='mt-5'>
                 <div className='flex items-center mb-5 w-1/3'>
+                  {/* Quantity selection dropdown */}
                   <Select
                     label='Quantity'
-                    placeholder='Select a quantity number'
-                    className='w-full'
+                    className='w-1/2 font-semibold'
                     onChange={(e) => setQuantity(e.target.value)}
                   >
                     {[...Array(product.stockQuantity).keys()]
@@ -115,18 +131,24 @@ export default function ProductDetailsPage() {
                       ))}
                   </Select>
                 </div>
+                {/* Add to Cart button */}
                 <Button
-                  className='flex items-center bg-primary text-white border-0 py-2 px-6 focus:outline-none hover:bg-gray-400 rounded'
+                  variant='solid'
+                  color='primary'
+                  size='lg'
+                  className='w-full md:w-1/2 text-lg'
                   onClick={addToCart}
                   disabled={product?.stockQuantity === 0}
                 >
                   {product?.stockQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
                 </Button>
-                <span className='text-red-500 font-bold'>{error}</span>
+                {/* Display error message, if any */}
+                <span className='pl-3 text-red-500 font-semibold'>{error}</span>
               </div>
             </div>
           </div>
         </div>
+        {/* Display related products */}
         <ProductCardList products={relatedProducts} title='You may also like' />
       </section>
     </Layout>

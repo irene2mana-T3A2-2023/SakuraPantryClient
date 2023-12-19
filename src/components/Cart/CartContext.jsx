@@ -11,8 +11,8 @@ export const CartProvider = ({ children }) => {
     localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
   );
 
-  // Function to add one item to cart
-  const addToCart = (item) => {
+  // Function to add one item to cart - UNDONE (need to add logic to give notice when exceed stockQuantity)
+  const increaseCart = (item) => {
     // Check if the item is already in cart
     const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id);
 
@@ -31,7 +31,7 @@ export const CartProvider = ({ children }) => {
   };
 
   // Function to minus one item from cart
-  const minusFromCart = (item) => {
+  const decreaseCart = (item) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id);
 
     // If the quantity of the item is 1, remove the item from the cart
@@ -82,8 +82,8 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
-        addToCart,
-        minusFromCart,
+        increaseCart,
+        decreaseCart,
         removeFromCart,
         getCartTotalPrice,
         getCartTotalQuantity,
