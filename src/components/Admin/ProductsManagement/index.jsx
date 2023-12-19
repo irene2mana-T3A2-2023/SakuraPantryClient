@@ -35,9 +35,6 @@ export default function ProductsMangement() {
     }
   };
 
-  // eslint-disable-next-line
-  console.log(data);
-
   const renderCell = (product, columnKey) => {
     const cellValue = product[columnKey];
 
@@ -69,6 +66,13 @@ export default function ProductsMangement() {
         return (
           <div className='flex justify-center'>
             <span className='text-md text-orange-500 font-semibold'>{cellValue}</span>
+          </div>
+        );
+
+      case 'isFeatured':
+        return (
+          <div className='flex justify-center'>
+            <span className='text-md text-blue-500 font-semibold'>{cellValue ? 'YES' : 'NO'}</span>
           </div>
         );
 
@@ -148,6 +152,7 @@ export default function ProductsMangement() {
           { name: 'DESCRIPTION', uid: 'description' },
           { name: 'PRICE', uid: 'price' },
           { name: 'QUANTITY IN STOCK', uid: 'stockQuantity' },
+          { name: 'FEATURED', uid: 'isFeatured' },
           { name: 'ACTIONS', uid: 'actions' }
         ]}
       />
