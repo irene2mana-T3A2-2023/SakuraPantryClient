@@ -38,6 +38,14 @@ export default function ProductsMangement() {
   const renderCell = (product, columnKey) => {
     const cellValue = product[columnKey];
 
+    const openEditProductModal = () => {
+      setModalType('edit-product');
+
+      setSelectedProduct(product);
+
+      onOpen();
+    };
+
     switch (columnKey) {
       case 'name':
         return <span className='text-md font-medium text-secondary-500'>{cellValue}</span>;
@@ -80,7 +88,10 @@ export default function ProductsMangement() {
         return (
           <div className='relative flex items-center2 gap-3'>
             <Tooltip content='Edit product'>
-              <span className='text-lg text-default-500 cursor-pointer active:opacity-50'>
+              <span
+                className='text-lg text-default-500 cursor-pointer active:opacity-50'
+                onClick={openEditProductModal}
+              >
                 <FiEdit />
               </span>
             </Tooltip>
