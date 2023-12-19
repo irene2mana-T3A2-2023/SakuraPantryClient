@@ -4,15 +4,16 @@ import { FiMinus, FiPlus } from 'react-icons/fi';
 import { CartContext } from './CartContext';
 import { currencyFormatter } from '../../utils';
 
+// CART ITEMS COMPONENTS
 export const CartItem = ({ item }) => {
-  const { addToCart, minusFromCart, removeFromCart } = useContext(CartContext);
+  const { increaseCart, decreaseCart, removeFromCart } = useContext(CartContext);
 
   return (
     <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full'>
       <div className='flex items-center m-auto'>
         <div className='flex justify-start items-center w-1/2'>
-          <img src={item.image} alt='' className='w-32 h-32' />
-          <div>
+          <img src={item.imageUrl} alt='' className='w-32 h-32' />
+          <div className='ml-5'>
             <p className='justify-self-start mt-8'>{item.name}</p>
             <div className='text-sm my-1.5'>${item.price}</div>
             <div
@@ -30,7 +31,7 @@ export const CartItem = ({ item }) => {
               color='primary'
               size='sm'
               variant='flat'
-              onClick={() => minusFromCart(item)}
+              onClick={() => decreaseCart(item)}
             >
               {<FiMinus className='h-5 w-5 text-black-100 self-center' />}
             </Button>
@@ -40,7 +41,7 @@ export const CartItem = ({ item }) => {
               color='primary'
               size='sm'
               variant='flat'
-              onClick={() => addToCart(item)}
+              onClick={() => increaseCart(item)}
             >
               {<FiPlus className='h-5 w-5 text-black-500 self-center' />}
             </Button>

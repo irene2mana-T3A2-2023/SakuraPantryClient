@@ -14,27 +14,6 @@ import api from '../../configs/api';
 import toast from 'react-hot-toast';
 import { getAxiosErrorMessage } from '../../utils';
 
-// Function to place an order
-const placeOrder = async (orderData) => {
-  try {
-    // Retrieve the user's token from local storage
-    const token = localStorage.getItem('token');
-    // Send a POST request to create an order
-    const response = await api.post('/orders', orderData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    // Log the order data and show a success message
-    console.log(response.data);
-    toast.success('Order placed!');
-  } catch (error) {
-    // Log and show an error message if order placement fails
-    console.error('Error placing order:', error);
-    toast.error(getAxiosErrorMessage(error));
-  }
-};
-
 // CHECKOUT COMPONENT
 export const Checkout = () => {
   // Initialize the useForm hook
@@ -47,7 +26,30 @@ export const Checkout = () => {
   } = useForm();
 
   // Access cart items and total price from the CartContext
-  const { cartItems, getCartTotalPrice } = useContext(CartContext);
+  const { cartItems, setCartItems, getCartTotalPrice } = useContext(CartContext);
+
+  // Function to place an order
+  const placeOrder = async (orderData) => {
+    try {
+      // Retrieve the user's token from local storage
+      const token = localStorage.getItem('token');
+      // Send a POST request to create an order
+      const response = await api.post('/orders', orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      // Log the order data and show a success message
+      console.log(response.data);
+      toast.success('Order placed!');
+      localStorage.removeItem('cartItems');
+      setCartItems([]);
+    } catch (error) {
+      // Log and show an error message if order placement fails
+      console.error('Error placing order:', error);
+      toast.error(getAxiosErrorMessage(error));
+    }
+  };
 
   // Handler for changing the payment method
   const handlePaymentMethodChange = (value) => {

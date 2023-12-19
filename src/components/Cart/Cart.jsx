@@ -6,8 +6,7 @@ import { PiShoppingCartDuotone } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
 import { currencyFormatter } from '../../utils';
 
-// fetch product info (image, price, name) from DB
-
+// CART COMPONENT
 export const Cart = () => {
   const { cartItems, getCartTotalPrice } = useContext(CartContext);
   const navigate = useNavigate();
