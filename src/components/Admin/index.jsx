@@ -5,6 +5,7 @@ import Summary from './Summary';
 import ProductsMangement from './ProductsManagement';
 import CategoriesMangement from './CategoriesManagement';
 import UsersManagement from './UsersManagement';
+import OrdersManagement from './OrdersManagement';
 
 export default function AdminDashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,7 +53,9 @@ export default function AdminDashboard() {
             </div>
           }
         >
-          <div className='container max-w-full mt-10'>This is order management table</div>
+          <div className='container max-w-full mt-10'>
+            <OrdersManagement />
+          </div>
         </Tab>
         <Tab
           key='product-management'
