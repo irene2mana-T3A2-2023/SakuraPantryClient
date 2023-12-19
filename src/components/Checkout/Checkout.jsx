@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { useForm } from 'react-hook-form';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Accordion, AccordionItem, Button, Divider, Input } from '@nextui-org/react';
 import { RadioGroup, Radio } from '@nextui-org/react';
 import { CartContext } from '../Cart/CartContext';
@@ -13,6 +13,7 @@ import stripe from '../../assets/images/stripe.png';
 import api from '../../configs/api';
 import toast from 'react-hot-toast';
 import { getAxiosErrorMessage } from '../../utils';
+import { OrderSuccess } from './OrderSuccess';
 
 // CHECKOUT COMPONENT
 export const Checkout = () => {
@@ -28,6 +29,8 @@ export const Checkout = () => {
   // Access cart items and total price from the CartContext
   const { cartItems, setCartItems, getCartTotalPrice } = useContext(CartContext);
 
+  const [orderPlaced, setOrderPlaced] = useState(false);
+
   // Function to place an order
   const placeOrder = async (orderData) => {
     try {
@@ -42,8 +45,11 @@ export const Checkout = () => {
       // Log the order data and show a success message
       console.log(response.data);
       toast.success('Order placed!');
+      // Remove cart items in local storage once the order is placed
       localStorage.removeItem('cartItems');
       setCartItems([]);
+      // Set the state to indicate that the order is placed
+      setOrderPlaced(true);
     } catch (error) {
       // Log and show an error message if order placement fails
       console.error('Error placing order:', error);
@@ -74,140 +80,147 @@ export const Checkout = () => {
 
   // JSX structure for the Checkout component
   return (
-    <div className='flex flex-col'>
-      <h1 className='text-3xl mb-8'>CHECKOUT</h1>
-      <div className='flex flex-col md:flex-row mb-8 gap-x-5'>
-        {/* Shipping Address and Payment Method */}
-        <div className='border border-solid border-1 rounded p-4 border-pink-500 md:w-3/5 order-2 md:order-none'>
-          {/* Form for user input */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Accordion defaultExpandedKeys={['2']} selectionMode='multiple'>
-              <AccordionItem
-                key='1'
-                aria-label='Accordion 2'
-                className='text-xl'
-                title='SHIPPING ADDRESS'
-              >
-                <Input
-                  required
-                  label='Address'
-                  className='mb-3'
-                  {...register('shippingAddress.address')}
-                />
-                <Input
-                  required
-                  label='City'
-                  className='mb-3'
-                  {...register('shippingAddress.city')}
-                />
-                <div className='flex flex-row gap-x-2'>
-                  <Input
-                    required
-                    label='State'
-                    className='flex-1 mb-3 w-1/2'
-                    {...register('shippingAddress.state')}
-                  />
-                  <Input
-                    required
-                    label='Postcode'
-                    className='flex-1 mb-3 w-1/2'
-                    {...register('shippingAddress.postcode')}
-                  />
-                </div>
-                <Input required label='Phone' className='mb-3' {...register('phone')} />
-              </AccordionItem>
-              <AccordionItem
-                key='2'
-                aria-label='Accordion 3'
-                className='text-xl'
-                title='PAYMENT OPTION'
-              >
-                {/* Payment Method Radio Group */}
-                <RadioGroup isRequired={true} color='secondary' defaultValue='Credit Card'>
-                  <div className='flex border-solid bg-stone-100 rounded pl-2 pt-3 pb-3 pr-3'>
-                    <Radio
-                      value='Credit Card'
-                      {...register('paymentMethod')}
-                      onChange={() => handlePaymentMethodChange('Credit Card')}
-                    >
-                      Credit Card
-                    </Radio>
-                    <div className='flex ml-auto gap-2'>
-                      <img src={card} alt='' className='w-12 h-8' />
-                      <img src={visa} alt='' className='w-10 h-10' />
-                      <img src={amex} alt='' className='w-10 h-10' />
+    <div>
+      {/* Conditionally render the success message */}
+      {orderPlaced ? (
+        <OrderSuccess />
+      ) : (
+        <div className='flex flex-col'>
+          <h1 className='text-3xl mb-8'>CHECKOUT</h1>
+          <div className='flex flex-col md:flex-row mb-8 gap-x-5'>
+            {/* Shipping Address and Payment Method */}
+            <div className='border border-solid border-1 rounded p-4 border-pink-500 md:w-3/5 order-2 md:order-none'>
+              {/* Form for user input */}
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Accordion defaultExpandedKeys={['2']} selectionMode='multiple'>
+                  <AccordionItem
+                    key='1'
+                    aria-label='Accordion 2'
+                    className='text-xl'
+                    title='SHIPPING ADDRESS'
+                  >
+                    <Input
+                      required
+                      label='Address'
+                      className='mb-3'
+                      {...register('shippingAddress.address')}
+                    />
+                    <Input
+                      required
+                      label='City'
+                      className='mb-3'
+                      {...register('shippingAddress.city')}
+                    />
+                    <div className='flex flex-row gap-x-2'>
+                      <Input
+                        required
+                        label='State'
+                        className='flex-1 mb-3 w-1/2'
+                        {...register('shippingAddress.state')}
+                      />
+                      <Input
+                        required
+                        label='Postcode'
+                        className='flex-1 mb-3 w-1/2'
+                        {...register('shippingAddress.postcode')}
+                      />
                     </div>
-                  </div>
-                  <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
-                    <Radio
-                      value='PayPal'
-                      {...register('paymentMethod')}
-                      onChange={() => handlePaymentMethodChange('PayPal')}
-                    >
-                      PayPal
-                    </Radio>
-                    <img src={paypal} alt='' className='flex ml-auto w-12 h-12' />
-                  </div>
-                  <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
-                    <Radio
-                      value='Stripe'
-                      {...register('paymentMethod')}
-                      onChange={() => handlePaymentMethodChange('Stripe')}
-                    >
-                      Stripe
-                    </Radio>
-                    <img src={stripe} alt='' className='flex ml-auto w-12 h-12' />
-                  </div>
-                </RadioGroup>
-              </AccordionItem>
-            </Accordion>
-            {/* "Place Order" button */}
-            <div className='mt-6'>
-              <Button
-                type='submit'
-                radius='sm'
-                color='primary'
-                variant='solid'
-                className='w-3/5'
-                size='lg'
-              >
-                <p className='text-lg'>Place Order</p>
-              </Button>
-              <p className='text-sm text-stone-500 mt-2'>
-                * Press Place Order to complete your purchase.
-              </p>
+                    <Input required label='Phone' className='mb-3' {...register('phone')} />
+                  </AccordionItem>
+                  <AccordionItem
+                    key='2'
+                    aria-label='Accordion 3'
+                    className='text-xl'
+                    title='PAYMENT OPTION'
+                  >
+                    {/* Payment Method Radio Group */}
+                    <RadioGroup isRequired={true} color='secondary' defaultValue='Credit Card'>
+                      <div className='flex border-solid bg-stone-100 rounded pl-2 pt-3 pb-3 pr-3'>
+                        <Radio
+                          value='Credit Card'
+                          {...register('paymentMethod')}
+                          onChange={() => handlePaymentMethodChange('Credit Card')}
+                        >
+                          Credit Card
+                        </Radio>
+                        <div className='flex ml-auto gap-2'>
+                          <img src={card} alt='' className='w-12 h-8' />
+                          <img src={visa} alt='' className='w-10 h-10' />
+                          <img src={amex} alt='' className='w-10 h-10' />
+                        </div>
+                      </div>
+                      <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
+                        <Radio
+                          value='PayPal'
+                          {...register('paymentMethod')}
+                          onChange={() => handlePaymentMethodChange('PayPal')}
+                        >
+                          PayPal
+                        </Radio>
+                        <img src={paypal} alt='' className='flex ml-auto w-12 h-12' />
+                      </div>
+                      <div className='flex border-solid bg-stone-100 rounded p-2 pr-3'>
+                        <Radio
+                          value='Stripe'
+                          {...register('paymentMethod')}
+                          onChange={() => handlePaymentMethodChange('Stripe')}
+                        >
+                          Stripe
+                        </Radio>
+                        <img src={stripe} alt='' className='flex ml-auto w-12 h-12' />
+                      </div>
+                    </RadioGroup>
+                  </AccordionItem>
+                </Accordion>
+                {/* "Place Order" button */}
+                <div className='mt-6'>
+                  <Button
+                    type='submit'
+                    radius='sm'
+                    color='primary'
+                    variant='solid'
+                    className='w-3/5'
+                    size='lg'
+                  >
+                    <p className='text-lg'>Place Order</p>
+                  </Button>
+                  <p className='text-sm text-stone-500 mt-2'>
+                    * Press Place Order to complete your purchase.
+                  </p>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-        {/* Order Summary section */}
-        <div className='w-full mb-5 md:w-2/5'>
-          {/* Order Summary heading */}
-          <h2 className='p-5 text-xl'>ORDER SUMMARY</h2>
-          <div className='ml-2 mb-3'>
-            {/* Render OrderSummary component for each cart item */}
-            {cartItems.map((item) => (
-              <OrderSummary key={item._id} item={item} />
-            ))}
+            {/* Order Summary section */}
+            <div className='w-full mb-5 md:w-2/5'>
+              {/* Order Summary heading */}
+              <h2 className='p-5 text-xl'>ORDER SUMMARY</h2>
+              <div className='ml-2 mb-3'>
+                {/* Render OrderSummary component for each cart item */}
+                {cartItems.map((item) => (
+                  <OrderSummary key={item._id} item={item} />
+                ))}
+              </div>
+              {/* Shipping and Order Total sections */}
+              <div className='mb-6'>
+                <div className='flex items-center justify-center'>
+                  {/* Divider line */}
+                  <Divider style={{ width: '92%' }} className='bg-pink-500 h-px' />
+                </div>
+                {/* Shipping cost */}
+                <div className='flex flex-row ml-5 mt-3 font-semibold'>
+                  <p className='justify-start'>Shipping</p>
+                  <p className='justify-end ml-auto pr-5'>$0.00 AUD</p>
+                </div>
+                {/* Order Total */}
+                <div className='flex flex-row ml-5 mt-3 font-semibold'>
+                  <p className='justify-start'>Order Total</p>
+                  <p className='justify-end ml-auto pr-5'>${getCartTotalPrice()} AUD</p>
+                </div>
+              </div>
+            </div>
           </div>
-          {/* Shipping and Order Total sections */}
-          <div className='mb-6'>
-            <div className='flex items-center justify-center'>
-              {/* Divider line */}
-              <Divider style={{ width: '92%' }} className='bg-pink-500 h-px' />
-            </div>
-            {/* Shipping cost */}
-            <div className='flex flex-row ml-5 mt-3 font-semibold'>
-              <p className='justify-start'>Shipping</p>
-              <p className='justify-end ml-auto pr-5'>$0.00 AUD</p>
-            </div>
-            {/* Order Total */}
-            <div className='flex flex-row ml-5 mt-3 font-semibold'>
-              <p className='justify-start'>Order Total</p>
-              <p className='justify-end ml-auto pr-5'>${getCartTotalPrice()} AUD</p>
-            </div>
-          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
