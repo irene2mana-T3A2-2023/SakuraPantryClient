@@ -6,7 +6,7 @@ export default function OrderDetail({ closeModal, order }) {
   return (
     <>
       <ModalHeader className='flex gap-1 justify-between py-10'>
-        <span className='text-2xl font-semibold'>Order #{order.id}</span>
+        <span className='text-2xl font-semibold'>Order #{order?._id}</span>
         <Chip color={statusColor[order.status]} variant='bordered'>
           {order.status}
         </Chip>
