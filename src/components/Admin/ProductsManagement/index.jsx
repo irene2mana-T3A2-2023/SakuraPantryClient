@@ -4,7 +4,7 @@ import { getAxiosErrorMessage } from '../../../utils';
 import toast from 'react-hot-toast';
 import DataTable from '../DataTable';
 import { Tooltip, Image, useDisclosure, Modal, ModalContent } from '@nextui-org/react';
-import { currencyFormatter } from '../../../utils';
+import { currencyFormatter, formatDateTime } from '../../../utils';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import AddProduct from './AddProductModal';
 import EditProduct from './EditProductModal';
@@ -56,7 +56,7 @@ export default function ProductsMangement() {
 
     switch (columnKey) {
       case 'name':
-        return <span className='text-md font-medium text-secondary-500'>{cellValue}</span>;
+        return <span className='text-md font-medium text-primary'>{cellValue}</span>;
 
       case 'imageUrl':
         return (
@@ -89,6 +89,13 @@ export default function ProductsMangement() {
         return (
           <div className='flex justify-center'>
             <span className='text-md text-blue-500 font-semibold'>{cellValue ? 'YES' : 'NO'}</span>
+          </div>
+        );
+
+      case 'createdAt':
+        return (
+          <div>
+            <span className='text-md text-foreground'>{formatDateTime(cellValue)}</span>
           </div>
         );
 
@@ -175,6 +182,7 @@ export default function ProductsMangement() {
           { name: 'PRICE', uid: 'price' },
           { name: 'QUANTITY IN STOCK', uid: 'stockQuantity' },
           { name: 'FEATURED', uid: 'isFeatured' },
+          { name: 'CREATED AT', uid: 'createdAt' },
           { name: 'ACTIONS', uid: 'actions' }
         ]}
       />
