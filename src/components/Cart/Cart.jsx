@@ -16,7 +16,7 @@ export const Cart = () => {
       {/* If there are items in cart, render the items. Else, render a notice of empty cart */}
       {cartItems.length === 0 ? (
         <div className='flex flex-col items-center justify-center h-screen'>
-          <PiShoppingCartDuotone className='w-20 h-20' />
+          <PiShoppingCartDuotone className='w-28 h-28' />
           <p className='text-2xl text-gray-500 mb-6 mt-2'>Your cart is empty!</p>
           <Button size='lg' color='primary' variant='solid' onClick={(e) => navigate('/')}>
             Shop our products
