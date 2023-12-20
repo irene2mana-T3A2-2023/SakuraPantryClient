@@ -2,6 +2,7 @@ import { Button } from '@nextui-org/react';
 import React, { useContext } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { CartContext } from './CartContext';
+import { currencyFormatter } from '../../utils';
 
 // CART ITEMS COMPONENTS
 export const CartItem = ({ item }) => {
@@ -45,7 +46,7 @@ export const CartItem = ({ item }) => {
               {<FiPlus className='h-5 w-5 text-black-500 self-center' />}
             </Button>
           </div>
-          <p>${(item.price * item.quantity).toFixed(2)}</p>
+          <p>{currencyFormatter((item.price * item.quantity).toFixed(2))}</p>
         </div>
       </div>
     </div>

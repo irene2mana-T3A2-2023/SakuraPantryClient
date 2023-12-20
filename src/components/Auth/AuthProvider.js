@@ -87,8 +87,8 @@ export default function AuthProvider({ children }) {
     // Update the 'isAuthenticated' state to 'false', indicating the user is no longer authenticated
     setIsAuthenticated(false);
 
-    // Use the 'navigate' function to redirect the user to the '/sign-in' page
-    navigate('/sign-in');
+    // Use the 'navigate' function to redirect the user to the homepage
+    navigate('/');
   };
 
   //Take userData as its argument. It is used for initiating the process of resetting a user's password.
