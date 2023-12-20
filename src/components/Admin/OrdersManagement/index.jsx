@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tooltip, useDisclosure, Modal, ModalContent, Chip, User } from '@nextui-org/react';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
@@ -42,115 +42,112 @@ export default function OrdersManagement() {
     fetchData();
   }, []);
 
-  const renderCell = useCallback(
-    (order, columnKey) => {
-      const cellValue = order[columnKey];
+  const renderCell = (order, columnKey) => {
+    const cellValue = order[columnKey];
 
-      const openViewOrderModal = () => {
-        setModalType('view-order');
+    const openViewOrderModal = () => {
+      setModalType('view-order');
 
-        setSelectedOrder(order);
+      setSelectedOrder(order);
 
-        onOpen();
-      };
+      onOpen();
+    };
 
-      const openUpdateOrderModal = () => {
-        setModalType('update-order');
+    const openUpdateOrderModal = () => {
+      setModalType('update-order');
 
-        setSelectedOrder(order);
+      setSelectedOrder(order);
 
-        onOpen();
-      };
+      onOpen();
+    };
 
-      const openCancelOrderModal = () => {
-        setModalType('cancel-order');
+    const openCancelOrderModal = () => {
+      setModalType('cancel-order');
 
-        setSelectedOrder(order);
+      setSelectedOrder(order);
 
-        onOpen();
-      };
+      onOpen();
+    };
 
-      switch (columnKey) {
-        case '_id':
-          return (
-            <div className='text-md font-medium text-primary'>
-              <span className='text-md font-semibold'>{cellValue}</span>
-            </div>
-          );
+    switch (columnKey) {
+      case '_id':
+        return (
+          <div className='text-md font-medium text-primary'>
+            <span className='text-md font-semibold'>{cellValue}</span>
+          </div>
+        );
 
-        case 'user':
-          return (
-            <div>
-              <User
-                name={`${cellValue.firstName} ${cellValue.lastName}`}
-                description={cellValue.email}
-              />
-            </div>
-          );
+      case 'user':
+        return (
+          <div>
+            <User
+              name={`${cellValue.firstName} ${cellValue.lastName}`}
+              description={cellValue.email}
+            />
+          </div>
+        );
 
-        case 'totalPrice':
-          return (
-            <div>
-              <span className='text-md text-blue-500'>{currencyFormatter(cellValue)}</span>
-            </div>
-          );
+      case 'totalPrice':
+        return (
+          <div>
+            <span className='text-md text-blue-500'>{currencyFormatter(cellValue)}</span>
+          </div>
+        );
 
-        case 'status':
-          return (
-            <div>
-              <Chip color={statusColor[cellValue]} variant='bordered'>
-                {cellValue}
-              </Chip>
-            </div>
-          );
+      case 'status':
+        return (
+          <div>
+            <Chip color={statusColor[cellValue]} variant='bordered'>
+              {cellValue}
+            </Chip>
+          </div>
+        );
 
-        case 'createdAt':
-          return (
-            <div>
-              <span className='text-md text-foreground'>{formatDateTime(cellValue)}</span>
-            </div>
-          );
+      case 'createdAt':
+        return (
+          <div>
+            <span className='text-md text-foreground'>{formatDateTime(cellValue)}</span>
+          </div>
+        );
 
-        case 'actions':
-          return (
-            <div className='relative flex items-center2 gap-3'>
-              <Tooltip content='Details'>
-                <span
-                  className='text-lg text-default-500 cursor-pointer active:opacity-50'
-                  onClick={openViewOrderModal}
-                >
-                  <FiEye />
-                </span>
-              </Tooltip>
-              {order.status === 'Delivered' || order.status === 'Cancelled' ? null : (
-                <>
-                  <Tooltip content='Update status'>
-                    <span
-                      className='text-lg text-default-500 cursor-pointer active:opacity-50'
-                      onClick={openUpdateOrderModal}
-                    >
-                      <FiEdit />
-                    </span>
-                  </Tooltip>
-                  <Tooltip color='danger' content='Cancel product'>
-                    <span
-                      className='text-lg text-danger cursor-pointer active:opacity-50'
-                      onClick={openCancelOrderModal}
-                    >
-                      <FiXCircle />
-                    </span>
-                  </Tooltip>
-                </>
-              )}
-            </div>
-          );
+      case 'actions':
+        return (
+          <div className='relative flex items-center2 gap-3'>
+            <Tooltip content='Details'>
+              <span
+                className='text-lg text-default-500 cursor-pointer active:opacity-50'
+                onClick={openViewOrderModal}
+              >
+                <FiEye />
+              </span>
+            </Tooltip>
+            {order.status === 'Delivered' || order.status === 'Cancelled' ? null : (
+              <>
+                <Tooltip content='Update status'>
+                  <span
+                    className='text-lg text-default-500 cursor-pointer active:opacity-50'
+                    onClick={openUpdateOrderModal}
+                  >
+                    <FiEdit />
+                  </span>
+                </Tooltip>
+                <Tooltip color='danger' content='Cancel product'>
+                  <span
+                    className='text-lg text-danger cursor-pointer active:opacity-50'
+                    onClick={openCancelOrderModal}
+                  >
+                    <FiXCircle />
+                  </span>
+                </Tooltip>
+              </>
+            )}
+          </div>
+        );
 
-        default:
-          return cellValue;
-      }
-    },
-    [onOpen]
-  );
+      default:
+        return cellValue;
+    }
+  };
 
   const renderModalContent = (closeModal) => {
     switch (modalType) {
