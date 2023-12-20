@@ -66,15 +66,9 @@ export const Checkout = () => {
     setLoading(true);
     try {
       // Retrieve the user's token from local storage
-      const token = localStorage.getItem('token');
       // Send a POST request to create an order
-      const response = await api.post('/orders', orderData, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      await api.post('/orders', orderData);
       // Log the order data and show a success message
-      console.log(response.data);
       toast.success('Order placed!');
       // Remove cart items in local storage once the order is placed
       localStorage.removeItem('cartItems');
@@ -82,7 +76,6 @@ export const Checkout = () => {
       // Set the state to indicate that the order is placed
       setOrderPlaced(true);
       // Return the response for async validation
-      return response;
     } catch (error) {
       // Log and show an error message if order placement fails
       console.error('Error placing order:', error);
