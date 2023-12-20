@@ -16,4 +16,21 @@ export const getAxiosErrorMessage = (error) => {
   return errorMessage;
 };
 
-export const currencyFormatter = (price) => `$${price}`;
+export const currencyFormatter = (price) => `$${Number.parseFloat(price).toFixed(2)}`;
+
+export const formatDateTime = (dateString) => {
+  const date = new Date(dateString);
+
+  // Formatting options
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
+
+  // Return the formatted date and time
+  return date.toLocaleString('en-US', options);
+};

@@ -31,7 +31,7 @@ export default function DeleteProductModal({ closeModal, product, fetchData }) {
     <>
       <ModalHeader>Delete product</ModalHeader>
       <ModalBody>
-        <span>
+        <span className='text-lg'>
           If you delete this product, you will not be able to recover it. Are you sure you want to
           delete it?
         </span>

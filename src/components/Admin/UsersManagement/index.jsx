@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Chip } from '@nextui-org/react';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
-import { getAxiosErrorMessage } from '../../../utils';
+import { getAxiosErrorMessage, formatDateTime } from '../../../utils';
 import toast from 'react-hot-toast';
 
 export default function UsersManagement() {
@@ -26,10 +26,10 @@ export default function UsersManagement() {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
-      case 'firstName':
+      case 'name':
         return (
-          <span className='text-md font-medium text-secondary-500'>
-            {cellValue} {user.lastName}
+          <span className='text-md font-medium text-primary'>
+            {user.firstName} {user.lastName}
           </span>
         );
 
@@ -64,6 +64,13 @@ export default function UsersManagement() {
           </Chip>
         );
 
+      case 'createdAt':
+        return (
+          <div>
+            <span className='text-md text-foreground'>{formatDateTime(cellValue)}</span>
+          </div>
+        );
+
       default:
         return cellValue;
     }
@@ -81,9 +88,10 @@ export default function UsersManagement() {
       data={data}
       renderCell={renderCell}
       columns={[
-        { name: 'NAME', uid: 'firstName' },
+        { name: 'NAME', uid: 'name' },
         { name: 'ROLE', uid: 'role' },
         { name: 'EMAIL', uid: 'email' },
+        { name: 'CREATED AT', uid: 'createdAt' },
         { name: 'STATUS', uid: 'status' }
       ]}
     />

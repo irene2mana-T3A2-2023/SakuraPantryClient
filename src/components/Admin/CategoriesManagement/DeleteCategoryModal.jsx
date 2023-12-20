@@ -28,7 +28,7 @@ export default function DeleteCategoryModal({ closeModal, category, fetchData })
     <>
       <ModalHeader>Delete Category</ModalHeader>
       <ModalBody>
-        <span>
+        <span className='text-lg'>
           If you delete this category, you will not be able to recover it. Are you sure you want to
           delete it?
         </span>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../../../configs/api';
-import { getAxiosErrorMessage } from '../../../utils';
+import { getAxiosErrorMessage, formatDateTime } from '../../../utils';
 import toast from 'react-hot-toast';
 import DataTable from '../DataTable';
 import { Tooltip, useDisclosure, Modal, ModalContent } from '@nextui-org/react';
@@ -55,7 +55,14 @@ export default function CategoriessMangement() {
 
     switch (columnKey) {
       case 'name':
-        return <span className='text-md font-medium text-secondary-500'>{cellValue}</span>;
+        return <span className='text-md font-medium text-primary'>{cellValue}</span>;
+
+      case 'createdAt':
+        return (
+          <div>
+            <span className='text-md text-foreground'>{formatDateTime(cellValue)}</span>
+          </div>
+        );
 
       case 'actions':
         return (
@@ -134,6 +141,7 @@ export default function CategoriessMangement() {
         renderCell={renderCell}
         columns={[
           { name: 'NAME', uid: 'name' },
+          { name: 'CREATED AT', uid: 'createdAt' },
           { name: 'ACTIONS', uid: 'actions' }
         ]}
       />

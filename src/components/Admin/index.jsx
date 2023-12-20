@@ -1,5 +1,6 @@
 import { Tabs, Tab } from '@nextui-org/react';
-import { FiDatabase, FiUser, FiEdit, FiPackage, FiFile } from 'react-icons/fi';
+import { FiDatabase, FiUser, FiEdit, FiPackage } from 'react-icons/fi';
+import { BiCategoryAlt } from 'react-icons/bi';
 import { useSearchParams } from 'react-router-dom';
 import Summary from './Summary';
 import ProductsMangement from './ProductsManagement';
@@ -74,7 +75,7 @@ export default function AdminDashboard() {
           key='categories-management'
           title={
             <div className='flex items-center space-x-2'>
-              <FiFile />
+              <BiCategoryAlt />
               <span>Categories</span>
             </div>
           }

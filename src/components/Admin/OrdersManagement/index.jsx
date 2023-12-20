@@ -2,15 +2,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { Tooltip, useDisclosure, Modal, ModalContent, Chip, User } from '@nextui-org/react';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
-import { currencyFormatter } from '../../../utils';
-import { FiEye, FiEdit } from 'react-icons/fi';
+import { currencyFormatter, formatDateTime } from '../../../utils';
+import { FiEye, FiEdit, FiXCircle } from 'react-icons/fi';
 import { statusColor } from './config';
 import OrderDetail from './OrderDetail';
+import UpdateOrderStatus from './UpdateOrderStatusModal';
+import CancelOrderModal from './CancelOrderModal';
 
 export default function OrdersManagement() {
   const [loading, setLoading] = useState(false);
 
-  const [modalType, setmodalType] = useState(null);
+  const [modalType, setModalType] = useState(null);
 
   const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -20,23 +22,23 @@ export default function OrdersManagement() {
     onClose: () => {
       setSelectedOrder(null);
 
-      setmodalType(null);
+      setModalType(null);
     }
   });
 
+  const fetchData = async () => {
+    setLoading(true);
+
+    try {
+      const { data } = await api.get('/orders');
+
+      setData(data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-
-      try {
-        const { data } = await api.get('/orders');
-
-        setData(data);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -45,7 +47,23 @@ export default function OrdersManagement() {
       const cellValue = order[columnKey];
 
       const openViewOrderModal = () => {
-        setmodalType('view-order');
+        setModalType('view-order');
+
+        setSelectedOrder(order);
+
+        onOpen();
+      };
+
+      const openUpdateOrderModal = () => {
+        setModalType('update-order');
+
+        setSelectedOrder(order);
+
+        onOpen();
+      };
+
+      const openCancelOrderModal = () => {
+        setModalType('cancel-order');
 
         setSelectedOrder(order);
 
@@ -53,9 +71,9 @@ export default function OrdersManagement() {
       };
 
       switch (columnKey) {
-        case 'id':
+        case '_id':
           return (
-            <div className='flex items-center text-secondary-500'>
+            <div className='text-md font-medium text-primary'>
               <span className='text-md font-semibold'>{cellValue}</span>
             </div>
           );
@@ -86,6 +104,13 @@ export default function OrdersManagement() {
             </div>
           );
 
+        case 'createdAt':
+          return (
+            <div>
+              <span className='text-md text-foreground'>{formatDateTime(cellValue)}</span>
+            </div>
+          );
+
         case 'actions':
           return (
             <div className='relative flex items-center2 gap-3'>
@@ -97,11 +122,26 @@ export default function OrdersManagement() {
                   <FiEye />
                 </span>
               </Tooltip>
-              <Tooltip content='Update status'>
-                <span className='text-lg text-default-500 cursor-pointer active:opacity-50'>
-                  <FiEdit />
-                </span>
-              </Tooltip>
+              {order.status === 'Delivered' || order.status === 'Cancelled' ? null : (
+                <>
+                  <Tooltip content='Update status'>
+                    <span
+                      className='text-lg text-default-500 cursor-pointer active:opacity-50'
+                      onClick={openUpdateOrderModal}
+                    >
+                      <FiEdit />
+                    </span>
+                  </Tooltip>
+                  <Tooltip color='danger' content='Cancel product'>
+                    <span
+                      className='text-lg text-danger cursor-pointer active:opacity-50'
+                      onClick={openCancelOrderModal}
+                    >
+                      <FiXCircle />
+                    </span>
+                  </Tooltip>
+                </>
+              )}
             </div>
           );
 
@@ -112,18 +152,25 @@ export default function OrdersManagement() {
     [onOpen]
   );
 
-  const renderModalContent = useCallback(
-    (closeModal) => {
-      switch (modalType) {
-        case 'view-order':
-          return <OrderDetail closeModal={closeModal} order={selectedOrder} />;
+  const renderModalContent = (closeModal) => {
+    switch (modalType) {
+      case 'view-order':
+        return <OrderDetail closeModal={closeModal} order={selectedOrder} />;
 
-        default:
-          return null;
-      }
-    },
-    [modalType, selectedOrder]
-  );
+      case 'update-order':
+        return (
+          <UpdateOrderStatus closeModal={closeModal} order={selectedOrder} fetchData={fetchData} />
+        );
+
+      case 'cancel-order':
+        return (
+          <CancelOrderModal closeModal={closeModal} order={selectedOrder} fetchData={fetchData} />
+        );
+
+      default:
+        return null;
+    }
+  };
 
   if (!data) {
     return null;
@@ -141,6 +188,7 @@ export default function OrdersManagement() {
           { name: 'TOTAL PRICE', uid: 'totalPrice' },
           { name: 'PAYMENT METHOD', uid: 'paymentMethod' },
           { name: 'STATUS', uid: 'status' },
+          { name: 'CREATED AT', uid: 'createdAt' },
           { name: 'ACTIONS', uid: 'actions' }
         ]}
       />
