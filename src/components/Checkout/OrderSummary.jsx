@@ -7,7 +7,7 @@ export const OrderSummary = ({ item }) => {
       <div className='flex items-center'>
         <div className='flex justify-start items-center'>
           <img
-            src={item.image}
+            src={item.imageUrl}
             alt=''
             className='w-14 h-14 border border-solid rounded p-0.5 bg-stone-200'
           />
