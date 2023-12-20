@@ -5,11 +5,11 @@ import { FiMail, FiUser } from 'react-icons/fi';
 
 export default function Footer() {
   return (
-    <div className='w-full bg-primary min-h-[300px]'>
+    <div className='w-full bg-primary min-h-[300px] py-6'>
       <div className='container mx-auto p-6 h-full w-full max-w-[1536px] flex-grow flex'>
         {/*About us*/}
-        <div className='flex flex-col md:flex-row gap-5 w-full lg:gap-7'>
-          <div className='flex flex-col gap-4 w-full lg:w-[50%]'>
+        <div className='flex flex-col md:flex-row gap-5 w-full lg:gap-14'>
+          <div className='flex flex-col gap-4 w-full lg:w-[60%]'>
             <h3 className='text-secondary text-lg font-semibold'>ABOUT US</h3>
             <p className='text-white text-justify'>
               Sakura Pantry is dedicated to delivering the highest quality Japanese ingredients to
@@ -19,7 +19,7 @@ export default function Footer() {
             </p>
           </div>
           {/*Contact form*/}
-          <div className='flex w-full flex-col gap-4 lg:w-[50%]'>
+          <div className='flex w-full flex-col gap-4 lg:w-[40%]'>
             <h3 className='text-secondary text-lg font-semibold'>CONTACT US</h3>
             <Input
               label='Your name'
@@ -31,7 +31,7 @@ export default function Footer() {
               type='email'
               endContent={<FiMail className='h-6 w-6 text-default-400 self-center' />}
             />
-            <Textarea label='Questions' type='text' className='h-16' />
+            <Textarea label='Questions' type='text' className='h-auto' />
             {/*Social Media Icons and Button*/}
             <div className='flex justify-between'>
               <div className='flex'>
