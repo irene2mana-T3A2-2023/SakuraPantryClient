@@ -91,7 +91,7 @@ export default function EditProduct({ closeModal, fetchData, product }) {
 
   return (
     <form onSubmit={handleSubmit(updateProduct)}>
-      <ModalHeader className='flex flex-col gap-1 text-3xl'>Add new product</ModalHeader>
+      <ModalHeader className='flex flex-col gap-1 text-3xl'>Edit product</ModalHeader>
       <ModalBody>
         {isFetchingCategories ? (
           <Spinner />

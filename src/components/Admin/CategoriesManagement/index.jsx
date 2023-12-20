@@ -60,7 +60,7 @@ export default function CategoriessMangement() {
       case 'actions':
         return (
           <div className='relative flex items-center2 gap-3'>
-            <Tooltip content='Edit product'>
+            <Tooltip content='Edit category'>
               <span
                 className='text-lg text-default-500 cursor-pointer active:opacity-50'
                 onClick={openEditCategoryModal}
@@ -68,7 +68,7 @@ export default function CategoriessMangement() {
                 <FiEdit />
               </span>
             </Tooltip>
-            <Tooltip color='danger' content='Delete product'>
+            <Tooltip color='danger' content='Delete category'>
               <span
                 className='text-lg text-danger cursor-pointer active:opacity-50'
                 onClick={openDeleteCategoryModal}
@@ -130,7 +130,7 @@ export default function CategoriessMangement() {
       <DataTable
         data={data}
         addAction={openAddCategoryModal}
-        addActionLabel='Add new product'
+        addActionLabel='Add new category'
         renderCell={renderCell}
         columns={[
           { name: 'NAME', uid: 'name' },
