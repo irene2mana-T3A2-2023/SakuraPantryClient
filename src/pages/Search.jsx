@@ -10,32 +10,31 @@ export default function SearchPage() {
   // React-router-dom is used to access the URL query parameters.
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  //  Retrieves the value of the query parameter keyword from URLSearchParams.
+  //  Extract the query parameters keyword(k) and categorySlug(c) from the URL.
   const keyword = query.get('k');
   const categorySlug = query.get('c');
-  // Store the search results.
+  // Store the search results, the current page number and the total number fo pages.
   const [results, setResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  // Set 8 items to display per page.
   const itemsPerPage = 8;
 
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
+        // API to fetch search results and set them to the results and the totalpage state.
         const response = await api.get(
           `/products/search?k=${keyword}&c=${categorySlug}&page=${currentPage}&limit=${itemsPerPage}`
         );
         setResults(response.data.results);
-        // eslint-disable-next-line
-        console.log(response.data.results);
         setTotalPages(response.data.totalPages);
       } catch (error) {
-        //eslint-disable-next-line
-        console.log('Error fetching search results', error);
         toast.error('Error fetching search results', error);
       }
     };
-
+    // When either keyword or categorySlug is changed, or when currentPage is changed, the fetchSearchResults() is called to retrieve and display new search results.
+    // However, if both keyword and categorySlug are not present, meaning that search criteria are not provided.
     if (keyword || categorySlug) {
       fetchSearchResults();
     }
@@ -48,7 +47,7 @@ export default function SearchPage() {
           {keyword ? `Products for "${keyword}"` : `Products in category "${categorySlug}"`}
         </h3>
         <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6'>
-          {/* Checks if there are any products in the results array. If results contain items, it maps over each product*/}
+          {/* Checks if there　is at least one or more elements in the results array. If results contain items, it maps over each product*/}
           {results.length > 0 ? (
             results.map((product) => (
               <div
