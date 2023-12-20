@@ -66,7 +66,7 @@ export default function SearchBar() {
         {...register('q')}
         className='w-full'
         classNames={{
-          inputWrapper: 'rounded-tr-none rounded-br-none'
+          inputWrapper: 'rounded-large rounded-tr-none rounded-br-none'
         }}
         placeholder='Search...'
         variant='flat'
