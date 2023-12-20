@@ -15,3 +15,5 @@ export const getAxiosErrorMessage = (error) => {
 
   return errorMessage;
 };
+
+export const currencyFormatter = (price) => `$${price}`;
