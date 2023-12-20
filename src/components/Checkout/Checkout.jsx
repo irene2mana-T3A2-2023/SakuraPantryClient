@@ -17,6 +17,7 @@ import { OrderSuccess } from './OrderSuccess';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
+// Joi schema to validata input fields
 const schema = Joi.object({
   shippingAddress: Joi.object({
     address: Joi.string().required().messages({
@@ -40,7 +41,8 @@ const schema = Joi.object({
     'string.pattern.base': `Phone number must contain numbers only`,
     'string.empty': `Phone number cannot be empty`,
     'any.required': `Phone number is required`
-  })
+  }),
+  paymentMethod: Joi.string().required()
 });
 
 // CHECKOUT COMPONENT
@@ -53,10 +55,15 @@ export const Checkout = () => {
   // Access cart items and total price from the CartContext
   const { cartItems, setCartItems, getCartTotalPrice } = useContext(CartContext);
 
+  // Set state for managing placed order
   const [orderPlaced, setOrderPlaced] = useState(false);
+
+  // State to manage the loading status.
+  const [loading, setLoading] = useState(false);
 
   // Function to place an order
   const placeOrder = async (orderData) => {
+    setLoading(true);
     try {
       // Retrieve the user's token from local storage
       const token = localStorage.getItem('token');
@@ -82,6 +89,9 @@ export const Checkout = () => {
       toast.error(getAxiosErrorMessage(error));
       // If the order placement fails, reject the promise with the error
       throw error;
+    } finally {
+      // Set loading to false after the order is successfully placed
+      setLoading(false);
     }
   };
 
@@ -90,11 +100,10 @@ export const Checkout = () => {
     setValue('paymentMethod', value);
   };
 
-  // Set state to manage the loading status
-  //const [loading, setLoading] = useState(false);
-
   // Handler for form submission
   const onSubmit = async (updatedData) => {
+    console.log('Form State: ', formState);
+    console.log('Updated Data: ', updatedData);
     try {
       // Create an array of order items based on cart items
       const orderItems = cartItems.map((item) => ({
@@ -127,7 +136,12 @@ export const Checkout = () => {
             {/* Shipping Address and Payment Method */}
             <div className='border border-solid border-1 rounded p-4 border-pink-500 md:w-3/5 order-2 md:order-none'>
               {/* Form for user input */}
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form
+                onSubmit={handleSubmit(onSubmit, (errors) => {
+                  console.log('Errors occured in form submission.');
+                  console.log(errors);
+                })}
+              >
                 <Accordion defaultExpandedKeys={['2']} selectionMode='multiple'>
                   <AccordionItem
                     key='1'
@@ -222,6 +236,7 @@ export const Checkout = () => {
                     variant='solid'
                     className='w-3/5 text-lg'
                     size='lg'
+                    isDisabled={loading}
                   >
                     Place Order
                   </Button>

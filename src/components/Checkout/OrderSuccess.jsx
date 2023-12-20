@@ -6,7 +6,7 @@ import orderSuccessIcon from '../../assets/images/order-success-icon.png';
 export const OrderSuccess = () => {
   const navigate = useNavigate();
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
+    <div className='md:flex flex-col items-center justify-center md:h-screen'>
       <img src={orderSuccessIcon} alt='' className='w-28 h-28' />
       <h2 className='text-3xl text-gray-500 mb-6 mt-2'>Thank you for your purchase!</h2>
       <p>
@@ -18,7 +18,7 @@ export const OrderSuccess = () => {
       </p>
       <Button
         size='lg'
-        className='w-1/5 mt-5 font-semibold'
+        className='md:w-1/4 mt-5 font-semibold'
         color='primary'
         variant='ghost'
         onClick={(e) => navigate('/')}

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import api from '../../configs/api';
 import AuthContext from './AuthContext';
 import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getAxiosErrorMessage } from '../../utils';
+import { CartContext } from '../Cart/CartContext';
 
 //Provide authentication-related functionality to its children components.
 export default function AuthProvider({ children }) {
@@ -21,6 +22,8 @@ export default function AuthProvider({ children }) {
 
   // Use the 'useSearchParams' hook to access the URL's query parameters.
   const [searchParams] = useSearchParams();
+
+  const { setCartItems } = useContext(CartContext);
 
   const register = async (userData) => {
     try {
@@ -86,6 +89,10 @@ export default function AuthProvider({ children }) {
 
     // Update the 'isAuthenticated' state to 'false', indicating the user is no longer authenticated
     setIsAuthenticated(false);
+
+    //
+    localStorage.removeItem('cartItems');
+    setCartItems([]);
 
     // Use the 'navigate' function to redirect the user to the homepage
     navigate('/');
