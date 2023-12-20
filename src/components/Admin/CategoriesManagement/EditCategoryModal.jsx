@@ -45,7 +45,7 @@ export default function EditCategoryModal({ closeModal, fetchData, category }) {
 
   return (
     <form onSubmit={handleSubmit(editCategory)}>
-      <ModalHeader className='flex flex-col gap-1 text-3xl'>Edit new category</ModalHeader>
+      <ModalHeader className='flex flex-col gap-1 text-3xl'>Edit category</ModalHeader>
       <ModalBody>
         <Input
           {...register('name')}
