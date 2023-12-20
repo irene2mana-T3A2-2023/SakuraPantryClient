@@ -35,11 +35,24 @@ export default function ProductsMangement() {
     }
   };
 
-  // eslint-disable-next-line
-  console.log(data);
-
   const renderCell = (product, columnKey) => {
     const cellValue = product[columnKey];
+
+    const openEditProductModal = () => {
+      setModalType('edit-product');
+
+      setSelectedProduct(product);
+
+      onOpen();
+    };
+
+    const openDeleteProductModal = () => {
+      setModalType('delete-product');
+
+      setSelectedProduct(product);
+
+      onOpen();
+    };
 
     switch (columnKey) {
       case 'name':
@@ -72,16 +85,29 @@ export default function ProductsMangement() {
           </div>
         );
 
+      case 'isFeatured':
+        return (
+          <div className='flex justify-center'>
+            <span className='text-md text-blue-500 font-semibold'>{cellValue ? 'YES' : 'NO'}</span>
+          </div>
+        );
+
       case 'actions':
         return (
           <div className='relative flex items-center2 gap-3'>
             <Tooltip content='Edit product'>
-              <span className='text-lg text-default-500 cursor-pointer active:opacity-50'>
+              <span
+                className='text-lg text-default-500 cursor-pointer active:opacity-50'
+                onClick={openEditProductModal}
+              >
                 <FiEdit />
               </span>
             </Tooltip>
             <Tooltip color='danger' content='Delete product'>
-              <span className='text-lg text-danger cursor-pointer active:opacity-50'>
+              <span
+                className='text-lg text-danger cursor-pointer active:opacity-50'
+                onClick={openDeleteProductModal}
+              >
                 <FiTrash />
               </span>
             </Tooltip>
@@ -148,6 +174,7 @@ export default function ProductsMangement() {
           { name: 'DESCRIPTION', uid: 'description' },
           { name: 'PRICE', uid: 'price' },
           { name: 'QUANTITY IN STOCK', uid: 'stockQuantity' },
+          { name: 'FEATURED', uid: 'isFeatured' },
           { name: 'ACTIONS', uid: 'actions' }
         ]}
       />
