@@ -9,6 +9,7 @@ export const OrderSuccess = () => {
     <div className='md:flex flex-col items-center justify-center md:h-screen'>
       <img src={orderSuccessIcon} alt='' className='w-28 h-28' />
       <h2 className='text-3xl text-gray-500 mb-6 mt-2'>Thank you for your purchase!</h2>
+      <p>Your order has been placed and currently being processed.</p>
       <p>
         View your order history{' '}
         <Link to='/user-account' className='text-pink-500 underline'>
