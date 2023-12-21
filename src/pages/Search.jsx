@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { Image, Pagination } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import api from '../configs/api';
@@ -8,14 +8,13 @@ import toast from 'react-hot-toast';
 
 export default function SearchPage() {
   // React-router-dom is used to access the URL query parameters.
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
   //  Extract the query parameters keyword(k) and categorySlug(c) from the URL.
-  const keyword = query.get('k');
-  const categorySlug = query.get('c');
+  const keyword = searchParams.get('k');
+  const categorySlug = searchParams.get('c');
   // Store the search results, the current page number and the total number fo pages.
   const [results, setResults] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
   const [totalPages, setTotalPages] = useState(0);
   // Set 8 items to display per page.
   const itemsPerPage = 8;
@@ -39,6 +38,14 @@ export default function SearchPage() {
       fetchSearchResults();
     }
   }, [keyword, categorySlug, currentPage]);
+
+  // Page represents the page number selected by the user.
+  const handlePageChange = (page) => {
+    // Updates currentPage with the page number selected by the user.
+    setCurrentPage(page);
+    //  Reflect the current search keyword, categorySlug, and the new page number in the URL.
+    setSearchParams({ k: keyword, c: categorySlug, page });
+  };
 
   return (
     <Layout>
@@ -86,7 +93,7 @@ export default function SearchPage() {
             showControls
             total={totalPages}
             initialPage={currentPage}
-            onChange={(page) => setCurrentPage(page)}
+            onChange={handlePageChange}
           />
         </div>
       </div>
