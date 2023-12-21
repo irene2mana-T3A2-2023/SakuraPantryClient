@@ -7,7 +7,7 @@ import Layout from '../layouts/Base';
 import toast from 'react-hot-toast';
 
 export default function SearchPage() {
-  // React-router-dom is used to access the URL query parameters.
+  // Provides access to the current query parameters and a function to update them.
   const [searchParams, setSearchParams] = useSearchParams();
   //  Extract the query parameters keyword(k) and categorySlug(c) from the URL.
   const keyword = searchParams.get('k');
@@ -22,7 +22,7 @@ export default function SearchPage() {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        // API to fetch search results and set them to the results and the totalpage state.
+        // API to fetch search results and set them to the results and the totalPage state.
         const response = await api.get(
           `/products/search?k=${keyword}&c=${categorySlug}&page=${currentPage}&limit=${itemsPerPage}`
         );
