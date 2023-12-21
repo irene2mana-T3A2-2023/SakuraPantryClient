@@ -20,6 +20,7 @@ export default function ProductDetailsPage() {
   // Initialize the quantity state with a default value of 1 to ensure that the user starts with a single item by default.
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   // Access 'setCartItems' from the CartContext
   const { setCartItems } = useContext(CartContext);
@@ -57,6 +58,8 @@ export default function ProductDetailsPage() {
 
   // Fetch product details and related products
   useEffect(() => {
+    setIsLoading(true);
+
     const fetchProductDetails = async () => {
       try {
         const response = await api.get(`/products/${slug}`);
@@ -65,6 +68,8 @@ export default function ProductDetailsPage() {
         fetchRelatedProducts(categorySlug);
       } catch (error) {
         console.error('Error fetching product details', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -161,7 +166,11 @@ export default function ProductDetailsPage() {
           </div>
         </div>
         {/* Display related products */}
-        <ProductCardList products={relatedProducts} title='You may also like' />
+        <ProductCardList
+          products={relatedProducts}
+          title='You may also like'
+          isLoading={isLoading}
+        />
       </section>
     </Layout>
   );

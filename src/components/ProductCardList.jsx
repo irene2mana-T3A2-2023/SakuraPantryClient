@@ -8,7 +8,7 @@ const ProductCardList = ({
   isLoading,
   skeletonNo = 5
 }) => {
-  const className = isHorizontalViewInMobile ? `flex overflow-x-auto` : 'grid';
+  const className = isHorizontalViewInMobile ? 'flex overflow-x-auto' : 'grid';
 
   return (
     <div className='flex flex-col mt-10'>
@@ -18,7 +18,7 @@ const ProductCardList = ({
         </h3>
       ) : null}
       <div
-        className={`${className} lg:overflow-x-visible lg:grid md:grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-8 no-scrollbar`}
+        className={`${className} lg:grid md:grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-8 no-scrollbar`}
       >
         {/* Iterate over the products array. */}
         {isLoading
