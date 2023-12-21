@@ -1,11 +1,12 @@
-/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../layouts/Base';
-import { Image, Button, Select, SelectItem, Divider } from '@nextui-org/react';
+import { Image, Button, Select, SelectItem, Divider, Spinner } from '@nextui-org/react';
+import toast from 'react-hot-toast';
 import api from '../configs/api';
 import ProductCardList from '../components/ProductCardList';
 import { CartContext } from '../components/Cart/CartContext';
+import { currencyFormatter, getAxiosErrorMessage } from '../utils';
 
 // Define a constant for the quantity error message
 const QUANTITY_ERROR_MSG = '*Quantity limit exceeded!';
@@ -19,7 +20,6 @@ export default function ProductDetailsPage() {
   const [relatedProducts, setRelatedProducts] = useState([]);
   // Initialize the quantity state with a default value of 1 to ensure that the user starts with a single item by default.
   const [quantity, setQuantity] = useState(1);
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   // Access 'setCartItems' from the CartContext
@@ -40,9 +40,8 @@ export default function ProductDetailsPage() {
         // Check if adding the selected quantity exceeds the stock limit
         if (item?.stockQuantity >= parseInt(quantity) + parseInt(item?.quantity)) {
           item.quantity += parseInt(quantity);
-          setError('');
         } else {
-          setError(QUANTITY_ERROR_MSG);
+          toast.error(QUANTITY_ERROR_MSG);
         }
       }
       return item;
@@ -54,27 +53,8 @@ export default function ProductDetailsPage() {
     // Update the cart items in context and local storage
     setCartItems(newCartItems);
     localStorage.setItem('cartItems', JSON.stringify(newCartItems));
+    toast.success('Product added successfully');
   };
-
-  // Fetch product details and related products
-  useEffect(() => {
-    setIsLoading(true);
-
-    const fetchProductDetails = async () => {
-      try {
-        const response = await api.get(`/products/${slug}`);
-        setProduct(response.data);
-        const categorySlug = response.data.category.slug;
-        fetchRelatedProducts(categorySlug);
-      } catch (error) {
-        console.error('Error fetching product details', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProductDetails();
-  }, [slug]);
 
   // Function to fetch related products based on category
   const fetchRelatedProducts = async (categorySlug) => {
@@ -83,9 +63,27 @@ export default function ProductDetailsPage() {
       const relatedProductsData = response.data;
       setRelatedProducts(relatedProductsData);
     } catch (error) {
-      console.error('Error fetching related products', error);
+      toast.error(getAxiosErrorMessage(error));
     }
   };
+
+  // Fetch product details and related products
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await api.get(`/products/${slug}`);
+        setProduct(response.data);
+        const categorySlug = response.data.category.slug;
+        await fetchRelatedProducts(categorySlug);
+      } catch (error) {
+        toast.error(getAxiosErrorMessage(error));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProductDetails();
+  }, [slug]);
 
   // Updates quantity state if input is a valid number greater than 0.
   const onChangeQuantity = (e) => {
@@ -94,10 +92,12 @@ export default function ProductDetailsPage() {
     }
   };
 
-  if (!product) {
+  if (isLoading && !product) {
     return (
       <Layout>
-        <div>Loading...</div>
+        <div className='container mx-auto flex items-center justify-center'>
+          <Spinner size='lg' color='secondary' />
+        </div>
       </Layout>
     );
   }
@@ -105,24 +105,24 @@ export default function ProductDetailsPage() {
   // Render the product details page
   return (
     <Layout>
-      <section className='body-font overflow-hidden bg-white items-center'>
-        <div className='container flex justify-center items-center md:mx-20 md:my-12'>
-          <div className='md:flex md:flex-cols'>
-            <div className='border-1.5 border-pink-500 p-8 rounded md:w-2/3 flex justify-center'>
+      <section className='body-font overflow-hidden bg-white items-center w-full'>
+        <div className='container max-w-[1280px] flex mx-auto mb:8 md:my-14'>
+          <div className='flex flex-col md:flex-row gap-4 md:gap-10'>
+            <div className='border-1.5 border-pink-500 md:min-w-[45%] p-4 rounded w-full md:w-2/5 flex justify-center items-center'>
               <Image
                 alt='product image'
                 className='max-h-full w-auto object-cover rounded'
                 src={product.imageUrl}
               />
             </div>
-            <div className='md:w-full md:pl-12 mt-6 md:mt-0'>
-              <div className='md:pr-20'>
+            <div>
+              <div>
                 <h1 className='text-gray-900 text-3xl title-font font-medium'>{product.name}</h1>
                 <Divider className='bg-pink-500 p-0.5 w-1/3 mt-5 h-px' />
                 <div className='mt-2'>
                   <span className='mr-2 font-semibold'>Price:</span>
                   <span className='title-font font-medium text-2xl text-gray-900 mt-3'>
-                    ${product.price.toFixed(2)} AUD
+                    {currencyFormatter(product.price)} AUD
                   </span>
                 </div>
                 <div className='flex mb-4'></div>
@@ -159,8 +159,6 @@ export default function ProductDetailsPage() {
                 >
                   {product?.stockQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
                 </Button>
-                {/* Display error message, if any */}
-                <span className='pl-3 text-red-500 font-semibold'>{error}</span>
               </div>
             </div>
           </div>
