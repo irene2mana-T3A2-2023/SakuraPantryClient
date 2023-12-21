@@ -5,6 +5,7 @@ import orderSuccessIcon from '../../assets/images/order-success-icon.png';
 
 export const OrderSuccess = () => {
   const navigate = useNavigate();
+
   return (
     <div className='flex flex-col items-center justify-center h-screen'>
       <img src={orderSuccessIcon} alt='' className='w-28 h-28' />
