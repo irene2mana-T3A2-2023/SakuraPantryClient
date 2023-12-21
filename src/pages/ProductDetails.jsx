@@ -17,7 +17,8 @@ export default function ProductDetailsPage() {
   // State variables
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [quantity, setQuantity] = useState(0);
+  // Initialize the quantity state with a default value of 1 to ensure that the user starts with a single item by default.
+  const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState('');
 
   // Access 'setCartItems' from the CartContext
@@ -81,6 +82,13 @@ export default function ProductDetailsPage() {
     }
   };
 
+  // Updates quantity state if input is a valid number greater than 0.
+  const onChangeQuantity = (e) => {
+    if (!isNaN(e.target.value) && e.target.value > 0) {
+      setQuantity(Number(e.target.value));
+    }
+  };
+
   if (!product) {
     return (
       <Layout>
@@ -95,7 +103,7 @@ export default function ProductDetailsPage() {
       <section className='body-font overflow-hidden bg-white items-center'>
         <div className='container flex justify-center items-center md:mx-20 md:my-12'>
           <div className='md:flex md:flex-cols'>
-            <div className='border-1.5 border-pink-500 p-8 rounded md:w-2/3'>
+            <div className='border-1.5 border-pink-500 p-8 rounded md:w-2/3 flex justify-center'>
               <Image
                 alt='product image'
                 className='max-h-full w-auto object-cover rounded'
@@ -119,17 +127,20 @@ export default function ProductDetailsPage() {
                 <div className='flex items-center mb-5 w-1/3'>
                   {/* Quantity selection dropdown */}
                   <Select
-                    label='Quantity'
-                    className='w-1/2 font-semibold'
-                    onChange={(e) => setQuantity(e.target.value)}
+                    size='sm'
+                    aria-label='select-quantity'
+                    aria-labelledby='select-quantity'
+                    className='w-[80px]'
+                    variant='bordered'
+                    defaultSelectedKeys={[1]}
+                    selectedKeys={`${quantity}`}
+                    onChange={onChangeQuantity}
                   >
-                    {[...Array(product.stockQuantity).keys()]
-                      .map((value) => value + 1)
-                      .map((quantity) => (
-                        <SelectItem key={quantity} value={JSON.stringify(quantity)}>
-                          {JSON.stringify(quantity)}
-                        </SelectItem>
-                      ))}
+                    {[...Array(Math.min(5, product?.stockQuantity || 0)).keys()].map((x) => (
+                      <SelectItem key={x + 1} value={x + 1}>
+                        {`${x + 1}`}
+                      </SelectItem>
+                    ))}
                   </Select>
                 </div>
                 {/* Add to Cart button */}
