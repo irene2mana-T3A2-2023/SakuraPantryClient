@@ -15,7 +15,7 @@ export default function SearchBar() {
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      q: searchParams.get('k') || undefined,
+      k: searchParams.get('k') || undefined,
       c: searchParams.get('c') || undefined
     }
   });
