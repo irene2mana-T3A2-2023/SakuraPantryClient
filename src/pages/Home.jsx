@@ -6,14 +6,17 @@ import toast from 'react-hot-toast';
 import ProductCardList from '../components/ProductCardList';
 
 const HomePage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [newArrivals, setNewArrivals] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
   // Fetch products data from an API when the component mounts.
   useEffect(() => {
     const fetchProducts = async () => {
-      //Call the api.get method to retrieve products.
+      setIsLoading(true);
+
       try {
+        //Call the api.get method to retrieve products.
         const newArrivalProductsResponse = await api.get('/products/new-arrivals');
         setNewArrivals(newArrivalProductsResponse.data);
 
@@ -22,6 +25,8 @@ const HomePage = () => {
       } catch (error) {
         // If there is an error during the registration process, catches the error and displays an error message.
         toast.error('Error fetching products', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -33,12 +38,13 @@ const HomePage = () => {
       <div className='w-full mb-10'>
         <img src={homeImage} alt='HomeImage' className='w-full object-cover h-50 lg:h-80' />
         {/*New Arrivals Section*/}
-        <ProductCardList products={newArrivals} title='New Arrivals' />
+        <ProductCardList products={newArrivals} title='New Arrivals' isLoading={isLoading} />
         {/* Featured Collection Section */}
         <ProductCardList
           // Create a new array containing only those products where the isFeatured property is true.
           products={featuredProducts}
           title='Featured Collection'
+          isLoading={isLoading}
         />
       </div>
     </Layout>

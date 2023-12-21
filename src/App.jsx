@@ -8,6 +8,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import OrderSuccess from './pages/OrderSuccess';
 import UserAccount from './pages/UserAccount';
 import AdminDashboard from './pages/AdminDashboard';
 import NotFound from './pages/NotFound';
@@ -26,6 +27,7 @@ function App() {
       <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
       <Route path='/cart' element={<Cart />} />
       <Route path='/checkout' element={<ProtectedRoute Page={Checkout} />} />
+      <Route path='/order-success' element={<ProtectedRoute Page={OrderSuccess} />} />
       <Route path='/user-account' element={<ProtectedRoute Page={UserAccount} />} />
       <Route path='/admin-dashboard' element={<AdminProtectedRoute Page={AdminDashboard} />} />
       <Route path='*' element={<NotFound />} />
