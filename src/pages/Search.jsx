@@ -4,7 +4,7 @@ import { Pagination } from '@nextui-org/react';
 import api from '../configs/api';
 import Layout from '../layouts/Base';
 import toast from 'react-hot-toast';
-import ProductsList from '../components/ProductCardList';
+import ProductsCardList from '../components/ProductCardList';
 
 export default function SearchPage() {
   // Provides access to the current query parameters and a function to update them.
@@ -76,7 +76,7 @@ export default function SearchPage() {
         {!results.length && !isLoading ? (
           <p>No products found for '{keyword}'</p>
         ) : (
-          <ProductsList
+          <ProductsCardList
             products={results}
             isHorizontalViewInMobile={false}
             isLoading={isLoading}
