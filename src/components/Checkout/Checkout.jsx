@@ -1,5 +1,5 @@
 import { useForm, Controller } from 'react-hook-form';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -10,9 +10,8 @@ import {
   Radio,
   Image
 } from '@nextui-org/react';
-import { OrderSuccess } from './OrderSuccess';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Joi from 'joi';
 import { CartContext } from '../Cart/CartContext';
 import { OrderSummary } from './OrderSummary';
@@ -57,6 +56,8 @@ const schema = Joi.object({
 
 // CHECKOUT COMPONENT
 export const Checkout = () => {
+  const navigate = useNavigate();
+
   // Initialize the useForm hook
   const { register, handleSubmit, formState, control } = useForm({
     resolver: joiResolver(schema),
@@ -68,8 +69,6 @@ export const Checkout = () => {
   // Access cart items and total price from the CartContext
   const { cartItems, setCartItems, getCartTotalPrice } = useContext(CartContext);
 
-  const [orderPlaced, setOrderPlaced] = useState(false);
-
   // Function to place an order
   const placeOrder = async (orderData) => {
     try {
@@ -79,10 +78,10 @@ export const Checkout = () => {
       toast.success('Order placed!');
       // Remove cart items in local storage once the order is placed
       localStorage.removeItem('cartItems');
+      // Reset the cart items state to an empty array
       setCartItems([]);
-      // Set the state to indicate that the order is placed
-      setOrderPlaced(true);
-      // Return the response for async validation
+      // Navigate to the order success page
+      navigate('/order-success');
     } catch (error) {
       // Log and show an error message if order placement fails
       toast.error(getAxiosErrorMessage(error));
@@ -114,11 +113,6 @@ export const Checkout = () => {
   // If the cart is empty, redirect to the homepage.
   if (!cartItems?.length) {
     return <Navigate replace to={'/'} />;
-  }
-
-  // If order is placed sucessfully, it should show success screen
-  if (orderPlaced) {
-    return <OrderSuccess />;
   }
 
   // JSX structure for the Checkout component
