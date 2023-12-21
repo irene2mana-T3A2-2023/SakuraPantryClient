@@ -15,15 +15,15 @@ export default function SearchBar() {
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      q: searchParams.get('q') || undefined,
+      q: searchParams.get('k') || undefined,
       c: searchParams.get('c') || undefined
     }
   });
 
-  const onSubmit = ({ q, c }) => {
+  const onSubmit = ({ k, c }) => {
     const params = {};
 
-    if (q.trim() !== '') params.q = q;
+    if (k.trim() !== '') params.k = k;
 
     if (c.trim() !== '') params.c = c;
 
@@ -63,7 +63,7 @@ export default function SearchBar() {
       className='flex items-center justify-center max-w-full md:min-w-[450px] xl:min-w-[800px] w-full'
     >
       <Input
-        {...register('q')}
+        {...register('k')}
         className='w-full'
         classNames={{
           inputWrapper: 'rounded-large rounded-tr-none rounded-br-none'
@@ -71,7 +71,7 @@ export default function SearchBar() {
         placeholder='Search...'
         variant='flat'
         onKeyDown={onKeyDownHandler}
-        defaultValue={searchParams.get('q') || undefined}
+        defaultValue={searchParams.get('k') || undefined}
         size='sm'
       />
       <Select
