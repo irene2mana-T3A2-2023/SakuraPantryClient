@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import api from '../../../configs/api';
-import { getAxiosErrorMessage } from '../../../utils';
 import toast from 'react-hot-toast';
-import DataTable from '../DataTable';
 import { Tooltip, Image, useDisclosure, Modal, ModalContent } from '@nextui-org/react';
-import { currencyFormatter, formatDateTime } from '../../../utils';
 import { FiEdit, FiTrash } from 'react-icons/fi';
+import api from '../../../configs/api';
+import DataTable from '../DataTable';
+import { currencyFormatter, formatDateTime, getAxiosErrorMessage } from '../../../utils';
 import AddProduct from './AddProductModal';
 import EditProduct from './EditProductModal';
 import DeleteProduct from './DeleteProductModal';

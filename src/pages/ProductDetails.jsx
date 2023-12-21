@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Layout from '../layouts/Base';
 import { Image, Button, Select, SelectItem, Divider } from '@nextui-org/react';
+import Layout from '../layouts/Base';
 import api from '../configs/api';
 import ProductCardList from '../components/ProductCardList';
 import { CartContext } from '../components/Cart/CartContext';

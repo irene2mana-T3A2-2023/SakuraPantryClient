@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { Image, Pagination } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import api from '../configs/api';
 import Layout from '../layouts/Base';
-import toast from 'react-hot-toast';
 
 export default function SearchPage() {
   // Provides access to the current query parameters and a function to update them.

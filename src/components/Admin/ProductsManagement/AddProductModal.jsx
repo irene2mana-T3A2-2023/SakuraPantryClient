@@ -1,6 +1,4 @@
 import Joi from 'joi';
-import api from '../../../configs/api';
-import { getAxiosErrorMessage } from '../../../utils';
 import toast from 'react-hot-toast';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm, Controller } from 'react-hook-form';
@@ -17,6 +15,8 @@ import {
   SelectItem,
   Checkbox
 } from '@nextui-org/react';
+import { getAxiosErrorMessage } from '../../../utils';
+import api from '../../../configs/api';
 
 const productSchema = Joi.object({
   name: Joi.string().required(),

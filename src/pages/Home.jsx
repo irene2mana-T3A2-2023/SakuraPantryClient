@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import Layout from '../layouts/Base';
 import api from '../configs/api';
-import { useState, useEffect } from 'react';
 import homeImage from '../assets/images/homePage.jpg';
-import toast from 'react-hot-toast';
 import ProductCardList from '../components/ProductCardList';
 
 const HomePage = () => {

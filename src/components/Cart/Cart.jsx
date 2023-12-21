@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { CartItem } from './CartItem';
 import { Button, Divider } from '@nextui-org/react';
-import { CartContext } from './CartContext';
 import { PiShoppingCartDuotone } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
 import { currencyFormatter } from '../../utils';
+import { CartContext } from './CartContext';
+import { CartItem } from './CartItem';
 
 // CART COMPONENT
 export const Cart = () => {

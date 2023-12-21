@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import './index.css';
-import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { NextUIProvider } from '@nextui-org/react';
+import App from './App';
 import AuthProvider from './components/Auth/AuthProvider';
 import Toaster from './components/Toaster';
 import { CartProvider } from './components/Cart/CartContext';

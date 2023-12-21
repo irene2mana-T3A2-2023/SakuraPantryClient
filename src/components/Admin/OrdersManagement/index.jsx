@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Tooltip, useDisclosure, Modal, ModalContent, Chip, User } from '@nextui-org/react';
+import { FiEye, FiEdit, FiXCircle } from 'react-icons/fi';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
 import { currencyFormatter, formatDateTime } from '../../../utils';
-import { FiEye, FiEdit, FiXCircle } from 'react-icons/fi';
 import { statusColor } from './config';
 import OrderDetail from './OrderDetail';
 import UpdateOrderStatus from './UpdateOrderStatusModal';
