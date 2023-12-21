@@ -23,9 +23,13 @@ export default function SearchBar() {
   const onSubmit = ({ k, c }) => {
     const params = {};
 
-    if (k.trim() !== '') params.k = k;
+    if (k.trim() !== '') {
+      params.k = k;
+    }
 
-    if (c.trim() !== '') params.c = c;
+    if (c.trim() !== '') {
+      params.c = c;
+    }
 
     if (Object.keys(params).length > 0) {
       if (pathname === '/search') {
