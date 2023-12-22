@@ -1,11 +1,11 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithAuthContext } from '../helpers';
+import { renderWithContext } from '../helpers';
 import SignInPage from '../../pages/SignIn';
 
 describe('components/SignIn', () => {
   const mockLogin = jest.fn();
   const setup = () => {
-    renderWithAuthContext(<SignInPage />, { authProviderProps: { login: mockLogin } });
+    renderWithContext(<SignInPage />, { authProviderProps: { login: mockLogin } });
     const emailInput = screen.getByTestId('email');
     const passwordInput = screen.getByTestId('password');
     const submitButton = screen.getByTestId('signin-button');

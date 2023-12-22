@@ -1,12 +1,12 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithAuthContext } from '../helpers';
+import { renderWithContext } from '../helpers';
 import SignUpPage from '../../pages/SignUp';
 
 describe('SignUpPage Component', () => {
   const mockSignUp = jest.fn();
 
   const setup = () => {
-    renderWithAuthContext(<SignUpPage />, { authProviderProps: { register: mockSignUp } });
+    renderWithContext(<SignUpPage />, { authProviderProps: { register: mockSignUp } });
     const firstNameInput = screen.getByTestId('firstName');
     const lastNameInput = screen.getByTestId('lastName');
     const emailInput = screen.getByTestId('email');
@@ -84,6 +84,4 @@ describe('SignUpPage Component', () => {
       })
     );
   });
-
-  // Add additional tests for form validation feedback, loading state, etc., as needed.
 });
