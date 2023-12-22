@@ -13,12 +13,7 @@ export default function SearchBar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      k: searchParams.get('k') || undefined,
-      c: searchParams.get('c') || undefined
-    }
-  });
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = ({ k, c }) => {
     const params = {};
@@ -35,7 +30,7 @@ export default function SearchBar() {
       if (pathname === '/search') {
         setSearchParams(params);
       } else {
-        navigate(`/search?${createSearchParams(params)}`);
+        navigate(`/search?${createSearchParams(params).toString()}`);
       }
     }
   };
@@ -85,7 +80,7 @@ export default function SearchBar() {
         placeholder='Category'
         aria-labelledby='search'
         className='max-w-[120px] lg:max-w-[200px]'
-        defaultValue={searchParams.get('c') || undefined}
+        defaultSelectedKeys={searchParams.get('c') ? [searchParams.get('c')] : undefined}
         popoverProps={{
           className: 'min-w-[165px] md:min-w-[250px]'
         }}

@@ -39,7 +39,7 @@ export default function SearchPage() {
 
       try {
         // API to fetch search results and set them to the results and the totalPage state.
-        const response = await api.get(`/products/search?${createSearchParams(params)}`);
+        const response = await api.get(`/products/search?${createSearchParams(params).toString()}`);
 
         setResults(response.data.results);
 
