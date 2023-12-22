@@ -31,7 +31,7 @@ export const UserProfile = () => {
 
   // JSX structure for User Profile component
   return (
-    <div className='mt-10'>
+    <div className='mt-10 md:mx-32'>
       <h1 className='text-3xl mb-8'>MY PROFILE</h1>
       <form>
         <div className='flex flex-row items-center gap-2 mb-3'>
