@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Image, Pagination } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
+import { Pagination } from '@nextui-org/react';
 import api from '../configs/api';
 import Layout from '../layouts/Base';
 import toast from 'react-hot-toast';
+import ProductsCardList from '../components/ProductCardList';
 
 export default function SearchPage() {
   // Provides access to the current query parameters and a function to update them.
@@ -18,18 +18,36 @@ export default function SearchPage() {
   const [totalPages, setTotalPages] = useState(0);
   // Set 8 items to display per page.
   const itemsPerPage = 8;
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
+      setIsLoading(true);
+
+      const params = {
+        page: currentPage,
+        limit: itemsPerPage
+      };
+
+      if (keyword) {
+        params.k = keyword;
+      }
+
+      if (categorySlug) {
+        params.c = categorySlug;
+      }
+
       try {
         // API to fetch search results and set them to the results and the totalPage state.
-        const response = await api.get(
-          `/products/search?k=${keyword}&c=${categorySlug}&page=${currentPage}&limit=${itemsPerPage}`
-        );
+        const response = await api.get(`/products/search?${createSearchParams(params).toString()}`);
+
         setResults(response.data.results);
+
         setTotalPages(response.data.totalPages);
       } catch (error) {
         toast.error('Error fetching search results', error);
+      } finally {
+        setIsLoading(false);
       }
     };
     // When either keyword or categorySlug is changed, or when currentPage is changed, the fetchSearchResults() is called to retrieve and display new search results.
@@ -49,53 +67,32 @@ export default function SearchPage() {
 
   return (
     <Layout>
-      <div className='container mx-auto px-6'>
-        <h3 className='text-gray-700 text-4xl font-medium'>
-          {keyword ? `Products for "${keyword}"` : `Products in category "${categorySlug}"`}
-        </h3>
-        <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6'>
-          {/* Checks if there　is at least one or more elements in the results array. If results contain items, it maps over each product*/}
-          {results.length > 0 ? (
-            results.map((product) => (
-              <div
-                key={product._id}
-                className='w-full min-w-[240px] mx-auto rounded-md shadow-md overflow-hidden'
-              >
-                <Link to={`/product/${product.slug}`}>
-                  <div className='flex flex-col w-full bg-cover items-center '>
-                    <Image
-                      alt='product image'
-                      className='h-40 max-w-full object-cover rounded-t-lg '
-                      src={product.imageUrl}
-                    />
-                    <div className='px-5 py-3 flex flex-col justify-end mt-auto '>
-                      <div className='text-center font-medium'>
-                        <h3 className='font-bold text-gray-900 uppercase mb-1'>{product.name}</h3>
-                        <p className=' text-gray-500'>{product.category.name}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='mb-3 mr-3'>
-                    <p className='font-semibold text-gray-900 text-lg text-right'>
-                      Price: ${product.price}
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            ))
-          ) : (
-            // If results is empty, it displays a message below.
-            <p>No products found for '{keyword}'</p>
-          )}
-        </div>
-        <div className='flex justify-center mt-7'>
-          <Pagination
-            showControls
-            total={totalPages}
-            initialPage={currentPage}
-            onChange={handlePageChange}
+      <div className='container max-w-full mx-auto py-6'>
+        {isLoading ? null : (
+          <h3 className='text-gray-700 text-4xl font-light mb-10'>
+            {keyword ? `Products for "${keyword}"` : `Products in category "${categorySlug}"`}
+          </h3>
+        )}
+        {!results.length && !isLoading ? (
+          <p>No products found for '{keyword}'</p>
+        ) : (
+          <ProductsCardList
+            products={results}
+            isHorizontalViewInMobile={false}
+            isLoading={isLoading}
+            skeletonNo={8}
           />
-        </div>
+        )}
+        {totalPages > 1 ? (
+          <div className='flex justify-center mt-7'>
+            <Pagination
+              showControls
+              total={totalPages}
+              initialPage={currentPage}
+              onChange={handlePageChange}
+            />
+          </div>
+        ) : null}
       </div>
     </Layout>
   );
