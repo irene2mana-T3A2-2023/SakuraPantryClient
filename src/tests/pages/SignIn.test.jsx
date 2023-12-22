@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithAuthContext } from '../helpers';
 import SignInPage from '../../pages/SignIn';
 
-describe('SignInPage Component', () => {
+describe('components/SignIn', () => {
   const mockLogin = jest.fn();
   const setup = () => {
     renderWithAuthContext(<SignInPage />, { authProviderProps: { login: mockLogin } });
@@ -14,10 +14,11 @@ describe('SignInPage Component', () => {
   };
 
   it('should display email, password inputs, and the submit button', () => {
-    setup();
-    expect(screen.getByTestId('email')).toBeInTheDocument();
-    expect(screen.getByTestId('password')).toBeInTheDocument();
-    expect(screen.getByTestId('signin-button')).toBeInTheDocument();
+    const { emailInput, passwordInput, submitButton, rememberMeCheckbox } = setup();
+    expect(emailInput).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(rememberMeCheckbox).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
   });
 
   it('should allow the user to enter email and password', () => {

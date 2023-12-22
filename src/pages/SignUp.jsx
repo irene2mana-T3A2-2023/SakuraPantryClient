@@ -85,12 +85,14 @@ export default function SignUpPage() {
                 className='mb-6 lg:mb-0'
                 errorMessage={formState.errors?.firstName?.message}
                 endContent={<FiUser className='h-6 w-6 text-default-400 self-center' />}
+                data-testid='firstName'
               />
               <Input
                 {...register('lastName')}
                 label='Last Name'
                 errorMessage={formState.errors?.lastName?.message}
                 endContent={<FiUser className='h-6 w-6 text-default-400 self-center' />}
+                data-testid='lastName'
               />
             </div>
             <Input
@@ -99,6 +101,7 @@ export default function SignUpPage() {
               className='mb-6'
               errorMessage={formState.errors?.email?.message}
               endContent={<FiMail className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='email'
             />
             <Input
               {...register('password')}
@@ -107,6 +110,7 @@ export default function SignUpPage() {
               className='mb-6'
               errorMessage={formState.errors?.password?.message}
               endContent={<FiLock className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='password'
             />
             <Input
               {...register('confirmPassword')}
@@ -114,6 +118,7 @@ export default function SignUpPage() {
               type='password'
               errorMessage={formState.errors?.confirmPassword?.message}
               endContent={<FiLock className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='confirmPassword'
             />
             <Button
               type='submit'
@@ -121,6 +126,7 @@ export default function SignUpPage() {
               className='w-full mt-8'
               size='lg'
               isDisabled={loading}
+              data-testid='signup-button'
             >
               Sign Up
             </Button>
