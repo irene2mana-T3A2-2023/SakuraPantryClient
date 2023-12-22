@@ -12,7 +12,7 @@ export default function ProtectedRoute({ Page }) {
   // Define a function 'getRedirectPath' to dynamically create a redirect URL.
   const getRedirectPath = () => {
     // Use 'createSearchParams' to build search parameters with the current URL path.
-    const newParams = createSearchParams({ from: pathname });
+    const newParams = createSearchParams({ from: pathname }).toString();
 
     // Formulate and return the sign-in URL with the query parameters.
     return `/sign-in?${newParams}`;
