@@ -1,6 +1,6 @@
 import { useLocation, createSearchParams, Navigate } from 'react-router-dom';
-import useAuth from './Auth/useAuth';
 import NotFound from '../pages/NotFound';
+import useAuth from './Auth/useAuth';
 
 // AdminProtectedRoute: A functional component to protect routes intended for admin users.
 export default function AdminProtectedRoute({ Page }) {

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { createSearchParams, useSearchParams } from 'react-router-dom';
 import { Pagination } from '@nextui-org/react';
+import toast from 'react-hot-toast';
 import api from '../configs/api';
 import Layout from '../layouts/Base';
-import toast from 'react-hot-toast';
 import ProductsCardList from '../components/ProductCardList';
 
 export default function SearchPage() {

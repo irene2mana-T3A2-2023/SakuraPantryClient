@@ -1,6 +1,5 @@
 import { Input, Button, Textarea } from '@nextui-org/react';
-import { FaSquareInstagram } from 'react-icons/fa6';
-import { FaSquareFacebook } from 'react-icons/fa6';
+import { FaSquareInstagram, FaSquareFacebook } from 'react-icons/fa6';
 import { FiMail, FiUser } from 'react-icons/fi';
 
 export default function Footer() {

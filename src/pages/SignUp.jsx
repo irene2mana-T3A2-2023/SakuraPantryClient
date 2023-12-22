@@ -1,5 +1,4 @@
-import { Card } from '@nextui-org/react';
-import { Input, Button } from '@nextui-org/react';
+import { Input, Button, Card } from '@nextui-org/react';
 import Joi from 'joi';
 import { FiMail, FiLock, FiUser } from 'react-icons/fi';
 import { joiResolver } from '@hookform/resolvers/joi';

@@ -1,8 +1,8 @@
 import { Badge } from '@nextui-org/react';
 import { useContext } from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
-import { CartContext } from './Cart/CartContext';
 import { Link } from 'react-router-dom';
+import { CartContext } from './Cart/CartContext';
 
 export default function CartInHeader() {
   const { getCartTotalQuantity } = useContext(CartContext);

@@ -1,11 +1,11 @@
 import Joi from 'joi';
-import api from '../../../configs/api';
 import { useState } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { getAxiosErrorMessage } from '../../../utils';
 import toast from 'react-hot-toast';
 import { ModalHeader, ModalBody, ModalFooter, Button, Input } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
+import { getAxiosErrorMessage } from '../../../utils';
+import api from '../../../configs/api';
 
 const categorySchema = Joi.object({
   name: Joi.string().required()

@@ -1,5 +1,5 @@
-import ProductCard from './ProductCard';
 import { Skeleton } from '@nextui-org/react';
+import ProductCard from './ProductCard';
 
 const ProductCardList = ({
   products,
