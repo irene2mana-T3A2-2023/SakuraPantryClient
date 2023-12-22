@@ -15,9 +15,9 @@ describe('pages/ForgotPassword', () => {
   };
 
   it('should display the email input and submit button', () => {
-    setup();
-    expect(screen.getByTestId('email')).toBeInTheDocument();
-    expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+    const { emailInput, submitButton } = setup();
+    expect(emailInput).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
   });
 
   it('allows typing in the email input', () => {

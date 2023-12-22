@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { Routes, Route, MemoryRouter } from 'react-router-dom';
 import AuthContext from '../../components/Auth/AuthContext';
 import { CartContext } from '../../components/Cart/CartContext';
 
@@ -9,14 +9,29 @@ const defaultCartProviderProps = {
 
 export const renderWithContext = (
   ui,
-  { authProviderProps, cartProviderProps = defaultCartProviderProps, ...renderOptions } = {}
+  {
+    authProviderProps,
+    cartProviderProps = defaultCartProviderProps,
+    Page,
+    path,
+    initialEntries = ['/'],
+    ...renderOptions
+  } = {}
 ) => {
   return render(
-    <BrowserRouter>
+    <MemoryRouter initialEntries={initialEntries}>
       <AuthContext.Provider value={authProviderProps}>
-        <CartContext.Provider value={cartProviderProps}>{ui}</CartContext.Provider>
+        <CartContext.Provider value={cartProviderProps}>
+          {path && Page ? (
+            <Routes>
+              <Route path={path} element={<Page />} />
+            </Routes>
+          ) : (
+            ui
+          )}
+        </CartContext.Provider>
       </AuthContext.Provider>
-    </BrowserRouter>,
+    </MemoryRouter>,
     renderOptions
   );
 };
