@@ -4,16 +4,14 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import ProductCardList from '../components/ProductCardList';
 import panel1 from '../assets/images/panel1.jpg';
-import panel2 from '../assets/images/panel2.jpg';
+import panel2 from '../assets/images/panel2.png';
 import panel3 from '../assets/images/panel3.jpg';
-import panel4 from '../assets/images/panel4.jpg';
 import Carousel from '../components/Carousel';
 
 const items = [
   { id: 1, imageUrl: panel1, title: 'Item 1' },
   { id: 2, imageUrl: panel2, title: 'Item 2' },
-  { id: 3, imageUrl: panel3, title: 'Item 3' },
-  { id: 4, imageUrl: panel4, title: 'Item 4' }
+  { id: 3, imageUrl: panel3, title: 'Item 3' }
 ];
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
