@@ -4,20 +4,29 @@ import logo from '../assets/images/SakuraPantryLogo_resized.png';
 import useAuth from './Auth/useAuth';
 import UserMenu from './UserMenu';
 import GuestMenu from './GuestMenu';
+import SearchBar from './SearchBar';
 
 export default function Header({ isAdminHeader }) {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Navbar isBordered isBlurred maxWidth='2xl' className='max-w-full bg-primary' height='80px'>
+    <Navbar
+      isBlurred
+      maxWidth='2xl'
+      className='max-w-full py-4 min-h-[120px] md:min-h-[80px] bg-primary'
+      height='auto'
+      classNames={{
+        wrapper: 'grid grid-cols-2 md:flex'
+      }}
+    >
       <NavbarBrand>
         <Link to='/'>
-          <Image src={logo} className='h-[50px]' />
+          <Image src={logo} className='w-full max-h-[50px] md:w-auto' />
         </Link>
       </NavbarBrand>
       {isAdminHeader ? null : (
-        <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-          <p className='text-white'>Search bar will come here</p>
+        <NavbarContent className='gap-4 row-start-2 col-start-1 col-span-2' justify='center'>
+          <SearchBar />
         </NavbarContent>
       )}
       <NavbarContent justify='end'>
