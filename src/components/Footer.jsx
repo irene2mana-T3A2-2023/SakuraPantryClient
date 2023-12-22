@@ -35,8 +35,12 @@ export default function Footer() {
             {/*Social Media Icons and Button*/}
             <div className='flex justify-between'>
               <div className='flex'>
-                <FaSquareFacebook className='text-white w-11 h-11 mr-4' />
-                <FaSquareInstagram className='text-white w-11 h-11' />
+                <a href='https://www.facebook.com/'>
+                  <FaSquareFacebook className='text-white w-11 h-11 mr-4' />
+                </a>
+                <a href='https://www.instagram.com/'>
+                  <FaSquareInstagram className='text-white w-11 h-11' />
+                </a>
               </div>
               <Button color='secondary'>Send</Button>
             </div>
