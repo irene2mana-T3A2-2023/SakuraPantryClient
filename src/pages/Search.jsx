@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { createSearchParams, useSearchParams } from 'react-router-dom';
 import { Pagination } from '@nextui-org/react';
 import toast from 'react-hot-toast';

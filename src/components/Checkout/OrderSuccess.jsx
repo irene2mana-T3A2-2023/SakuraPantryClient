@@ -1,5 +1,4 @@
 import { Button } from '@nextui-org/react';
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import orderSuccessIcon from '../../assets/images/order-success-icon.png';
 

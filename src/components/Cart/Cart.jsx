@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Button, Divider } from '@nextui-org/react';
 import { PiShoppingCartDuotone } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';

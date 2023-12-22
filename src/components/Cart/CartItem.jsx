@@ -1,5 +1,5 @@
 import { Button } from '@nextui-org/react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { currencyFormatter } from '../../utils';
 import { CartContext } from './CartContext';

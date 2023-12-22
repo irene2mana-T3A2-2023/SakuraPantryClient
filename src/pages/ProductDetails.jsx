@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Image, Button, Select, SelectItem, Divider, Spinner } from '@nextui-org/react';
 import toast from 'react-hot-toast';
