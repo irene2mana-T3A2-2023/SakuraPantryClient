@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import { Input } from '@nextui-org/react';
 import toast from 'react-hot-toast';
@@ -7,9 +5,11 @@ import api from '../../configs/api';
 
 // USER PROFILE COMPONENT
 export const UserProfile = () => {
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState([]);
 
+  // Fetch current user
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
@@ -29,9 +29,10 @@ export const UserProfile = () => {
     fetchUser();
   }, []);
 
+  // JSX structure for User Profile component
   return (
     <div className='mt-10'>
-      <h1 className='text-3xl mb-8'>My Account</h1>
+      <h1 className='text-3xl mb-8'>MY PROFILE</h1>
       <form>
         <div className='flex flex-row items-center gap-2 mb-3'>
           <Input value={user.firstName} />

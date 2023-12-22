@@ -56,7 +56,9 @@ export const OrderHistory = () => {
 
   // JSX structure for the Order history component
   return (
-    <div>
+    <div className='mt-10'>
+      <h1 className='text-3xl mb-8'>ORDER HISTORY</h1>
+      {/* Orders table */}
       <Table aria-label='Order Table' className='mt-10'>
         <TableHeader>
           <TableColumn>ORDER NO.</TableColumn>
@@ -87,13 +89,21 @@ export const OrderHistory = () => {
           ))}
         </TableBody>
       </Table>
+      {/* Modal to view rder items */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
-              <ModalHeader className='flex flex-col gap-1'>Order Items</ModalHeader>
+              <ModalHeader className='flex flex-col gap-1'>Order Summary</ModalHeader>
               <ModalBody>
                 <div>
+                  <div className='mb-5 px-3'>
+                    <h2 className='font-semibold mb-2'>Shipping Address</h2>
+                    <p>{currentOrder.shippingAddress.address}</p>
+                    <p>{currentOrder.shippingAddress.city}</p>
+                    <p>{currentOrder.shippingAddress.state}</p>
+                    <p>{currentOrder.shippingAddress.postcode}</p>
+                  </div>
                   {currentOrder?.orderItems.map((item) => (
                     <div key={item._id} className='flex flex-row items-center p-3'>
                       <div className='border-1.5 border-solid rounded p-2 border-pink-500'>
