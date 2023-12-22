@@ -1,26 +1,18 @@
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { screen } from '@testing-library/react';
 import ProductCard from '../../components/ProductCard';
+import { renderWithContext } from '../helpers';
+import mockProducts from '../mocks/products';
+import { currencyFormatter } from '../../utils';
 
 describe('components/ProductCard', () => {
   it('renders product details', () => {
-    const mockProduct = {
-      slug: 'miso-paste',
-      imageUrl: 'image-url.jpg',
-      name: 'Miso Paste',
-      category: { name: 'Sauces&Seasonings' },
-      price: 9.5
-    };
+    renderWithContext(<ProductCard product={mockProducts[0]} />);
 
-    render(
-      <BrowserRouter>
-        <ProductCard product={mockProduct} />
-      </BrowserRouter>
-    );
-
-    expect(screen.getByText('Miso Paste')).toBeInTheDocument();
-    expect(screen.getByText('Sauces&Seasonings')).toBeInTheDocument();
-    expect(screen.getByText('Price: $9.50')).toBeInTheDocument();
-    expect(screen.getByRole('img')).toHaveAttribute('src', 'image-url.jpg');
+    expect(screen.getByText(mockProducts[0].name)).toBeInTheDocument();
+    expect(screen.getByText(mockProducts[0].category.name)).toBeInTheDocument();
+    expect(
+      screen.getByText(`Price: ${currencyFormatter(mockProducts[0].price)}`)
+    ).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('src', mockProducts[0].imageUrl);
   });
 });
