@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Layout from '../layouts/Base';
 import { Image, Button, Select, SelectItem, Divider, Spinner } from '@nextui-org/react';
 import toast from 'react-hot-toast';
+import Layout from '../layouts/Base';
 import api from '../configs/api';
 import ProductCardList from '../components/ProductCardList';
 import { CartContext } from '../components/Cart/CartContext';

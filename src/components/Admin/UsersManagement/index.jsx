@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Chip } from '@nextui-org/react';
+import toast from 'react-hot-toast';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
 import { getAxiosErrorMessage, formatDateTime } from '../../../utils';
-import toast from 'react-hot-toast';
 
 export default function UsersManagement() {
   const [data, setData] = useState(null);

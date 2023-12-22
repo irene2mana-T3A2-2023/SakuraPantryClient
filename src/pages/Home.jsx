@@ -1,7 +1,7 @@
-import Layout from '../layouts/Base';
-import api from '../configs/api';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import Layout from '../layouts/Base';
+import api from '../configs/api';
 import ProductCardList from '../components/ProductCardList';
 import panel1 from '../assets/images/panel1.jpg';
 import panel2 from '../assets/images/panel2.png';

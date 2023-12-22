@@ -13,16 +13,16 @@ import {
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Joi from 'joi';
+import toast from 'react-hot-toast';
 import { CartContext } from '../Cart/CartContext';
-import { OrderSummary } from './OrderSummary';
 import card from '../../assets/images/card.png';
 import amex from '../../assets/images/american-express.png';
 import paypal from '../../assets/images/paypal.png';
 import visa from '../../assets/images/visa.png';
 import stripe from '../../assets/images/stripe.png';
 import api from '../../configs/api';
-import toast from 'react-hot-toast';
 import { getAxiosErrorMessage } from '../../utils';
+import { OrderSummary } from './OrderSummary';
 
 const schema = Joi.object({
   shippingAddress: Joi.object({

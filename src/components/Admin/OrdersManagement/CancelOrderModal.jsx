@@ -1,8 +1,8 @@
-import api from '../../../configs/api';
 import { useState } from 'react';
-import { getAxiosErrorMessage } from '../../../utils';
 import toast from 'react-hot-toast';
 import { ModalBody, ModalFooter, Button, ModalHeader, Chip } from '@nextui-org/react';
+import { getAxiosErrorMessage } from '../../../utils';
+import api from '../../../configs/api';
 import { statusColor } from './config';
 
 export default function CancelOrderModal({ closeModal, order, fetchData }) {

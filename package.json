@@ -28,6 +28,7 @@
     "extends": [
       "react-app",
       "react-app/jest",
+      "plugin:import/errors",
       "prettier"
     ],
     "plugins": [
@@ -39,6 +40,8 @@
       "browser": true
     },
     "rules": {
+      "import/order": "error",
+      "no-duplicate-imports": "error",
       "react/jsx-indent": [
         1,
         2
@@ -55,6 +58,13 @@
           ]
         }
       ]
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx"]
+        }
+      }
     }
   },
   "browserslist": {
@@ -74,6 +84,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.1.0",
     "tailwindcss": "^3.3.5"

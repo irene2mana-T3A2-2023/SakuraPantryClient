@@ -1,6 +1,6 @@
 import { Divider, Image } from '@nextui-org/react';
-import { currencyFormatter } from '../../../utils';
 import { Fragment } from 'react';
+import { currencyFormatter } from '../../../utils';
 
 export default function CartItems({ items }) {
   // eslint-disable-next-line

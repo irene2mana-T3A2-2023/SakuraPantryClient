@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import api from '../../configs/api';
-import AuthContext from './AuthContext';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import api from '../../configs/api';
 import { getAxiosErrorMessage } from '../../utils';
+import AuthContext from './AuthContext';
 
 //Provide authentication-related functionality to its children components.
 export default function AuthProvider({ children }) {

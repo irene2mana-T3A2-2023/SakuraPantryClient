@@ -1,8 +1,8 @@
 import { Button } from '@nextui-org/react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
-import { CartContext } from './CartContext';
 import { currencyFormatter } from '../../utils';
+import { CartContext } from './CartContext';
 
 // CART ITEMS COMPONENTS
 export const CartItem = ({ item }) => {
