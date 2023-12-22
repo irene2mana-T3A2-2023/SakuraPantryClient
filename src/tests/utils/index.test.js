@@ -1,6 +1,6 @@
 import { currencyFormatter, getAxiosErrorMessage, formatDateTime } from '../../utils';
 
-describe('utils', () => {
+describe('utils test', () => {
   describe('getAxiosErrorMessage', () => {
     it('returns a custom message for errors with response data', () => {
       const error = {
@@ -65,13 +65,8 @@ describe('utils', () => {
 
   describe('formatDateTime', () => {
     it('formats the date string correctly', () => {
-      // Arrange
       const dateString = '2023-01-01T13:00:00';
-
-      // Act
       const formattedDate = formatDateTime(dateString);
-
-      // Assert
       expect(formattedDate).toBe('Jan 1, 2023, 01:00 PM');
     });
   });
