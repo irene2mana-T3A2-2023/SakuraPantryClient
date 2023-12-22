@@ -7,10 +7,15 @@ const defaultCartProviderProps = {
   getCartTotalQuantity: jest.fn().mockReturnValue(3)
 };
 
+const defaultAuthProviderProps = {
+  isAuthenticated: false,
+  use: null
+};
+
 export const renderWithContext = (
   ui,
   {
-    authProviderProps,
+    authProviderProps = defaultAuthProviderProps,
     cartProviderProps = defaultCartProviderProps,
     Page,
     path,

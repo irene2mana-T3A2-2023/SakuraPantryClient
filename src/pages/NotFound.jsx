@@ -18,7 +18,14 @@ export default function NotFoundPage() {
               The page you are looking for could not be found.
             </span>
           </div>
-          <Button as={Link} color='primary' size='lg' to='/' className='mt-14'>
+          <Button
+            as={Link}
+            color='primary'
+            size='lg'
+            to='/'
+            className='mt-14'
+            data-testid='back-home-button'
+          >
             Back to home
           </Button>
         </div>
