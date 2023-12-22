@@ -7,9 +7,11 @@ import { CartContext } from './Cart/CartContext';
 export default function CartInHeader() {
   const { getCartTotalQuantity } = useContext(CartContext);
 
+  const totalItem = getCartTotalQuantity();
+
   return (
-    <Link to='/cart'>
-      <Badge color='secondary' content={getCartTotalQuantity()} isInvisible={false} shape='circle'>
+    <Link to='/cart' className='inline-flex items-center'>
+      <Badge color='secondary' content={totalItem} isInvisible={totalItem === 0} shape='circle'>
         <FiShoppingCart className='w-6 h-6 text-white' />
       </Badge>
     </Link>

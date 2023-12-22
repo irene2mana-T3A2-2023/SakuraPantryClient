@@ -5,7 +5,7 @@ import { currencyFormatter } from '../utils';
 const ProductCard = ({ product }) => {
   return (
     <Link to={`/product/${product.slug}`}>
-      <div className='flex flex-col py-4 h-[95%] items-center max-w-full transform overflow-hidden min-w-[240px] rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg'>
+      <div className='flex flex-col py-4 h-[95%] items-center max-w-full transform overflow-hidden min-w-[240px] rounded-lg bg-white shadow-lg duration-300 hover:scale-105 hover:shadow-lg'>
         <Image
           className='h-40 w-full object-cover object-center'
           src={product.imageUrl}

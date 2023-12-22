@@ -13,7 +13,7 @@ export default function AdminProtectedRoute({ Page }) {
   // Define a function 'getRedirectPath' to construct a redirect URL.
   const getRedirectPath = () => {
     // Use 'createSearchParams' to build search parameters, including the current path for post-sign-in redirection.
-    const newParams = createSearchParams({ from: pathname });
+    const newParams = createSearchParams({ from: pathname }).toString();
 
     // Construct and return the full sign-in URL with the included search parameters.
     return `/sign-in?${newParams}`;
