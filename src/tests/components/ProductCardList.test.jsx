@@ -26,7 +26,7 @@ const mockProducts = [
   }
 ];
 
-describe('ProductCardList', () => {
+describe('components/ProductCardList', () => {
   it('renders product cards when not loading', () => {
     render(
       <BrowserRouter>

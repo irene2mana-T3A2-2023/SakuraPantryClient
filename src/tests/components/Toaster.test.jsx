@@ -5,9 +5,10 @@ jest.mock('react-hot-toast', () => ({
   Toaster: () => <div>Mocked Toaster</div>
 }));
 
-describe('Toaster Component', () => {
+describe('components/Toaster', () => {
   it('renders the Toaster component', () => {
     render(<Toaster />);
+
     expect(screen.getByText('Mocked Toaster')).toBeInTheDocument();
   });
 });

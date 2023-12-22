@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Footer from '../../components/Footer';
 
-describe('Footer', () => {
+describe('components/Footer', () => {
   it('renders the ABOUT US section with description', () => {
     render(<Footer />);
     expect(screen.getByText('ABOUT US')).toBeInTheDocument();
