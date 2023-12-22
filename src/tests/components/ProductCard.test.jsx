@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard';
 
-describe('ProductCard Component', () => {
+describe('ProductCard', () => {
   it('renders product details', () => {
     const mockProduct = {
       slug: 'miso-paste',

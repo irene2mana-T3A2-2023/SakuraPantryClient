@@ -7,7 +7,7 @@ const mockItems = [
   { imageUrl: 'url3.jpg', title: 'Item 3' }
 ];
 
-describe('Carousel Component', () => {
+describe('Carousel', () => {
   it('renders the first image on initial load', () => {
     render(<Carousel items={mockItems} />);
     const firstImage = screen.getByAltText('Item 1');
