@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { Tooltip, Image, useDisclosure, Modal, ModalContent } from '@nextui-org/react';
+import { Tooltip, Image, useDisclosure, Modal, ModalContent, Spinner } from '@nextui-org/react';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
@@ -11,6 +11,8 @@ import DeleteProduct from './DeleteProductModal';
 
 export default function ProductsMangement() {
   const [data, setData] = useState(null);
+
+  const [loading, setLoading] = useState(true);
 
   const [modalType, setModalType] = useState(null);
 
@@ -31,6 +33,8 @@ export default function ProductsMangement() {
       setData(res.data);
     } catch (err) {
       toast.error(getAxiosErrorMessage(err));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -162,8 +166,12 @@ export default function ProductsMangement() {
     fetchProducts();
   }, []);
 
-  if (!data) {
-    return null;
+  if (loading || !data) {
+    return (
+      <div className='container max-w-full flex items-center justify-center min-h-[500px]'>
+        <Spinner size='lg' />
+      </div>
+    );
   }
 
   return (
