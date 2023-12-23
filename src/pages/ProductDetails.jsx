@@ -165,8 +165,10 @@ export default function ProductDetailsPage() {
                     color='primary'
                     size='lg'
                     className='w-full md:w-1/2 text-lg'
+                    as={Link}
+                    to='/cart'
                   >
-                    <Link to='/cart'>View Cart</Link>
+                    View Cart
                   </Button>
                 </div>
               </div>
