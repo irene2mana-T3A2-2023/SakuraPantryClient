@@ -1,9 +1,47 @@
+/* eslint-disable no-console */
 import { Input, Button, Textarea } from '@nextui-org/react';
+import axios from 'axios';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaSquareInstagram, FaSquareFacebook, FaSquarePhone, FaLocationDot } from 'react-icons/fa6';
 import { FiMail, FiUser } from 'react-icons/fi';
-import { MdEmail } from "react-icons/md";
+import { MdEmail } from 'react-icons/md';
 
+// FOOTER COMPONENET
 export default function Footer() {
+  // Set state for form data
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    questions: ''
+  });
+
+  // Handle changes in input fields
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle form submit
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formData);
+
+    // Use axios to post to sheetbest API
+    try {
+      await axios.post(
+        'https://sheet.best/api/sheets/1c36c2cb-9a92-4cf8-bb62-7cc3cddfe14b',
+        formData
+      );
+      toast.success('Enquiries successfully submitted!');
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error submitting form:', error);
+      toast.error('Error submitting enquiry. Please try again.');
+    }
+  };
+  // JSX structure for footer component
   return (
     <div className='w-full bg-primary min-h-[300px] py-6'>
       <div className='container mx-auto p-6 h-full w-full w-1/2 flex-grow flex mt-5'>
@@ -39,33 +77,55 @@ export default function Footer() {
             </div>
           </div>
           {/*Contact form*/}
-          <div className='flex w-full flex-col gap-4 lg:w-[50%]'>
+          <div className='lg:w-[50%]'>
             <h3 className='text-secondary text-2xl font-semibold'>CONTACT US</h3>
-            <Input
-              label='Your name'
-              type='text'
-              endContent={<FiUser className='h-6 w-6 text-default-400 self-center' />}
-            />
-            <Input
-              label='Your email'
-              type='email'
-              endContent={<FiMail className='h-6 w-6 text-default-400 self-center' />}
-            />
-            <Textarea label='Questions' type='text' className='h-auto' />
-            {/*Social Media Icons and Button*/}
-            <div className='flex justify-between'>
-              <div className='flex'>
-                <a href='https://www.facebook.com/'>
-                  <FaSquareFacebook className='text-secondary w-9 h-9 mr-4' />
-                </a>
-                <a href='https://www.instagram.com/'>
-                  <FaSquareInstagram className='text-secondary w-9 h-9' />
-                </a>
+            <form onSubmit={handleFormSubmit}>
+              <div className='flex w-full flex-col gap-4 mt-5 mb-5'>
+                <Input
+                  label='Your name'
+                  type='text'
+                  name='name'
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  endContent={<FiUser className='h-6 w-6 text-default-400 self-center' />}
+                />
+                <Input
+                  label='Your email'
+                  type='email'
+                  name='email'
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  endContent={<FiMail className='h-6 w-6 text-default-400 self-center' />}
+                />
+                <Textarea
+                  label='Questions'
+                  type='text'
+                  className='h-auto'
+                  name='questions'
+                  value={formData.questions}
+                  onChange={handleInputChange}
+                />
               </div>
-              <Button color='secondary' variant='ghost' className='font-semibold w-1/3'>
-                Send Your Enquiry
-              </Button>
-            </div>
+              {/*Social Media Icons and Button*/}
+              <div className='flex justify-between'>
+                <div className='flex'>
+                  <a href='https://www.facebook.com/'>
+                    <FaSquareFacebook className='text-secondary w-9 h-9 mr-4' />
+                  </a>
+                  <a href='https://www.instagram.com/'>
+                    <FaSquareInstagram className='text-secondary w-9 h-9' />
+                  </a>
+                </div>
+                <Button
+                  type='submit'
+                  color='secondary'
+                  variant='ghost'
+                  className='font-semibold w-1/3'
+                >
+                  Send Your Enquiry
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
