@@ -46,9 +46,7 @@ export const CartItem = ({ item }) => {
               {<FiPlus className='h-5 w-5 text-black-500 self-center' />}
             </Button>
           </div>
-          <p className='mt-3 lg:mt-0'>
-            {currencyFormatter((item.price * item.quantity).toFixed(2))}
-          </p>
+          <p className='mt-3 lg:mt-0'>{currencyFormatter(item.price * item.quantity)}</p>
         </div>
       </div>
     </div>
