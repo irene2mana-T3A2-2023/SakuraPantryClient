@@ -26,7 +26,6 @@ export default function Footer() {
   // Handle form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
 
     // Use axios to post to sheetbest API
     try {
