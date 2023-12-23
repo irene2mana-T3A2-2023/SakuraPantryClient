@@ -69,6 +69,7 @@ export default function ResetPasswordPage() {
               className='mb-6'
               errorMessage={formState.errors?.newPassword?.message}
               endContent={<FiLock className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='newPassword'
             />
             <Input
               {...register('confirmNewPassword')}
@@ -76,6 +77,7 @@ export default function ResetPasswordPage() {
               type='password'
               errorMessage={formState.errors?.confirmNewPassword?.message}
               endContent={<FiLock className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='confirmNewPassword'
             />
             <Button
               type='submit'
@@ -83,6 +85,7 @@ export default function ResetPasswordPage() {
               className='w-full mt-8'
               size='lg'
               isDisabled={loading}
+              data-testid='submit-button'
             >
               Update Password
             </Button>

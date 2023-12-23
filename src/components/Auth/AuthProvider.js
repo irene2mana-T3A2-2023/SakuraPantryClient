@@ -146,6 +146,33 @@ export default function AuthProvider({ children }) {
     }
   };
 
+  // Function to check current password before allowing user to change password
+  const verifyCurrentPassword = async (currentPassword) => {
+    try {
+      const res = await api.post('/auth/verify-current-password', {
+        currentPassword: currentPassword
+      });
+
+      if (res.data.isValid) {
+        return true; // Password is valid
+      } else {
+        return false; // Password is invalid
+      }
+    } catch (error) {
+      toast.error(getAxiosErrorMessage(error));
+      return false; // Password verification failed
+    }
+  };
+
+  // Function to allow current authenticated change their password
+  const changePassword = async (userData) => {
+    try {
+      await api.post('/auth/change-password', userData);
+    } catch (error) {
+      toast.error(getAxiosErrorMessage(error));
+    }
+  };
+
   // Use the 'useEffect' hook to perform side effects in the component
   useEffect(() => {
     // Defines an asynchronous 'initialise' function that attempts to authenticate the user.
@@ -175,11 +202,13 @@ export default function AuthProvider({ children }) {
   const value = {
     user,
     isAuthenticated,
+    verifyCurrentPassword,
     register,
     login,
     logout,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    changePassword
   };
 
   //It is responsible for providing authentication-related data and functions to its descendant components.
