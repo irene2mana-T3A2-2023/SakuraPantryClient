@@ -1,4 +1,4 @@
-import { Card, CardBody } from '@nextui-org/react';
+import { Card, CardBody, Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiDatabase, FiUser, FiEdit, FiPackage } from 'react-icons/fi';
@@ -8,6 +8,7 @@ import api from '../../configs/api';
 
 export default function Summary() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchSummary = async () => {
     try {
@@ -15,6 +16,8 @@ export default function Summary() {
       setData(res.data);
     } catch (err) {
       toast.error(getAxiosErrorMessage(err));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -22,8 +25,12 @@ export default function Summary() {
     fetchSummary();
   }, []);
 
-  if (!data) {
-    return null;
+  if (loading || !data) {
+    return (
+      <div className='container max-w-full flex items-center justify-center min-h-[500px]'>
+        <Spinner size='lg' />
+      </div>
+    );
   }
 
   return (
