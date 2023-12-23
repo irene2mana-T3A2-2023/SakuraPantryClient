@@ -18,13 +18,18 @@ const ProductCardList = ({
         </h3>
       ) : null}
       <div
+        data-testid='product-list-container'
         className={`${className} lg:grid md:grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-8 no-scrollbar`}
       >
         {/* Iterate over the products array. */}
         {isLoading
           ? // Render a list of Skeleton components when loading
             Array.from({ length: skeletonNo }, (_, index) => (
-              <Skeleton className='min-h-[300px] shadow-lg rounded-lg' key={index} />
+              <Skeleton
+                className='min-h-[300px] shadow-lg rounded-lg'
+                key={index}
+                data-testid='skeleton'
+              />
             ))
           : // Iterate over the products array when not loading
             products.map((product, index) => <ProductCard key={index} product={product} />)}

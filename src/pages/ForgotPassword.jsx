@@ -61,6 +61,7 @@ export default function ForgotPasswordPage() {
               className='mb-6'
               errorMessage={formState.errors?.email?.message}
               endContent={<FiMail className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='email'
             />
             <Button
               type='submit'
@@ -68,6 +69,7 @@ export default function ForgotPasswordPage() {
               className='w-full mt-8'
               size='lg'
               isDisabled={loading}
+              data-testid='submit-button'
             >
               Send
             </Button>

@@ -68,6 +68,7 @@ export default function SignInPage() {
               className='mb-6'
               errorMessage={formState.errors?.email?.message}
               endContent={<FiMail className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='email'
             />
             <Input
               {...register('password')}
@@ -76,6 +77,7 @@ export default function SignInPage() {
               className='mb-6'
               errorMessage={formState.errors?.password?.message}
               endContent={<FiLock className='h-6 w-6 text-default-400 self-center' />}
+              data-testid='password'
             />
             <Button
               type='submit'
@@ -83,6 +85,7 @@ export default function SignInPage() {
               className='w-full mt-8'
               size='lg'
               isDisabled={loading}
+              data-testid='signin-button'
             >
               Sign In
             </Button>
@@ -95,6 +98,7 @@ export default function SignInPage() {
                     onChange={(e) => onChange?.(e.target.checked)}
                     className='mb-2 lg:mb-0'
                     value={value}
+                    data-testid='rememberMe'
                   >
                     Remember me for 30 days
                   </Checkbox>

@@ -1,8 +1,7 @@
-// Carousel.js
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Carousel = ({ items }) => {
+export default function Carousel({ items }) {
   const [page, setPage] = useState(0);
   const numItems = items.length;
   const delay = 3000; // Delay in milliseconds for auto-play
@@ -51,6 +50,4 @@ const Carousel = ({ items }) => {
       </div>
     </div>
   );
-};
-
-export default Carousel;
+}
