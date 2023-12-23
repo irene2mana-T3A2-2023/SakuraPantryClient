@@ -66,7 +66,7 @@ export const ChangePassword = () => {
     <div className='container mx-auto flex flex-col items-center justify-center mt-8'>
       <Card className='p-10 shadow-none border-1 w-full lg:w-[60%]'>
         <h1 className='text-3xl mb-2 text-center'>CHANGE MY PASSWORD</h1>
-        <span className='text-sm lg:text-base mt-5 mb-10 text-center mx-8 text-gray-500'>
+        <span className='text-sm lg:text-base mt-5 mb-10 text-center lg:mx-8 text-gray-500'>
           Enter a new password below to change your password. Password must be least 8 characters
           long and contain letters or numbers only.
         </span>

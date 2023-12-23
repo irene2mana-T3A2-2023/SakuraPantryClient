@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Image, Button, Select, SelectItem, Divider, Spinner } from '@nextui-org/react';
 import toast from 'react-hot-toast';
 import Layout from '../layouts/Base';
@@ -149,16 +149,26 @@ export default function ProductDetailsPage() {
                   </Select>
                 </div>
                 {/* Add to Cart button */}
-                <Button
-                  variant='solid'
-                  color='primary'
-                  size='lg'
-                  className='w-full md:w-1/2 text-lg'
-                  onClick={addToCart}
-                  disabled={product?.stockQuantity === 0}
-                >
-                  {product?.stockQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
-                </Button>
+                <div className='md:flex flex-row gap-3'>
+                  <Button
+                    variant='solid'
+                    color='primary'
+                    size='lg'
+                    className='w-full md:w-1/2 text-lg mb-3'
+                    onClick={addToCart}
+                    disabled={product?.stockQuantity === 0}
+                  >
+                    {product?.stockQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                  </Button>
+                  <Button
+                    variant='ghost'
+                    color='primary'
+                    size='lg'
+                    className='w-full md:w-1/2 text-lg'
+                  >
+                    <Link to='/cart'>View Cart</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
