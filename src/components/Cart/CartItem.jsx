@@ -1,4 +1,4 @@
-import { Button } from '@nextui-org/react';
+import { Button, Image } from '@nextui-org/react';
 import { useContext } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import { currencyFormatter } from '../../utils';
@@ -10,21 +10,21 @@ export const CartItem = ({ item }) => {
 
   return (
     <div className='border rounded p-4 mb-4 mt-5 border-pink-500 text-lg w-full'>
-      <div className='lg:flex items-center m-auto'>
-        <div className='flex justify-start items-center w-full lg:w-1/2'>
-          <img src={item.imageUrl} alt='' className='w-32 h-32' />
-          <div className='lg:ml-5'>
-            <p className='justify-self-start lg:mt-8'>{item.name}</p>
+      <div className='flex items-center m-auto flex-col gap-6 lg:flex-row'>
+        <div className='flex justify-start items-center w-full'>
+          <Image src={item.imageUrl} alt='cart-product-item' className='h-32 w-auto flex-none' />
+          <div className='ml-5'>
+            <p className='justify-self-start mt-8'>{item.name}</p>
             <div className='text-sm my-1.5'>${item.price}</div>
             <div
-              className='hover:underline cursor-pointer text-xs text-stone-700'
+              className='hover:underline cursor-pointer text-xs text-danger-500'
               onClick={() => removeFromCart(item)}
             >
               Remove
             </div>
           </div>
         </div>
-        <div className='lg:flex justify-between items-center w-1/3 lg:ml-auto pl-32 lg:pl-0'>
+        <div className='flex justify-end lg:justify-between items-center w-full lg:w-1/3 gap-6'>
           <div className='flex justify-between items-center'>
             <Button
               isIconOnly

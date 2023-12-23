@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Tooltip, useDisclosure, Modal, ModalContent, Chip, User } from '@nextui-org/react';
+import {
+  Tooltip,
+  useDisclosure,
+  Modal,
+  ModalContent,
+  Chip,
+  User,
+  Spinner
+} from '@nextui-org/react';
 import { FiEye, FiEdit, FiXCircle } from 'react-icons/fi';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
@@ -27,8 +35,6 @@ export default function OrdersManagement() {
   });
 
   const fetchData = async () => {
-    setLoading(true);
-
     try {
       const { data } = await api.get('/orders');
 
@@ -169,8 +175,12 @@ export default function OrdersManagement() {
     }
   };
 
-  if (!data) {
-    return null;
+  if (loading || !data) {
+    return (
+      <div className='container max-w-full flex items-center justify-center min-h-[500px]'>
+        <Spinner size='lg' />
+      </div>
+    );
   }
 
   return (
@@ -178,7 +188,6 @@ export default function OrdersManagement() {
       <DataTable
         data={data}
         renderCell={renderCell}
-        loading={loading}
         columns={[
           { name: 'ID', uid: '_id', sortable: true },
           { name: 'USER', uid: 'user' },

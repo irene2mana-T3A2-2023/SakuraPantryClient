@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Chip } from '@nextui-org/react';
+import { Chip, Spinner } from '@nextui-org/react';
 import toast from 'react-hot-toast';
 import api from '../../../configs/api';
 import DataTable from '../DataTable';
@@ -7,6 +7,7 @@ import { getAxiosErrorMessage, formatDateTime } from '../../../utils';
 
 export default function UsersManagement() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -16,6 +17,8 @@ export default function UsersManagement() {
         setData(res.data);
       } catch (error) {
         toast.error(getAxiosErrorMessage(error));
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -76,11 +79,12 @@ export default function UsersManagement() {
     }
   };
 
-  // eslint-disable-next-line
-  console.log(data);
-
-  if (!data) {
-    return null;
+  if (loading || !data) {
+    return (
+      <div className='container max-w-full flex items-center justify-center min-h-[500px]'>
+        <Spinner size='lg' />
+      </div>
+    );
   }
 
   return (
