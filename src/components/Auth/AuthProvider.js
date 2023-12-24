@@ -1,22 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../../configs/api';
 import { getAxiosErrorMessage } from '../../utils';
+import { CartContext } from '../Cart/CartContext.jsx';
 import AuthContext from './AuthContext';
 
-//Provide authentication-related functionality to its children components.
+// Provide authentication-related functionality to its children components.
 export default function AuthProvider({ children }) {
   // Initialize state 'isInitialising' as true with its setter 'setIsInitialising' using useState hook.
   const [isInitialising, setIsInitialising] = useState(true);
 
-  //Create a state variable user with an initial value of null. The setUser function will be used to update the user state.
+  // Create a state variable user with an initial value of null. The setUser function will be used to update the user state.
   const [user, setUser] = useState(null);
 
   // Create a state variable 'isAuthenticated' with an initial value of false. The 'setIsAuthenticated' function will be used to update this state.
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  //Utilize the useNavigate hook to fetch the navigate function.
+  const { setCartItems } = useContext(CartContext);
+
+  // Utilize the useNavigate hook to fetch the navigate function.
   const navigate = useNavigate();
 
   // Use the 'useSearchParams' hook to access the URL's query parameters.
@@ -38,22 +41,22 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  //Take userData as its argument. It is used for user login.
+  // Take userData as its argument. It is used for user login.
   const login = async (userData) => {
     try {
-      //Make an HTTP POST request to the /auth/login endpoint using the api object, sending the userData to the server for login.
+      // Make an HTTP POST request to the /auth/login endpoint using the api object, sending the userData to the server for login.
       const response = await api.post('/auth/login', userData);
 
-      //Upon a successful login, it extracts the user and token from the response data.
+      // Upon a successful login, it extracts the user and token from the response data.
       const { user, token } = response.data;
 
-      //Set the user state using the setUser function and updates the isAuthenticated state to true if user is truthy
+      // Set the user state using the setUser function and updates the isAuthenticated state to true if user is truthy
       setUser(user);
 
       // Update the 'isAuthenticated' state to true if the 'user' is truthy.
       setIsAuthenticated(!!user);
 
-      //If a token is present, it stores the authentication token in the browser's local storage.
+      // If a token is present, it stores the authentication token in the browser's local storage.
       if (token) {
         localStorage.setItem('token', token);
       }
@@ -87,18 +90,24 @@ export default function AuthProvider({ children }) {
     // Update the 'isAuthenticated' state to 'false', indicating the user is no longer authenticated
     setIsAuthenticated(false);
 
+    // Remove cart items in local storage once the user logged out
+    localStorage.removeItem('cartItems');
+
+    // Set cart items to empty array
+    setCartItems([]);
+
     // Use the 'navigate' function to redirect the user to the homepage
     navigate('/');
   };
 
-  //Take userData as its argument. It is used for initiating the process of resetting a user's password.
+  // Take userData as its argument. It is used for initiating the process of resetting a user's password.
   const forgotPassword = async (userData) => {
     try {
-      //Make an asynchronous HTTP POST request to the /auth/forgot-password endpoint.
+      // Make an asynchronous HTTP POST request to the /auth/forgot-password endpoint.
       await api.post('/auth/forgot-password', userData);
-      //If the request is successful, it displays a success message using the toast.success function.
+      // If the request is successful, it displays a success message using the toast.success function.
       toast.success('Password reset email sent successfully!');
-      //If there's an error during the process, it catches the error and displays an error message.
+      // If there's an error during the process, it catches the error and displays an error message.
     } catch (error) {
       // In case of an error, display an error message using a toast notification.
       // 'getAxiosErrorMessage' extracts a user-friendly message from the error object.
@@ -106,16 +115,16 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  //Take userData as its argument. It is used for resetting a user's password.
+  // Take userData as its argument. It is used for resetting a user's password.
   const resetPassword = async (userData) => {
-    //Make an asynchronous HTTP POST request to the /auth/reset-password endpoint.
+    // Make an asynchronous HTTP POST request to the /auth/reset-password endpoint.
     try {
       await api.post('/auth/reset-password', userData);
-      //If the password reset is successful, it displays a success message.
+      // If the password reset is successful, it displays a success message.
       toast.success('Password reset successfully');
       //Redirect the user to the sign-in page to log in again with the new password.
       navigate('/sign-in');
-      //If there's an error during the process, it catches the error and displays an error message.
+      // If there's an error during the process, it catches the error and displays an error message.
     } catch (error) {
       // In case of an error, display an error message using a toast notification.
       // 'getAxiosErrorMessage' extracts a user-friendly message from the error object.
@@ -211,6 +220,6 @@ export default function AuthProvider({ children }) {
     changePassword
   };
 
-  //It is responsible for providing authentication-related data and functions to its descendant components.
+  // It is responsible for providing authentication-related data and functions to its descendant components.
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
