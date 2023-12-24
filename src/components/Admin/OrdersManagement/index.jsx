@@ -28,8 +28,9 @@ export default function OrdersManagement() {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure({
     onClose: () => {
+      // Clear selected order when modal closes
       setSelectedOrder(null);
-
+      // Clear modal type when modal closes
       setModalType(null);
     }
   });
@@ -48,9 +49,11 @@ export default function OrdersManagement() {
     fetchData();
   }, []);
 
+  // Define a function 'renderCell' to render cells in the data table.
   const renderCell = (order, columnKey) => {
     const cellValue = order[columnKey];
 
+    // Function to open the view order modal when an icon is clicked
     const openViewOrderModal = () => {
       setModalType('view-order');
 
@@ -59,6 +62,7 @@ export default function OrdersManagement() {
       onOpen();
     };
 
+    // Function to open the update order modal when an icon is clicked
     const openUpdateOrderModal = () => {
       setModalType('update-order');
 
@@ -67,6 +71,7 @@ export default function OrdersManagement() {
       onOpen();
     };
 
+    // Function to open the cancel order modal when an icon is clicked
     const openCancelOrderModal = () => {
       setModalType('cancel-order');
 
@@ -75,6 +80,7 @@ export default function OrdersManagement() {
       onOpen();
     };
 
+    // Render different content based on the column key
     switch (columnKey) {
       case '_id':
         return (
@@ -155,6 +161,7 @@ export default function OrdersManagement() {
     }
   };
 
+  // Define a function 'renderModalContent' to render modal content based on 'modalType'.
   const renderModalContent = (closeModal) => {
     switch (modalType) {
       case 'view-order':
