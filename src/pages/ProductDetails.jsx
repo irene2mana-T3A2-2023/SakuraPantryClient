@@ -28,32 +28,35 @@ export default function ProductDetailsPage() {
   // Function to add the product to the cart
   const addToCart = () => {
     let isItemExist = false;
-    // Retrieve existing cart items from local storage or initialize an empty array
     let newCartItems = localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [];
-    // Iterate through existing cart items
-    newCartItems.map((item) => {
-      // Check if the item already exists in the cart
+
+    newCartItems = newCartItems.map((item) => {
       if (item?._id === product?._id) {
         isItemExist = true;
-        // Check if adding the selected quantity exceeds the stock limit
         if (item?.stockQuantity >= parseInt(quantity) + parseInt(item?.quantity)) {
           item.quantity += parseInt(quantity);
+          // If quantity is updated successfully, show success toast
+          toast.success('Product added successfully');
         } else {
+          // If quantity exceeds stock limit, show an error notification
           toast.error(QUANTITY_ERROR_MSG);
         }
       }
       return item;
     });
-    // If the item doesn't exist in the cart, add it
+
     if (!isItemExist) {
+      // If the item doesn't exist, add it to the cart
       newCartItems.push({ ...product, quantity: parseInt(quantity) });
+      // Show success toast for new item
+      toast.success('Product added successfully');
     }
+
     // Update the cart items in context and local storage
     setCartItems(newCartItems);
     localStorage.setItem('cartItems', JSON.stringify(newCartItems));
-    toast.success('Product added successfully');
   };
 
   // Function to fetch related products based on category

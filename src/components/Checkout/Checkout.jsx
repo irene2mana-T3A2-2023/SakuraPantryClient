@@ -88,9 +88,6 @@ export const Checkout = () => {
     }
   };
 
-  // Set state to manage the loading status
-  //const [loading, setLoading] = useState(false);
-
   // Handler for form submission
   const onSubmit = async (updatedData) => {
     try {

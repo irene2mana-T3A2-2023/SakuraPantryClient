@@ -53,6 +53,7 @@ export default function EditProduct({ closeModal, fetchData, product }) {
     }
   };
 
+  // Define form control and validation using React Hook Form.
   const {
     register,
     handleSubmit,

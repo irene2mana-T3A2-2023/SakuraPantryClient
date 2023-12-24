@@ -17,8 +17,10 @@ export default function DataTable({
   data,
   loading
 }) {
+  // Determine the loading state of the table.
   const loadingState = loading || data.length === 0 ? 'loading' : 'idle';
 
+  // Top content for the table, typically used for action buttons like 'Add New'.
   const topContent = (
     <div className='flex flex-col gap-4'>
       <div className='flex justify-end gap-3 items-end'>
