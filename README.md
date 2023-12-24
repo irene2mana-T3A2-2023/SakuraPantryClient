@@ -204,7 +204,7 @@ npm run format
 
 ---
 
-## Client Libraries & Dependencies:
+## Client Libraries & Dependencies
 
 ### `@hookform/resolvers`
 
@@ -256,7 +256,7 @@ Included in the Create React App toolkit, `react-scripts` is a set of scripts an
 
 ---
 
-## Client Development Dependencies:
+## Client Development Dependencies
 
 ### `@testing-library/jest-dom`
 
