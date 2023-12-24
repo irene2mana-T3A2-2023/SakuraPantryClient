@@ -125,7 +125,7 @@ export default function OrdersManagement() {
       case 'actions':
         return (
           <div className='relative flex items-center2 gap-3'>
-            <Tooltip content='Details'>
+            <Tooltip content='View order details'>
               <span
                 className='text-lg text-default-500 cursor-pointer active:opacity-50'
                 onClick={openViewOrderModal}
@@ -135,7 +135,7 @@ export default function OrdersManagement() {
             </Tooltip>
             {order.status === 'Delivered' || order.status === 'Cancelled' ? null : (
               <>
-                <Tooltip content='Update status'>
+                <Tooltip content='Update order status'>
                   <span
                     className='text-lg text-default-500 cursor-pointer active:opacity-50'
                     onClick={openUpdateOrderModal}
@@ -143,7 +143,7 @@ export default function OrdersManagement() {
                     <FiEdit />
                   </span>
                 </Tooltip>
-                <Tooltip color='danger' content='Cancel product'>
+                <Tooltip color='danger' content='Cancel order'>
                   <span
                     className='text-lg text-danger cursor-pointer active:opacity-50'
                     onClick={openCancelOrderModal}
