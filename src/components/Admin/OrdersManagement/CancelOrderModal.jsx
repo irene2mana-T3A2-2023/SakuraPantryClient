@@ -14,6 +14,7 @@ export default function CancelOrderModal({ closeModal, order, fetchData }) {
       return;
     }
 
+    // Set loading to true
     setIsUpdating(true);
 
     try {
@@ -32,6 +33,7 @@ export default function CancelOrderModal({ closeModal, order, fetchData }) {
       // Display an error toast message with the error details if the update fails.
       toast.error(getAxiosErrorMessage(error));
     } finally {
+      // Set loading to false
       setIsUpdating(false);
     }
   };

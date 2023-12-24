@@ -9,7 +9,7 @@ import { statusColor } from './config';
 export default function UpdateOrderStatusModal({ closeModal, order, fetchData }) {
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateOrderStatus = async (data) => {
+  const updateOrderStatus = async () => {
     // Get the next status based on the current status
     const nextStatus = getNextStatus(order.status);
 
@@ -18,6 +18,7 @@ export default function UpdateOrderStatusModal({ closeModal, order, fetchData })
       return;
     }
 
+    // Set loading to true
     setIsUpdating(true);
 
     try {

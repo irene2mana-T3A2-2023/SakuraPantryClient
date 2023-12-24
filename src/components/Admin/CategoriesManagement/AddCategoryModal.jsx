@@ -38,7 +38,8 @@ export default function AddCategoryModal({ closeModal, fetchData }) {
       setIsAddingCategory(false);
     }
   };
-  // Destructure the useForm hook and initialize it with the categorySchema
+
+  // Define form control and validation using React Hook Form.
   const {
     register,
     handleSubmit,

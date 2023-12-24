@@ -5,20 +5,24 @@ import { getAxiosErrorMessage } from '../../../utils';
 import api from '../../../configs/api';
 
 export default function DeleteProductModal({ closeModal, product, fetchData }) {
+  // Define state variable for tracking the delete operation.
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const deleteProduct = async (data) => {
+  // Function to delete the product.
+  const deleteProduct = async () => {
     setIsDeleting(true);
 
     try {
-      await api.delete(`/products/${product.slug}`, data);
-
+      // Make an API DELETE request to delete the product.
+      await api.delete(`/products/${product.slug}`);
+      // Fetch updated data and display a success notification.
       await fetchData();
 
       toast.success('Product deleted successfully');
 
       closeModal();
     } catch (error) {
+      // Display an error notification in case of an API error.
       toast.error(getAxiosErrorMessage(error));
     }
   };

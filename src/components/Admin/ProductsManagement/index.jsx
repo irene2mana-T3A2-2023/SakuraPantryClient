@@ -10,22 +10,23 @@ import EditProduct from './EditProductModal';
 import DeleteProduct from './DeleteProductModal';
 
 export default function ProductsMangement() {
+  // Define state variables for product data, loading status, modal type, and selected product.
   const [data, setData] = useState(null);
-
   const [loading, setLoading] = useState(true);
-
   const [modalType, setModalType] = useState(null);
-
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // Disclosure hook from NextUI for controlling modal visibility and behavior.
   const { isOpen, onOpen, onOpenChange } = useDisclosure({
     onClose: () => {
+      // Clear selected product when modal closes.
       setSelectedProduct(null);
-
+      // Clear modal type when modal closes.
       setModalType(null);
     }
   });
 
+  // Async function to fetch product data from the API.
   const fetchProducts = async () => {
     try {
       const res = await api.get('/products');
@@ -38,9 +39,11 @@ export default function ProductsMangement() {
     }
   };
 
+  // Function for rendering cells in the data table based on the column key.
   const renderCell = (product, columnKey) => {
     const cellValue = product[columnKey];
 
+    // Opens the edit product modal and sets the selected product.
     const openEditProductModal = () => {
       setModalType('edit-product');
 
@@ -49,6 +52,7 @@ export default function ProductsMangement() {
       onOpen();
     };
 
+    // Opens the delete product modal and sets the selected product.
     const openDeleteProductModal = () => {
       setModalType('delete-product');
 
@@ -57,6 +61,7 @@ export default function ProductsMangement() {
       onOpen();
     };
 
+    // Uses a switch statement to render cell content based on the column key.
     switch (columnKey) {
       case 'name':
         return <span className='text-md font-medium text-primary'>{cellValue}</span>;
@@ -129,11 +134,13 @@ export default function ProductsMangement() {
     }
   };
 
+  // Function to open the modal for adding a new product.
   const openAddProductModal = () => {
     setModalType('add-product');
     onOpen();
   };
 
+  // Function to determine and render the appropriate modal content based on the modal type.
   const renderModalContent = (closeModal) => {
     switch (modalType) {
       case 'add-product':

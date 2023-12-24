@@ -39,7 +39,7 @@ export default function EditCategoryModal({ closeModal, fetchData, category }) {
     }
   };
 
-  // Destructure the useForm hook and initialize it with the categorySchema and initial values
+  // Define form control and validation using React Hook Form.
   const {
     register,
     handleSubmit,
