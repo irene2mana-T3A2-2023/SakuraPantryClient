@@ -76,7 +76,7 @@ export default function Footer() {
             </div>
           </div>
           {/*Contact form*/}
-          <div className='lg:w-[50%]'>
+          <div className='md:w-[60%] lg:w-[50%]'>
             <h3 className='text-secondary text-2xl font-semibold'>CONTACT US</h3>
             <form onSubmit={handleFormSubmit}>
               <div className='flex w-full flex-col gap-4 mt-5 mb-5'>
@@ -119,7 +119,7 @@ export default function Footer() {
                   type='submit'
                   color='secondary'
                   variant='ghost'
-                  className='font-semibold w-1/3'
+                  className='font-semibold lg:w-1/3'
                 >
                   Send Your Enquiry
                 </Button>
