@@ -29,30 +29,34 @@ const productSchema = Joi.object({
 });
 
 export default function AddProduct({ closeModal, fetchData }) {
+  // Define state variables for category data and loading state.
   const [categoryData, setCategoryData] = useState(null);
-
   const [isFetchingCategories, setIsFetchingCategories] = useState(true);
 
+  // Define state variable for adding product and its function.
   const [isAddingProduct, setIsAddingProduct] = useState(false);
 
+  // Function to add a new product.
   const addNewProduct = async (data) => {
     setIsAddingProduct(true);
 
     try {
+      // Make an API POST request to add a new product.
       await api.post('/products', data);
-
+      // Fetch updated data and display a success notification.
       await fetchData();
-
       toast.success('Product added successfully');
-
+      // Close the modal.
       closeModal();
     } catch (error) {
+      // Display an error notification in case of an API error.
       toast.error(getAxiosErrorMessage(error));
     } finally {
       setIsAddingProduct(false);
     }
   };
 
+  // Define form control and validation using React Hook Form.
   const {
     register,
     handleSubmit,
@@ -62,6 +66,7 @@ export default function AddProduct({ closeModal, fetchData }) {
     resolver: joiResolver(productSchema)
   });
 
+  // Use useEffect to fetch categories on component mount.
   useEffect(() => {
     const fetchCategories = async () => {
       setIsFetchingCategories(true);

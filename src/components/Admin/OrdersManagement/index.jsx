@@ -18,22 +18,23 @@ import UpdateOrderStatus from './UpdateOrderStatusModal';
 import CancelOrderModal from './CancelOrderModal';
 
 export default function OrdersManagement() {
+  // State for loading status, modal type, selected order, and order data.
   const [loading, setLoading] = useState(false);
-
   const [modalType, setModalType] = useState(null);
-
   const [selectedOrder, setSelectedOrder] = useState(null);
-
   const [data, setData] = useState(null);
 
+  // Disclosure hook for modal control with callback to reset state when modal closes.
   const { isOpen, onOpen, onOpenChange } = useDisclosure({
     onClose: () => {
+      // Clear selected order when modal closes
       setSelectedOrder(null);
-
+      // Clear modal type when modal closes
       setModalType(null);
     }
   });
 
+  // Function to fetch order data from the API.
   const fetchData = async () => {
     try {
       const { data } = await api.get('/orders');
@@ -48,9 +49,11 @@ export default function OrdersManagement() {
     fetchData();
   }, []);
 
+  // Function to render table cells based on the column key and order data.
   const renderCell = (order, columnKey) => {
     const cellValue = order[columnKey];
 
+    // Function to open the view order modal when an icon is clicked
     const openViewOrderModal = () => {
       setModalType('view-order');
 
@@ -59,6 +62,7 @@ export default function OrdersManagement() {
       onOpen();
     };
 
+    // Function to open the update order modal when an icon is clicked
     const openUpdateOrderModal = () => {
       setModalType('update-order');
 
@@ -67,6 +71,7 @@ export default function OrdersManagement() {
       onOpen();
     };
 
+    // Function to open the cancel order modal when an icon is clicked
     const openCancelOrderModal = () => {
       setModalType('cancel-order');
 
@@ -75,6 +80,7 @@ export default function OrdersManagement() {
       onOpen();
     };
 
+    // Render different content based on the column key
     switch (columnKey) {
       case '_id':
         return (
@@ -119,7 +125,7 @@ export default function OrdersManagement() {
       case 'actions':
         return (
           <div className='relative flex items-center2 gap-3'>
-            <Tooltip content='Details'>
+            <Tooltip content='View order details'>
               <span
                 className='text-lg text-default-500 cursor-pointer active:opacity-50'
                 onClick={openViewOrderModal}
@@ -129,7 +135,7 @@ export default function OrdersManagement() {
             </Tooltip>
             {order.status === 'Delivered' || order.status === 'Cancelled' ? null : (
               <>
-                <Tooltip content='Update status'>
+                <Tooltip content='Update order status'>
                   <span
                     className='text-lg text-default-500 cursor-pointer active:opacity-50'
                     onClick={openUpdateOrderModal}
@@ -137,7 +143,7 @@ export default function OrdersManagement() {
                     <FiEdit />
                   </span>
                 </Tooltip>
-                <Tooltip color='danger' content='Cancel product'>
+                <Tooltip color='danger' content='Cancel order'>
                   <span
                     className='text-lg text-danger cursor-pointer active:opacity-50'
                     onClick={openCancelOrderModal}
@@ -155,6 +161,7 @@ export default function OrdersManagement() {
     }
   };
 
+  // Function to render appropriate modal content based on modal type.
   const renderModalContent = (closeModal) => {
     switch (modalType) {
       case 'view-order':
@@ -175,6 +182,7 @@ export default function OrdersManagement() {
     }
   };
 
+  // Render loading spinner if data is not yet loaded.
   if (loading || !data) {
     return (
       <div className='container max-w-full flex items-center justify-center min-h-[500px]'>

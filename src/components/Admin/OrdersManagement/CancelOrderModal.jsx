@@ -8,24 +8,32 @@ import { statusColor } from './config';
 export default function CancelOrderModal({ closeModal, order, fetchData }) {
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateOrderStatus = async (data) => {
+  const updateOrderStatus = async () => {
+    // Check if the order status is 'Cancelled' or 'Deliveried'; if so, return without updating.
     if (order.status === 'Cancelled' || order.status === 'Deliveried') {
       return;
     }
 
+    // Set loading to true
     setIsUpdating(true);
 
     try {
+      // Send a PATCH request to update the order status to 'Cancelled'.
       await api.patch(`/orders/${order._id}/status`, { status: 'Cancelled' });
 
+      // Display a success toast message when the order is successfully cancelled.
       toast.success('Order cancelled successfully');
 
+      // Refetch dashboard data
       await fetchData();
 
+      // Close the modal using the 'closeModal' function passed as a prop.
       closeModal();
     } catch (error) {
+      // Display an error toast message with the error details if the update fails.
       toast.error(getAxiosErrorMessage(error));
     } finally {
+      // Set loading to false
       setIsUpdating(false);
     }
   };

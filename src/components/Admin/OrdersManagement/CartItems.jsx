@@ -3,9 +3,6 @@ import { Fragment } from 'react';
 import { currencyFormatter } from '../../../utils';
 
 export default function CartItems({ items }) {
-  // eslint-disable-next-line
-  console.log({ items });
-
   return (
     <div className='grid grid-cols-[100px_1fr_150px_100px] gap-2 w-full items-center'>
       <div className='text-lg font-semibold'></div>

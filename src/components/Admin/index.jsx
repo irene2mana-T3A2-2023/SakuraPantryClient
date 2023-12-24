@@ -9,8 +9,10 @@ import UsersManagement from './UsersManagement';
 import OrdersManagement from './OrdersManagement';
 
 export default function AdminDashboard() {
+  // Hook to manage search parameters in the URL.
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // Function to handle tab selection change and update the URL accordingly.
   const onSelectionChange = (key) => {
     setSearchParams({ tab: key });
   };
