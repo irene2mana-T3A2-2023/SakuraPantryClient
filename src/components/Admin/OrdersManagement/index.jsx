@@ -18,14 +18,13 @@ import UpdateOrderStatus from './UpdateOrderStatusModal';
 import CancelOrderModal from './CancelOrderModal';
 
 export default function OrdersManagement() {
+  // State for loading status, modal type, selected order, and order data.
   const [loading, setLoading] = useState(false);
-
   const [modalType, setModalType] = useState(null);
-
   const [selectedOrder, setSelectedOrder] = useState(null);
-
   const [data, setData] = useState(null);
 
+  // Disclosure hook for modal control with callback to reset state when modal closes.
   const { isOpen, onOpen, onOpenChange } = useDisclosure({
     onClose: () => {
       // Clear selected order when modal closes
@@ -35,6 +34,7 @@ export default function OrdersManagement() {
     }
   });
 
+  // Function to fetch order data from the API.
   const fetchData = async () => {
     try {
       const { data } = await api.get('/orders');
@@ -49,7 +49,7 @@ export default function OrdersManagement() {
     fetchData();
   }, []);
 
-  // Define a function 'renderCell' to render cells in the data table.
+  // Function to render table cells based on the column key and order data.
   const renderCell = (order, columnKey) => {
     const cellValue = order[columnKey];
 
@@ -161,7 +161,7 @@ export default function OrdersManagement() {
     }
   };
 
-  // Define a function 'renderModalContent' to render modal content based on 'modalType'.
+  // Function to render appropriate modal content based on modal type.
   const renderModalContent = (closeModal) => {
     switch (modalType) {
       case 'view-order':
@@ -182,6 +182,7 @@ export default function OrdersManagement() {
     }
   };
 
+  // Render loading spinner if data is not yet loaded.
   if (loading || !data) {
     return (
       <div className='container max-w-full flex items-center justify-center min-h-[500px]'>

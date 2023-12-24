@@ -6,9 +6,11 @@ import DataTable from '../DataTable';
 import { getAxiosErrorMessage, formatDateTime } from '../../../utils';
 
 export default function UsersManagement() {
+  // State for storing user data and loading status.
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Effect to fetch user data from API on component mount.
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -25,6 +27,7 @@ export default function UsersManagement() {
     fetchUsers();
   }, []);
 
+  // Function to render cell content based on the user data and column key.
   const renderCell = (user, columnKey) => {
     const cellValue = user[columnKey];
 
@@ -79,6 +82,7 @@ export default function UsersManagement() {
     }
   };
 
+  // Render a spinner while data is loading.
   if (loading || !data) {
     return (
       <div className='container max-w-full flex items-center justify-center min-h-[500px]'>

@@ -7,9 +7,11 @@ import { getAxiosErrorMessage, currencyFormatter } from '../../utils';
 import api from '../../configs/api';
 
 export default function Summary() {
+  // State for storing summary data and loading status.
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Function to fetch summary data from the API.
   const fetchSummary = async () => {
     try {
       const res = await api.get('/dashboard/summary');
@@ -25,6 +27,7 @@ export default function Summary() {
     fetchSummary();
   }, []);
 
+  // Display a spinner while the data is loading.
   if (loading || !data) {
     return (
       <div className='container max-w-full flex items-center justify-center min-h-[500px]'>
