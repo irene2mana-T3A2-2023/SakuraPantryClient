@@ -37,6 +37,7 @@ describe('utils test', () => {
       expect(getAxiosErrorMessage(error)).toBe('Something went wrong');
     });
   });
+
   describe('currencyFormatter', () => {
     it('formats a whole number correctly', () => {
       expect(currencyFormatter(100)).toBe('$100.00');

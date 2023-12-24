@@ -7,30 +7,38 @@ import { useForm } from 'react-hook-form';
 import { getAxiosErrorMessage } from '../../../utils';
 import api from '../../../configs/api';
 
+// Define a schema for category validation using Joi
 const categorySchema = Joi.object({
   name: Joi.string().required()
 });
 
+// Define the AddCategoryModal component
 export default function AddCategoryModal({ closeModal, fetchData }) {
+  // Define a state variable to track if a category is being added
   const [isAddingCategory, setIsAddingCategory] = useState(false);
 
+  // Define a function to add a new category
   const addNewCategory = async (data) => {
     setIsAddingCategory(true);
 
     try {
+      // Make an API request to create a new category
       await api.post('/categories', data);
 
+      // Display a success toast message
       toast.success('Category added successfully');
 
+      // Fetch updated data and close the modal
       await fetchData();
-
       closeModal();
     } catch (error) {
       toast.error(getAxiosErrorMessage(error));
     } finally {
+      // Reset the isAddingCategory state to false regardless of success or failure
       setIsAddingCategory(false);
     }
   };
+  // Destructure the useForm hook and initialize it with the categorySchema
   const {
     register,
     handleSubmit,
@@ -40,6 +48,7 @@ export default function AddCategoryModal({ closeModal, fetchData }) {
   });
 
   return (
+    // Create a form with a submit handler that calls addNewCategory
     <form onSubmit={handleSubmit(addNewCategory)}>
       <ModalHeader className='flex flex-col gap-1 text-3xl'>Add new category</ModalHeader>
       <ModalBody>
