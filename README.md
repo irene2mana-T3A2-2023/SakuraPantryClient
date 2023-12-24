@@ -92,7 +92,7 @@ cd SakuraPantryServer
 - Create a file named `.env.development` in the root of the server directory.
 - Copy the contents from `.env.example` to .`env.development` and update it with your actual configuration values.
 
-  5.**Seed the dummy data into your MongoDB**
+5.**Seed the dummy data into your MongoDB**
 
 Make sure your MongoDB is running before seeding the database.
 
@@ -136,7 +136,7 @@ cd SakuraPantryClient
 - Create a file named `.env.development` in the root of the server directory.
 - Copy the contents from the `.env.example` file into your `.env.development` file and update the `REACT_APP_API_HOST` placeholder with your actual API server's local configuration.
 
-  5.**Start the local server**
+5.**Start the local server**
 
 Make sure your local API server is still running on port `5000`, or on the API server port that you have configured.
 
