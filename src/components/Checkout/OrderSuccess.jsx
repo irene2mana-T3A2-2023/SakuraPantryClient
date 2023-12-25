@@ -18,7 +18,7 @@ export const OrderSuccess = () => {
       </p>
       <Button
         size='lg'
-        className='w-1/5 mt-5 font-semibold'
+        className='lg:w-1/5 mt-5 font-semibold'
         color='primary'
         variant='ghost'
         onClick={(e) => navigate('/')}
